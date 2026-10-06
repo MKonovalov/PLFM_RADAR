@@ -81,7 +81,7 @@ module radar_system_top_50t (
     // ===== FPGA→STM32 GPIO (Bank 15: 3.3V) =====
     output wire gpio_dig5,            // DIG_5 (H11→PD13): AGC saturation flag
     output wire gpio_dig6,            // DIG_6 (G12→PD14): reserved
-    output wire gpio_dig7             // DIG_7 (H12→PD15): reserved
+    output wire gpio_dig7             // DIG_7 (H12→PD15): AGC hard-overload flag
 );
 
     // ===== Tie-off wires for unconstrained FT601 inputs (inactive with USB_MODE=1) =====

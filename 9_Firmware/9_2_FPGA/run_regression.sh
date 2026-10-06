@@ -268,6 +268,19 @@ run_lint_static() {
 # Helper: compile and run a single testbench
 #   run_test <name> <vvp_path> <iverilog_args...>
 # ---------------------------------------------------------------------------
+# `timeout` is GNU coreutils: macOS ships neither timeout nor gtimeout by
+# default, which silently turned every simulation into "no PASS/FAIL markers".
+# Pick whatever exists; with none available, run unbounded (suites are short).
+# Keep this a plain string, not an array: the script runs under `set -u` and
+# macOS ships bash 3.2, where expanding an empty array (${arr[@]}) is an
+# unbound-variable error -- which silently swallowed every simulation result.
+TIMEOUT_CMD=""
+if command -v timeout >/dev/null 2>&1; then
+    TIMEOUT_CMD="timeout 120"
+elif command -v gtimeout >/dev/null 2>&1; then
+    TIMEOUT_CMD="gtimeout 120"
+fi
+
 run_test() {
     local name="$1"
     local vvp="$2"
@@ -286,7 +299,7 @@ run_test() {
 
     # Run
     local output
-    output=$(timeout 120 vvp "$vvp" 2>&1) || true
+    output=$($TIMEOUT_CMD vvp "$vvp" 2>&1) || true
 
     # Count PASS/FAIL in output (testbenches use explicit [PASS]/[FAIL] markers)
     local test_pass test_fail

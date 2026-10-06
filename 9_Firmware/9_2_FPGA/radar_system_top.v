@@ -131,7 +131,7 @@ module radar_system_top (
     // Used by STM32 outer AGC loop to read saturation state without USB polling.
     output wire gpio_dig5,          // DIG_5 (H11→PD13): AGC saturation flag (1=clipping detected)
     output wire gpio_dig6,          // DIG_6 (G12→PD14): AGC enable flag (mirrors host_agc_enable)
-    output wire gpio_dig7           // DIG_7 (H12→PD15): reserved (tied low)
+    output wire gpio_dig7           // DIG_7 (H12→PD15): AGC hard-overload flag
 );
 
 // ============================================================================
@@ -1039,10 +1039,11 @@ assign system_status = status_reg;
 //        STM32 reads PD13 to detect clipping and adjust ADAR1000 VGA gain.
 // DIG_6: AGC enable flag — mirrors host_agc_enable so STM32 outer-loop AGC
 //        tracks the FPGA register as single source of truth.
-// DIG_7: Reserved (tied low for future use).
+// DIG_7: AGC hard-overload flag — high when this frame clipped on
+//        many samples (>= 8), not just one. STM32 PD15 -> larger attack step.
 assign gpio_dig5 = (rx_agc_saturation_count != 8'd0);
 assign gpio_dig6 = host_agc_enable;
-assign gpio_dig7 = 1'b0;
+assign gpio_dig7 = (rx_agc_saturation_count >= 8'd8);
 
 // ============================================================================
 // DEBUG AND VERIFICATION
