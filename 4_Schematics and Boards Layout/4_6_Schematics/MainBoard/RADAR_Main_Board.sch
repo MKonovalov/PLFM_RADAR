@@ -28504,9 +28504,9 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <part name="C45" library="eagle-ltspice" deviceset="C" device="C0201" value="0.1uF"/>
 <part name="C46" library="eagle-ltspice" deviceset="C" device="C0201" value="0.1uF"/>
 <part name="GND74" library="supply1" deviceset="GND" device=""/>
-<part name="R14" library="rcl" deviceset="R-EU_" device="R0201" value="115R"/>
+<part name="R14" library="rcl" deviceset="R-EU_" device="R0201" value="56R"/>
 <part name="R15" library="rcl" deviceset="R-EU_" device="R0201" value="4.3k"/>
-<part name="C43" library="rcl" deviceset="C-EU" device="C0201" value="0.2pF"/>
+<part name="C43" library="rcl" deviceset="C-EU" device="C0201" value="0.6pF"/>
 <part name="C47" library="eagle-ltspice" deviceset="C" device="C0201" value="0.1uF"/>
 <part name="GND75" library="supply1" deviceset="GND" device=""/>
 <part name="R18" library="eagle-ltspice" deviceset="R" device="R0201" value="0R"/>

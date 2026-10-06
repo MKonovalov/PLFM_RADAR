@@ -59,7 +59,7 @@ Instruments: bench PSU with current limit, 4-channel scope (≥1 GHz), DMM, VNA 
 
 | Measurement | Target | If it fails |
 |---|---|---|
-| Cascade gain, mixer → ADC | **≈ 30 dB**. Built as-is: `U4` (R14 = 115 Ω = 10 dB) + `U8` (R22 = 56 Ω = 15 dB) = **25 dB**, i.e. ~5 dB short | change `R14` 115 Ω → 56 Ω (10 → 15 dB) for 30 dB and re-measure |
+| Cascade gain, mixer → ADC | **≈ 30 dB**. Rev A as built = **25 dB**: stage 1 `U4` (`R14` = 115 Ω, `C43` = 0.2 pF) = 10 dB + stage 2 `U8` (`R22` = 56 Ω, `C54` = 0.6 pF) = 15 dB. The respin changes stage 1 to `R14` = 56 Ω **and** `C43` = 0.6 pF -- matching the stage that already measures 15 dB -- for 30 dB | if it still falls short, use the IF gain trim, not a firmware fudge. Note the AD8352's `CD` tracks its gain (Table 5): changing `R_G` alone re-tunes distortion without touching gain |
 | ADC input level with a known target | ≈ −40 dBFS wideband noise per the design's own target | use the IF gain trim, not a firmware fudge |
 | TX/RX filter IL | TX ≤ 1.5 dB, RX ≤ 1.0 dB | re-run the link budget with the measured IL |
 | Image rejection | **≥ 40 dB** at the image (240 MHz offset, low-side LO 10.38 GHz) | the filter is a placeholder until a real one is fitted |
