@@ -104,6 +104,25 @@ typedef struct {
 
 extern SPI_HandleTypeDef  hspi1, hspi4;
 extern I2C_HandleTypeDef  hi2c1, hi2c2;
+
+/* ======================= I2C HAL (added) ========================= */
+/* The DAC5578 driver needs these; without them it cannot compile host-side, which
+ * is how the gate-bias emergency-stop path went unverified.  Both record a spy and
+ * capture the payload, and the returned status is controllable so a test can
+ * simulate a bus failure. */
+extern HAL_StatusTypeDef mock_i2c_status;      /* set to HAL_ERROR to fail the next call */
+extern uint32_t          mock_i2c_last_handle_id;
+extern uint16_t          mock_i2c_last_addr;   /* device address actually used */
+extern uint16_t          mock_i2c_last_tx_len;
+extern uint8_t           mock_i2c_last_tx[16]; /* payload of the last transmit */
+extern uint16_t          mock_i2c_rx_avail;    /* bytes a receive should hand back */
+extern uint8_t           mock_i2c_rx_data[16];
+extern uint16_t          mock_i2c_last_rx_len;
+
+HAL_StatusTypeDef HAL_I2C_Master_Transmit(I2C_HandleTypeDef *hi2c, uint16_t DevAddress,
+                                          uint8_t *pData, uint16_t Size, uint32_t Timeout);
+HAL_StatusTypeDef HAL_I2C_Master_Receive(I2C_HandleTypeDef *hi2c, uint16_t DevAddress,
+                                         uint8_t *pData, uint16_t Size, uint32_t Timeout);
 extern UART_HandleTypeDef huart3;
 extern UART_HandleTypeDef huart5;  /* GPS UART */
 extern ADC_HandleTypeDef  hadc3;
@@ -141,6 +160,8 @@ typedef enum {
     SPY_SPI_TRANSMIT_RECEIVE,
     SPY_SPI_TRANSMIT,
     SPY_UART_RX,
+    SPY_I2C_TX,          /* added for the DAC5578 gate-bias driver */
+    SPY_I2C_RX,
 } SpyCallType;
 
 typedef struct {

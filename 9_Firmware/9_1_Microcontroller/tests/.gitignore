@@ -13,6 +13,7 @@ test_bug10_spi_cs_not_toggled
 test_bug15_htim3_dangling_extern
 
 # TESTS_MOCK_ONLY
+test_pa_gate_bias_contract
 test_bug2_ad9523_double_setup
 test_bug6_timer_variable_collision
 test_bug7_gpio_pin_conflict

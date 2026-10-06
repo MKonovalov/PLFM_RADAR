@@ -55,7 +55,8 @@ TESTS_WITH_REAL := test_bug1_timed_sync_init_ordering \
                    test_bug15_htim3_dangling_extern
 
 # Tests that only need mocks (extracted patterns / static analysis)
-TESTS_MOCK_ONLY := test_bug2_ad9523_double_setup \
+TESTS_MOCK_ONLY := test_pa_gate_bias_contract \
+                   test_bug2_ad9523_double_setup \
                    test_bug6_timer_variable_collision \
                    test_bug7_gpio_pin_conflict \
                    test_bug8_uart_commented_out \
@@ -133,6 +134,14 @@ $(TESTS_WITH_REAL): %: %.c $(MOCK_OBJS) $(REAL_OBJ)
 	$(CC) $(CFLAGS) $(INCLUDES) $< $(MOCK_OBJS) $(REAL_OBJ) -o $@
 
 # Tests that only need mocks
+# gate-bias emergency-stop contract: links the REAL DAC5578 driver (which needs the
+# I2C HAL the mock now provides) so the CLR path is covered rather than re-implemented
+DA5578.o: ../9_1_1_C_Cpp_Libraries/DA5578.c
+	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+
+test_pa_gate_bias_contract: test_pa_gate_bias_contract.c DA5578.o $(MOCK_OBJS)
+	$(CC) $(CFLAGS) $(INCLUDES) $< DA5578.o $(MOCK_OBJS) -o $@
+
 test_bug2_ad9523_double_setup: test_bug2_ad9523_double_setup.c $(MOCK_OBJS)
 	$(CC) $(CFLAGS) $(INCLUDES) $< $(MOCK_OBJS) -o $@
 

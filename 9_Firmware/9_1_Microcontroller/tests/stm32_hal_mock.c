@@ -63,6 +63,59 @@ static struct {
     GPIO_PinState val;
 } gpio_read_table[GPIO_READ_TABLE_SIZE];
 
+/* spy_push is defined further down; the I2C capture needs it here */
+static void spy_push(SpyRecord rec);
+
+/* ========================= I2C capture (added) ==================== */
+HAL_StatusTypeDef mock_i2c_status        = HAL_OK;
+uint32_t          mock_i2c_last_handle_id = 0;
+uint16_t          mock_i2c_last_addr      = 0;
+uint16_t          mock_i2c_last_tx_len    = 0;
+uint8_t           mock_i2c_last_tx[16]    = {0};
+uint16_t          mock_i2c_rx_avail       = 0;
+uint8_t           mock_i2c_rx_data[16]    = {0};
+uint16_t          mock_i2c_last_rx_len    = 0;
+
+HAL_StatusTypeDef HAL_I2C_Master_Transmit(I2C_HandleTypeDef *hi2c, uint16_t DevAddress,
+                                          uint8_t *pData, uint16_t Size, uint32_t Timeout)
+{
+    mock_i2c_last_handle_id = hi2c ? hi2c->id : 0;
+    mock_i2c_last_addr      = DevAddress;
+    mock_i2c_last_tx_len    = (Size < sizeof(mock_i2c_last_tx)) ? Size : sizeof(mock_i2c_last_tx);
+    if (pData != NULL) {
+        memcpy(mock_i2c_last_tx, pData, mock_i2c_last_tx_len);
+    }
+    spy_push((SpyRecord){
+        .type  = SPY_I2C_TX,
+        .port  = NULL,
+        .pin   = DevAddress,
+        .value = Size,
+        .extra = mock_i2c_last_tx
+    });
+    (void)Timeout;
+    return mock_i2c_status;
+}
+
+HAL_StatusTypeDef HAL_I2C_Master_Receive(I2C_HandleTypeDef *hi2c, uint16_t DevAddress,
+                                         uint8_t *pData, uint16_t Size, uint32_t Timeout)
+{
+    mock_i2c_last_handle_id = hi2c ? hi2c->id : 0;
+    mock_i2c_last_addr      = DevAddress;
+    mock_i2c_last_rx_len    = (Size < mock_i2c_rx_avail) ? Size : mock_i2c_rx_avail;
+    if (pData != NULL) {
+        memcpy(pData, mock_i2c_rx_data, mock_i2c_last_rx_len);
+    }
+    spy_push((SpyRecord){
+        .type  = SPY_I2C_RX,
+        .port  = NULL,
+        .pin   = DevAddress,
+        .value = Size,
+        .extra = pData
+    });
+    (void)Timeout;
+    return mock_i2c_status;
+}
+
 void spy_reset(void)
 {
     spy_count = 0;
@@ -73,6 +126,14 @@ void spy_reset(void)
     memset(mock_uart_rx, 0, sizeof(mock_uart_rx));
     mock_uart_tx_len = 0;
     memset(mock_uart_tx_buf, 0, sizeof(mock_uart_tx_buf));
+    mock_i2c_status = HAL_OK;
+    mock_i2c_last_handle_id = 0;
+    mock_i2c_last_addr = 0;
+    mock_i2c_last_tx_len = 0;
+    memset(mock_i2c_last_tx, 0, sizeof(mock_i2c_last_tx));
+    mock_i2c_rx_avail = 0;
+    memset(mock_i2c_rx_data, 0, sizeof(mock_i2c_rx_data));
+    mock_i2c_last_rx_len = 0;
 }
 
 const SpyRecord *spy_get(int index)
