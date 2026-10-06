@@ -9077,7 +9077,7 @@ DIN A4, with small doc field</description>
 <part name="GND17" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
 <part name="GND18" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
 <part name="GND19" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
-<part name="U$1" library="My_Library_RADAR" deviceset="QPA2962_B" device=""/>
+<part name="C10" library="rcl" deviceset="C-EU" device="C1206" value="10µF"/><part name="C11" library="rcl" deviceset="C-EU" device="C1206" value="10µF"/><part name="C12" library="rcl" deviceset="C-EU" device="C1206" value="10µF"/><part name="C13" library="rcl" deviceset="C-EU" device="C1206" value="10µF"/><part name="C14" library="rcl" deviceset="C-EU" device="C1206" value="10µF"/><part name="C15" library="rcl" deviceset="C-EU" device="C1206" value="10µF"/><part name="C16" library="rcl" deviceset="C-EU" device="C1206" value="10µF"/><part name="C17" library="rcl" deviceset="C-EU" device="C1206" value="10µF"/><part name="U$1" library="My_Library_RADAR" deviceset="QPA2962_B" device=""/>
 <part name="FRAME1" library="frames" library_urn="urn:adsk.eagle:library:229" deviceset="A4-SMALL-DOCFIELD" device=""/>
 </parts>
 <sheets>
@@ -9243,7 +9243,7 @@ DIN A4, with small doc field</description>
 <instance part="GND19" gate="1" x="25.4" y="91.44" smashed="yes">
 <attribute name="VALUE" x="22.86" y="88.9" size="1.778" layer="96"/>
 </instance>
-<instance part="U$1" gate="G$1" x="91.44" y="100.33" smashed="yes"/>
+<instance part="C10" gate="G$1" x="22" y="34" smashed="yes"><attribute name="NAME" x="21" y="35" size="1.27" layer="95"/></instance><instance part="C11" gate="G$1" x="24" y="34" smashed="yes"><attribute name="NAME" x="23" y="35" size="1.27" layer="95"/></instance><instance part="C12" gate="G$1" x="26" y="34" smashed="yes"><attribute name="NAME" x="25" y="35" size="1.27" layer="95"/></instance><instance part="C13" gate="G$1" x="28" y="34" smashed="yes"><attribute name="NAME" x="27" y="35" size="1.27" layer="95"/></instance><instance part="C14" gate="G$1" x="30" y="37" smashed="yes"><attribute name="NAME" x="29" y="38" size="1.27" layer="95"/></instance><instance part="C15" gate="G$1" x="32" y="37" smashed="yes"><attribute name="NAME" x="31" y="38" size="1.27" layer="95"/></instance><instance part="C16" gate="G$1" x="34" y="37" smashed="yes"><attribute name="NAME" x="33" y="38" size="1.27" layer="95"/></instance><instance part="C17" gate="G$1" x="36" y="37" smashed="yes"><attribute name="NAME" x="35" y="38" size="1.27" layer="95"/></instance><instance part="U$1" gate="G$1" x="91.44" y="100.33" smashed="yes"/>
 <instance part="FRAME1" gate="/1" x="1.27" y="1.27" smashed="yes">
 <attribute name="LAST_DATE_TIME" x="102.87" y="7.62" size="2.54" layer="94"/>
 <attribute name="SHEET" x="166.37" y="2.54" size="2.54" layer="94"/>
@@ -9382,7 +9382,7 @@ DIN A4, with small doc field</description>
 <pinref part="X2" gate="-2" pin="S"/>
 <pinref part="GND15" gate="1" pin="GND"/>
 <wire x1="48.26" y1="184.15" x2="48.26" y2="182.88" width="0.1524" layer="91"/>
-</segment>
+<pinref part="C10" gate="G$1" pin="2"/><pinref part="C11" gate="G$1" pin="2"/><pinref part="C12" gate="G$1" pin="2"/><pinref part="C13" gate="G$1" pin="2"/><pinref part="C14" gate="G$1" pin="2"/><pinref part="C15" gate="G$1" pin="2"/><pinref part="C16" gate="G$1" pin="2"/><pinref part="C17" gate="G$1" pin="2"/></segment>
 </net>
 <net name="N$5" class="0">
 <segment>
@@ -9442,7 +9442,7 @@ DIN A4, with small doc field</description>
 <pinref part="U$1" gate="G$1" pin="VD2"/>
 <wire x1="111.76" y1="151.13" x2="111.76" y2="120.65" width="0.1524" layer="91"/>
 <wire x1="111.76" y1="120.65" x2="106.68" y2="120.65" width="0.1524" layer="91"/>
-</segment>
+<pinref part="C10" gate="G$1" pin="1"/><pinref part="C11" gate="G$1" pin="1"/><pinref part="C12" gate="G$1" pin="1"/><pinref part="C13" gate="G$1" pin="1"/><pinref part="C14" gate="G$1" pin="1"/><pinref part="C15" gate="G$1" pin="1"/><pinref part="C16" gate="G$1" pin="1"/><pinref part="C17" gate="G$1" pin="1"/></segment>
 </net>
 <net name="N$10" class="0">
 <segment>

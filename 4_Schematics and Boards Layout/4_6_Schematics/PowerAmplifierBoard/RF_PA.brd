@@ -4367,7 +4367,7 @@ Your PCBWay Team
 <param name="cfChangeDir" value="25"/>
 </pass>
 </autorouter>
-<elements>
+<elements><element name="C10" library="rcl" package="C1206" value="10µF" x="22.0" y="27.0" smashed="yes"/><element name="C11" library="rcl" package="C1206" value="10µF" x="21.0" y="33.0" smashed="yes"/><element name="C12" library="rcl" package="C1206" value="10µF" x="27.0" y="31.0" smashed="yes"/><element name="C13" library="rcl" package="C1206" value="10µF" x="15.0" y="30.0" smashed="yes"/><element name="C14" library="rcl" package="C1206" value="10µF" x="22.0" y="39.0" smashed="yes"/><element name="C15" library="rcl" package="C1206" value="10µF" x="15.0" y="36.0" smashed="yes"/><element name="C16" library="rcl" package="C1206" value="10µF" x="28.0" y="37.0" smashed="yes"/><element name="C17" library="rcl" package="C1206" value="10µF" x="30.0" y="25.0" smashed="yes"/>
 <element name="C1" library="rcl" package="C1206" value="10µF" x="6.98" y="23.03" smashed="yes">
 <attribute name="NAME" x="5.71" y="24.3" size="0.6096" layer="25"/>
 <attribute name="POPULARITY" value="54" x="52.7" y="-13.8" size="1.778" layer="27" display="off"/>
@@ -5092,7 +5092,7 @@ Your PCBWay Team
 <via x="16.905334375" y="12.026253125" extent="1-16" drill="0.15"/>
 <via x="17.539715625" y="12.66049375" extent="1-16" drill="0.15"/>
 <via x="17.552153125" y="12.0386875" extent="1-16" drill="0.15"/>
-</signal>
+<contactref element="C10" pad="2"/><contactref element="C11" pad="2"/><contactref element="C12" pad="2"/><contactref element="C13" pad="2"/><contactref element="C14" pad="2"/><contactref element="C15" pad="2"/><contactref element="C16" pad="2"/><contactref element="C17" pad="2"/></signal>
 <signal name="N$5">
 <contactref element="C4" pad="2"/>
 <contactref element="R4" pad="1"/>
@@ -5155,7 +5155,7 @@ Your PCBWay Team
 <wire x1="28.6" y1="31.1" x2="28.6" y2="32.577" width="0.6" layer="1"/>
 <wire x1="28.6" y1="32.577" x2="25" y2="36.177" width="0.6" layer="1"/>
 <wire x1="17.455" y1="15.6275" x2="17.455" y2="15.6569" width="0.6" layer="1"/>
-</signal>
+<contactref element="C10" pad="1"/><contactref element="C11" pad="1"/><contactref element="C12" pad="1"/><contactref element="C13" pad="1"/><contactref element="C14" pad="1"/><contactref element="C15" pad="1"/><contactref element="C16" pad="1"/><contactref element="C17" pad="1"/></signal>
 <signal name="N$10">
 <contactref element="R7" pad="2"/>
 <contactref element="C5" pad="1"/>
