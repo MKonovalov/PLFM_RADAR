@@ -30664,7 +30664,7 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <pinref part="X13" gate="-1" pin="S"/>
 <wire x1="162.56" y1="193.04" x2="160.02" y2="193.04" width="0.1524" layer="91"/>
 <label x="144.78" y="193.04" size="1.778" layer="95"/>
-<pinref part="OPA_2" gate="A" pin="V-"/><pinref part="OPA_1" gate="A" pin="V-"/><pinref part="R178" gate="G$1" pin="2"/><pinref part="R179" gate="G$1" pin="2"/><pinref part="R180" gate="G$1" pin="2"/><pinref part="R181" gate="G$1" pin="2"/><pinref part="R182" gate="G$1" pin="2"/><pinref part="R183" gate="G$1" pin="2"/><pinref part="R184" gate="G$1" pin="2"/><pinref part="R185" gate="G$1" pin="2"/></segment>
+</segment>
 </net>
 <net name="+5V0_PA_1" class="0">
 <segment>
@@ -30678,7 +30678,7 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <pinref part="X15" gate="-1" pin="S"/>
 <wire x1="203.2" y1="193.04" x2="200.66" y2="193.04" width="0.1524" layer="91"/>
 <label x="185.42" y="193.04" size="1.778" layer="95"/>
-<pinref part="OPA_3" gate="A" pin="V-"/><pinref part="OPA_4" gate="A" pin="V-"/><pinref part="R186" gate="G$1" pin="2"/><pinref part="R187" gate="G$1" pin="2"/><pinref part="R188" gate="G$1" pin="2"/><pinref part="R189" gate="G$1" pin="2"/><pinref part="R190" gate="G$1" pin="2"/><pinref part="R191" gate="G$1" pin="2"/><pinref part="R192" gate="G$1" pin="2"/><pinref part="R193" gate="G$1" pin="2"/></segment>
+</segment>
 </net>
 <net name="+3V3_ADAR12" class="0">
 <segment>
@@ -30732,7 +30732,7 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <pinref part="X19" gate="-1" pin="S"/>
 <wire x1="203.2" y1="231.14" x2="200.66" y2="231.14" width="0.1524" layer="91"/>
 <label x="190.5" y="231.14" size="1.778" layer="95"/>
-</segment>
+<pinref part="OPA_1" gate="A" pin="V-"/><pinref part="OPA_2" gate="A" pin="V-"/><pinref part="OPA_3" gate="A" pin="V-"/><pinref part="OPA_4" gate="A" pin="V-"/><pinref part="R178" gate="G$1" pin="2"/><pinref part="R179" gate="G$1" pin="2"/><pinref part="R180" gate="G$1" pin="2"/><pinref part="R181" gate="G$1" pin="2"/><pinref part="R182" gate="G$1" pin="2"/><pinref part="R183" gate="G$1" pin="2"/><pinref part="R184" gate="G$1" pin="2"/><pinref part="R185" gate="G$1" pin="2"/><pinref part="R186" gate="G$1" pin="2"/><pinref part="R187" gate="G$1" pin="2"/><pinref part="R188" gate="G$1" pin="2"/><pinref part="R189" gate="G$1" pin="2"/><pinref part="R190" gate="G$1" pin="2"/><pinref part="R191" gate="G$1" pin="2"/><pinref part="R192" gate="G$1" pin="2"/><pinref part="R193" gate="G$1" pin="2"/></segment>
 </net>
 <net name="+5V0_0" class="0">
 <segment>

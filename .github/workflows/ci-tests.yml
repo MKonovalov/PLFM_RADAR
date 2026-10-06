@@ -58,6 +58,7 @@ jobs:
           uv run --with openpyxl python 9_Firmware/tools/regenerate_bom.py . --check
           uv run --with openpyxl python 9_Firmware/tools/interboard_rails.py . --check
           uv run python 9_Firmware/tools/netlist_integrity.py . --check
+          uv run python 9_Firmware/tools/harness_map.py . --check
 
   # ===========================================================================
   # MCU Firmware Unit Tests (20 tests)
