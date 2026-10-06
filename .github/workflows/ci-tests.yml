@@ -50,10 +50,12 @@ jobs:
           9_Firmware/9_3_GUI/test_v7.py
           -v --tb=short
 
-      - name: Board artifact gates (BOM / DNP / inter-board rails)
+      - name: Board artifact gates (DNP / BOM / inter-board rails)
         run: |
-          uv run --with openpyxl python 9_Firmware/tools/regenerate_bom.py . --check
+          # Order matters: the BOM orderability check excludes DNP parts using
+          # the generated DNP list.
           uv run --with openpyxl python 9_Firmware/tools/extract_dnp.py . --check
+          uv run --with openpyxl python 9_Firmware/tools/regenerate_bom.py . --check
           uv run --with openpyxl python 9_Firmware/tools/interboard_rails.py . --check
 
   # ===========================================================================

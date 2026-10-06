@@ -60,6 +60,8 @@ MECHANICAL = ("con-ptr", "mech", "hole", "wirepad", "test")
 
 REF_HEADERS = ("designator", "reference", "refdes", "ref", "parts", "part")
 VAL_HEADERS = ("value", "values", "val")
+MPN_HEADERS = ("manufacturer_part_number", "mpn", "partnumber", "part_number",
+               "manufacturer pn", "manufacturer_part_no")
 
 
 def emit(msg=""):
@@ -158,7 +160,13 @@ def bom_summary(groups):
 
 
 def read_sheet(path):
-    """Best-effort read of a committed BOM spreadsheet -> {designator: value}."""
+    """Read a committed BOM spreadsheet -> {designator: {"value":…, "mpn":…}}.
+
+    The spreadsheet is the authority for orderable data (value + MPN); the board
+    file is only authoritative for what is placed.  Checking placement against
+    the board while ignoring the sheet's MPN column produced false "unorderable"
+    findings for parts whose value/MPN exist only in the sheet.
+    """
     try:
         import openpyxl
     except ImportError:
@@ -166,7 +174,7 @@ def read_sheet(path):
     if not os.path.exists(path):
         return None
     ws = openpyxl.load_workbook(path, data_only=True).active
-    idx_ref = idx_val = None
+    idx_ref = idx_val = idx_mpn = None
     result = {}
     for row in ws.iter_rows(values_only=True):
         cells = ["" if c is None else str(c).strip() for c in row]
@@ -177,14 +185,17 @@ def read_sheet(path):
                     idx_ref = i
                 if lc in VAL_HEADERS:
                     idx_val = i
+                if lc in MPN_HEADERS:
+                    idx_mpn = i
             continue
         ref_col = idx_ref
         if ref_col is not None and ref_col < len(cells) and cells[ref_col]:
             # one cell can hold several refs ("R1 R2 R3" or "R1,R2")
             for ref in re.split(r"[,\s;]+", cells[ref_col]):
                 if ref:
-                    in_range = idx_val is not None and idx_val < len(cells)
-                    result[ref] = cells[idx_val] if in_range else ""
+                    val = cells[idx_val] if idx_val is not None and idx_val < len(cells) else ""
+                    mpn = cells[idx_mpn] if idx_mpn is not None and idx_mpn < len(cells) else ""
+                    result[ref] = {"value": val, "mpn": mpn}
     return result
 
 
@@ -224,16 +235,38 @@ def main():
         emit(f"{board:12s} placed={len(rows):4d}  line-items={len(summary):3d}  "
              f"-> {os.path.relpath(os.path.join(out, board), root)}_bom.csv")
 
-        # A placed part with neither a value nor an MPN cannot be ordered.
-        unset = [
-            r["Designator"] for r in rows
-            if not r["Value"] and not r["PartNo"]
-            and not any(m in ((r["Package"] or "") + (r["Library"] or "")).lower()
-                        for m in MECHANICAL)
-        ]
+        # A placed part that has neither a value nor an MPN in the board file OR
+        # in its BOM sheet cannot be ordered -- unless it is Do-Not-Populate, in
+        # which case it is deliberately not ordered at all.  The DNP markers live
+        # in the spreadsheets, so read the generated list (extract_dnp.py).
+        dnp = set()
+        dnp_list = os.path.join(out, "DNP_list.csv")
+        if os.path.isfile(dnp_list):
+            with open(dnp_list, newline="") as f:
+                dnp = {r["Designator"] for r in csv.DictReader(f) if r.get("Designator")}
+
+        sheet_data = {}
+        for sheet_rel in SHEETS.get(board, []):
+            data = read_sheet(os.path.join(root, sheet_rel))
+            if data:
+                sheet_data.update(data)
+
+        unset = []
+        for r in rows:
+            if r["Designator"] in dnp:
+                continue
+            if any(m in ((r["Package"] or "") + (r["Library"] or "")).lower()
+                   for m in MECHANICAL):
+                continue
+            s = sheet_data.get(r["Designator"], {})
+            has = any((r["Value"], r["PartNo"], s.get("value", ""), s.get("mpn", "")))
+            if not has:
+                unset.append(r["Designator"])
         if unset:
             findings.append(f"{board}: {len(unset)} placed parts with no value/MPN "
-                            f"(e.g. {', '.join(unset[:5])})")
+                            f"anywhere (e.g. {', '.join(unset[:5])})")
+        if dnp:
+            emit(f"  ({len(dnp)} DNP designator(s) excluded from the orderability check)")
 
         for sheet_rel in SHEETS.get(board, []):
             sheet = read_sheet(os.path.join(root, sheet_rel))
