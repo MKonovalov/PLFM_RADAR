@@ -10559,7 +10559,7 @@ W = angled&lt;p&gt;
 <part name="GND235" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
 <part name="GND236" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
 <part name="GND237" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
-<part name="C159" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-EU" device="C0603" package3d_urn="urn:adsk.eagle:package:23616/2" value="22µF"/>
+<part name="C169" library="rcl" deviceset="C-EU" device="C0603" value="22µF"/><part name="C170" library="rcl" deviceset="C-EU" device="C0603" value="22µF"/><part name="C171" library="rcl" deviceset="C-EU" device="C0603" value="22µF"/><part name="C172" library="rcl" deviceset="C-EU" device="C0603" value="22µF"/><part name="C159" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-EU" device="C0603" package3d_urn="urn:adsk.eagle:package:23616/2" value="22µF"/>
 <part name="GND238" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
 <part name="C160" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-EU" device="C0603" package3d_urn="urn:adsk.eagle:package:23616/2" value="10nF"/>
 <part name="R57" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="R-EU_" device="M0805" package3d_urn="urn:adsk.eagle:package:23556/2" value="35.7k"/>
@@ -12478,7 +12478,7 @@ W = angled&lt;p&gt;
 <instance part="GND237" gate="1" x="802.64" y="317.5" smashed="yes">
 <attribute name="VALUE" x="800.1" y="314.96" size="1.778" layer="96"/>
 </instance>
-<instance part="C159" gate="G$1" x="787.4" y="294.64" smashed="yes" rot="R90">
+<instance part="C169" gate="G$1" x="191.7" y="283.9" smashed="yes"><attribute name="NAME" x="189.7" y="284.9" size="1.27" layer="95"/></instance><instance part="C170" gate="G$1" x="192.7" y="283.9" smashed="yes"><attribute name="NAME" x="190.7" y="284.9" size="1.27" layer="95"/></instance><instance part="C171" gate="G$1" x="193.7" y="283.9" smashed="yes"><attribute name="NAME" x="191.7" y="284.9" size="1.27" layer="95"/></instance><instance part="C172" gate="G$1" x="194.7" y="283.9" smashed="yes"><attribute name="NAME" x="192.7" y="284.9" size="1.27" layer="95"/></instance><instance part="C159" gate="G$1" x="787.4" y="294.64" smashed="yes" rot="R90">
 <attribute name="NAME" x="787.019" y="296.164" size="1.778" layer="95" rot="R90"/>
 <attribute name="VALUE" x="792.099" y="296.164" size="1.778" layer="96" rot="R90"/>
 </instance>
@@ -13742,7 +13742,7 @@ W = angled&lt;p&gt;
 <segment>
 <pinref part="X35" gate="-2" pin="S"/>
 <pinref part="GND249" gate="1" pin="GND"/>
-<pinref part="U35" gate="G$1" pin="GND"/><pinref part="U35" gate="G$1" pin="GND_2"/><pinref part="U35" gate="G$1" pin="EPAD"/><pinref part="R60" gate="G$1" pin="2"/><pinref part="C164" gate="G$1" pin="2"/><pinref part="C165" gate="G$1" pin="2"/><pinref part="C166" gate="G$1" pin="2"/><pinref part="C167" gate="G$1" pin="2"/><pinref part="X36" gate="-2" pin="S"/><pinref part="GND250" gate="1" pin="GND"/></segment>
+<pinref part="U35" gate="G$1" pin="GND"/><pinref part="U35" gate="G$1" pin="GND_2"/><pinref part="U35" gate="G$1" pin="EPAD"/><pinref part="R60" gate="G$1" pin="2"/><pinref part="C164" gate="G$1" pin="2"/><pinref part="C165" gate="G$1" pin="2"/><pinref part="C166" gate="G$1" pin="2"/><pinref part="C167" gate="G$1" pin="2"/><pinref part="X36" gate="-2" pin="S"/><pinref part="GND250" gate="1" pin="GND"/><pinref part="C169" gate="G$1" pin="2"/><pinref part="C170" gate="G$1" pin="2"/><pinref part="C171" gate="G$1" pin="2"/><pinref part="C172" gate="G$1" pin="2"/></segment>
 </net>
 <net name="N$1" class="0">
 <segment>
@@ -15968,7 +15968,7 @@ W = angled&lt;p&gt;
 <wire x1="784.86" y1="287.02" x2="800.1" y2="287.02" width="0.1524" layer="91"/>
 <pinref part="X35" gate="-1" pin="S"/>
 <wire x1="800.1" y1="287.02" x2="800.1" y2="281.94" width="0.1524" layer="91"/>
-</segment>
+<pinref part="C169" gate="G$1" pin="1"/><pinref part="C170" gate="G$1" pin="1"/><pinref part="C171" gate="G$1" pin="1"/><pinref part="C172" gate="G$1" pin="1"/></segment>
 </net>
 </nets>
 </sheet>

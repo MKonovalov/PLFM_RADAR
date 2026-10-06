@@ -2350,7 +2350,7 @@ Your PCBWay Team
 <param name="cfChangeDir" value="25"/>
 </pass>
 </autorouter>
-<elements><element name="U35" library="My_Library_RADAR" package="TPS7A8300RGRR" value="TPS7A8300RGRR" x="145.8" y="119.80000000000001" smashed="yes"/><element name="R59" library="rcl" package="M0805" value="24.3k" x="170.0" y="138.0" smashed="yes"/><element name="R60" library="rcl" package="M0805" value="11.5k" x="174.0" y="142.0" smashed="yes"/><element name="C164" library="rcl" package="C0603" value="22µF" x="160.0" y="126.0" smashed="yes"/><element name="C165" library="rcl" package="C0603" value="22µF" x="176.0" y="124.0" smashed="yes"/><element name="C166" library="rcl" package="C0603" value="10µF" x="180.0" y="136.0" smashed="yes"/><element name="C167" library="rcl" package="C0603" value="10nF" x="184.0" y="142.0" smashed="yes"/><element name="C168" library="rcl" package="C0603" value="10nF" x="167.0" y="143.0" smashed="yes"/><element name="X36" library="con-molex" package="22-23-2021" value="22-23-2021" x="190.0" y="131.3" smashed="yes"/>
+<elements><element name="C169" library="rcl" package="C0603" value="22µF" x="149.7" y="245.89999999999998" smashed="yes"/><element name="C170" library="rcl" package="C0603" value="22µF" x="149.7" y="247.89999999999998" smashed="yes"/><element name="C171" library="rcl" package="C0603" value="22µF" x="149.7" y="252.39999999999998" smashed="yes"/><element name="C172" library="rcl" package="C0603" value="22µF" x="149.7" y="256.4" smashed="yes"/><element name="U35" library="My_Library_RADAR" package="TPS7A8300RGRR" value="TPS7A8300RGRR" x="145.8" y="119.80000000000001" smashed="yes"/><element name="R59" library="rcl" package="M0805" value="24.3k" x="170.0" y="138.0" smashed="yes"/><element name="R60" library="rcl" package="M0805" value="11.5k" x="174.0" y="142.0" smashed="yes"/><element name="C164" library="rcl" package="C0603" value="22µF" x="160.0" y="126.0" smashed="yes"/><element name="C165" library="rcl" package="C0603" value="22µF" x="176.0" y="124.0" smashed="yes"/><element name="C166" library="rcl" package="C0603" value="10µF" x="180.0" y="136.0" smashed="yes"/><element name="C167" library="rcl" package="C0603" value="10nF" x="184.0" y="142.0" smashed="yes"/><element name="C168" library="rcl" package="C0603" value="10nF" x="167.0" y="143.0" smashed="yes"/><element name="X36" library="con-molex" package="22-23-2021" value="22-23-2021" x="190.0" y="131.3" smashed="yes"/>
 <element name="C1" library="rcl" package="C0805" value="0.1µF" x="86.28" y="21.19" smashed="yes" rot="R90">
 <attribute name="NAME" x="87.28" y="24.76" size="1.27" layer="25" rot="R180"/>
 <attribute name="POPULARITY" value="88" x="214.55" y="190.1" size="1.778" layer="27" rot="R90" display="off"/>
@@ -6075,7 +6075,7 @@ Your PCBWay Team
 <via x="145.8" y="73.5" extent="1-16" drill="0.6"/>
 <via x="150.2" y="73.4" extent="1-16" drill="0.6"/>
 <via x="154.8" y="73.4" extent="1-16" drill="0.6"/>
-<contactref element="U35" pad="18"/><contactref element="U35" pad="8"/><contactref element="U35" pad="21"/><contactref element="R60" pad="2"/><contactref element="C164" pad="2"/><contactref element="C165" pad="2"/><contactref element="C166" pad="2"/><contactref element="C167" pad="2"/><contactref element="X36" pad="2"/></signal>
+<contactref element="U35" pad="18"/><contactref element="U35" pad="8"/><contactref element="U35" pad="21"/><contactref element="R60" pad="2"/><contactref element="C164" pad="2"/><contactref element="C165" pad="2"/><contactref element="C166" pad="2"/><contactref element="C167" pad="2"/><contactref element="X36" pad="2"/><contactref element="C169" pad="2"/><contactref element="C170" pad="2"/><contactref element="C171" pad="2"/><contactref element="C172" pad="2"/></signal>
 <signal name="N$1">
 <contactref element="U1" pad="2"/>
 <contactref element="U$1" pad="2"/>
@@ -7756,7 +7756,7 @@ Your PCBWay Team
 <wire x1="181" y1="278.4" x2="182.7" y2="280.1" width="0.3" layer="1"/>
 <wire x1="182.7" y1="280.1" x2="182.7" y2="281.15" width="0.3" layer="1"/>
 <wire x1="175.250253125" y1="277.675" x2="174.750125" y2="277.675" width="0.3" layer="1"/>
-</signal>
+<contactref element="C169" pad="1"/><contactref element="C170" pad="1"/><contactref element="C171" pad="1"/><contactref element="C172" pad="1"/></signal>
 <signal name="N$13">
 <contactref element="U5" pad="1"/>
 <contactref element="C24" pad="2"/>

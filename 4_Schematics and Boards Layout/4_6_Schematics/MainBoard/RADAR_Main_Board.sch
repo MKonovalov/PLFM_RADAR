@@ -29624,8 +29624,8 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <text x="248.92" y="101.6" size="1.778" layer="98">2 X DAC5578</text>
 <text x="124.46" y="139.7" size="1.778" layer="98">AD9484</text>
 <text x="266.7" y="81.28" size="1.778" layer="98">3 X ADS7830</text>
-<text x="289.56" y="60.96" size="1.778" layer="98">6 X INA241A3</text>
-<text x="289.56" y="40.64" size="1.778" layer="98">6 X INA241A3</text>
+<text x="289.56" y="60.96" size="1.778" layer="98">8 X INA241A4</text>
+<text x="289.56" y="40.64" size="1.778" layer="98">8 X INA241A4</text>
 </plain>
 <instances>
 <instance part="J56" gate="G$1" x="452.12" y="241.3" smashed="yes"><attribute name="NAME" x="449.62" y="242.8" size="1.27" layer="95"/></instance><instance part="J57" gate="G$1" x="452.12" y="254.0" smashed="yes"><attribute name="NAME" x="449.62" y="255.5" size="1.27" layer="95"/></instance><instance part="J58" gate="G$1" x="700.0" y="90.0" smashed="yes"><attribute name="NAME" x="697.5" y="91.5" size="1.27" layer="95"/></instance><instance part="J59" gate="G$1" x="720.0" y="78.0" smashed="yes"><attribute name="NAME" x="717.5" y="79.5" size="1.27" layer="95"/></instance><instance part="R174" gate="G$1" x="440.0" y="248.0" smashed="yes"><attribute name="NAME" x="437.5" y="249.5" size="1.27" layer="95"/></instance><instance part="R175" gate="G$1" x="710.0" y="105.0" smashed="yes"><attribute name="NAME" x="707.5" y="106.5" size="1.27" layer="95"/></instance><instance part="X4" gate="-1" x="83.82" y="210.82" smashed="yes">
