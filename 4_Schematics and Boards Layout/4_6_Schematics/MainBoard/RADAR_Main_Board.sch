@@ -29264,7 +29264,7 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <part name="C297" library="eagle-ltspice" deviceset="C" device="C0201" value="0.1µF"/>
 <part name="GND1113" library="supply1" deviceset="GND" device=""/>
 <part name="R151" library="eagle-ltspice" deviceset="R" device="R0201" value="10k"/>
-<part name="U89" library="My_Library_RADAR" deviceset="ADS7830IPWR" device=""/>
+<part name="U90" library="My_Library_RADAR" deviceset="TXS0104EPWR" device="PW0014A-MFG"/><part name="U91" library="My_Library_RADAR" deviceset="TXS0102DCUR" device="DCU0008A-MFG"/><part name="R176" library="rcl" deviceset="R-EU_" device="R0201" value="10k"/><part name="R177" library="rcl" deviceset="R-EU_" device="R0201" value="10k"/><part name="C354" library="rcl" deviceset="C-EU" device="C0201" value="0.1uF"/><part name="C355" library="rcl" deviceset="C-EU" device="C0201" value="0.1uF"/><part name="C356" library="rcl" deviceset="C-EU" device="C0201" value="0.1uF"/><part name="C357" library="rcl" deviceset="C-EU" device="C0201" value="0.1uF"/><part name="C358" library="rcl" deviceset="C-EU" device="C0201" value="0.1uF"/><part name="C359" library="rcl" deviceset="C-EU" device="C0201" value="0.1uF"/><part name="X57" library="con-molex" deviceset="22-23-2021" device="22-23-2021"/><part name="U89" library="My_Library_RADAR" deviceset="ADS7830IPWR" device=""/>
 <part name="GND1116" library="supply1" deviceset="GND" device=""/>
 <part name="GND1117" library="supply1" deviceset="GND" device=""/>
 <part name="C299" library="eagle-ltspice" deviceset="C" device="C0201" value="0.1µF"/>
@@ -30285,7 +30285,7 @@ You are welcome to use this library for commercial purposes. For attribution, we
 </instances>
 <busses>
 </busses>
-<nets>
+<nets><net name="N$U91_OE" class="0"><segment><pinref part="U91" gate="G$1" pin="OE"/><pinref part="R177" gate="G$1" pin="1"/></segment></net><net name="N$U90_OE" class="0"><segment><pinref part="U90" gate="G$1" pin="OE"/><pinref part="R176" gate="G$1" pin="1"/></segment></net><net name="+2V5_FPGA" class="0"><segment><pinref part="U90" gate="G$1" pin="VCCA"/><pinref part="U91" gate="G$1" pin="VCCA"/><pinref part="R176" gate="G$1" pin="2"/><pinref part="R177" gate="G$1" pin="2"/><pinref part="C354" gate="G$1" pin="1"/><pinref part="C355" gate="G$1" pin="1"/><pinref part="C358" gate="G$1" pin="1"/><pinref part="C359" gate="G$1" pin="1"/><pinref part="X57" gate="-1" pin="S"/><pinref part="U42" gate="G$2" pin="VCCO_14"/></segment></net><net name="FLASH_NRST_F" class="0"><segment><pinref part="U9" gate="G$1" pin="RESET"/><pinref part="U91" gate="G$1" pin="B2"/></segment></net><net name="FLASH_NCS_F" class="0"><segment><pinref part="U9" gate="G$1" pin="S"/><pinref part="U91" gate="G$1" pin="B1"/></segment></net><net name="FLASH_DQ3_F" class="0"><segment><pinref part="U9" gate="G$1" pin="DQ3/HOLD"/><pinref part="U90" gate="G$1" pin="B4"/></segment></net><net name="FLASH_DQ2_F" class="0"><segment><pinref part="U9" gate="G$1" pin="W/DQ2"/><pinref part="U90" gate="G$1" pin="B3"/></segment></net><net name="FLASH_DQ1_F" class="0"><segment><pinref part="U9" gate="G$1" pin="DQ1"/><pinref part="U90" gate="G$1" pin="B2"/></segment></net><net name="FLASH_DQ0_F" class="0"><segment><pinref part="U9" gate="G$1" pin="DQ0"/><pinref part="U90" gate="G$1" pin="B1"/></segment></net>
 <net name="+3V3" class="0">
 <segment>
 <pinref part="X24" gate="-1" pin="S"/>
@@ -30597,7 +30597,7 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <segment>
 <pinref part="X22" gate="-2" pin="S"/>
 <pinref part="GND1079" gate="1" pin="GND"/>
-</segment>
+<pinref part="U90" gate="G$1" pin="GND"/><pinref part="U91" gate="G$1" pin="GND"/><pinref part="C354" gate="G$1" pin="2"/><pinref part="C355" gate="G$1" pin="2"/><pinref part="C356" gate="G$1" pin="2"/><pinref part="C357" gate="G$1" pin="2"/><pinref part="C358" gate="G$1" pin="2"/><pinref part="C359" gate="G$1" pin="2"/><pinref part="X57" gate="-2" pin="S"/></segment>
 </net>
 <net name="+1V8_FPGA" class="0">
 <segment>
@@ -30725,7 +30725,7 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <pinref part="X16" gate="-1" pin="S"/>
 <wire x1="162.56" y1="248.92" x2="160.02" y2="248.92" width="0.1524" layer="91"/>
 <label x="147.32" y="248.92" size="1.778" layer="95"/>
-</segment>
+<pinref part="U90" gate="G$1" pin="VCCB"/><pinref part="U91" gate="G$1" pin="VCCB"/><pinref part="C356" gate="G$1" pin="1"/><pinref part="C357" gate="G$1" pin="1"/></segment>
 </net>
 <net name="-5V5_PA" class="0">
 <segment>
@@ -32787,7 +32787,7 @@ You are welcome to use this library for commercial purposes. For attribution, we
 </net>
 <net name="FPGA_FLASH_NRST" class="0">
 <segment>
-<pinref part="U9" gate="A" pin="RESET"/>
+
 <pinref part="R50" gate="G$1" pin="1"/>
 <wire x1="556.26" y1="53.34" x2="548.64" y2="53.34" width="0.1524" layer="91"/>
 <wire x1="548.64" y1="53.34" x2="541.02" y2="53.34" width="0.1524" layer="91"/>
@@ -32799,7 +32799,7 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <label x="127" y="111.76" size="1.778" layer="95"/>
 <pinref part="U42" gate="G$2" pin="IO_L5N_T0_D07_14"/>
 <junction x="152.4" y="111.76"/>
-</segment>
+<pinref part="U91" gate="G$1" pin="A2"/></segment>
 </net>
 <net name="N$25" class="2">
 <segment>
@@ -32823,7 +32823,7 @@ You are welcome to use this library for commercial purposes. For attribution, we
 </net>
 <net name="FPGA_FLASH_NCS" class="0">
 <segment>
-<pinref part="U9" gate="A" pin="S"/>
+
 <pinref part="R52" gate="G$1" pin="1"/>
 <wire x1="556.26" y1="33.02" x2="548.64" y2="33.02" width="0.1524" layer="91"/>
 <wire x1="548.64" y1="33.02" x2="548.64" y2="30.48" width="0.1524" layer="91"/>
@@ -32836,11 +32836,11 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <label x="127" y="109.22" size="1.778" layer="95"/>
 <pinref part="U42" gate="G$2" pin="IO_L6P_T0_FCS_B_14"/>
 <junction x="152.4" y="109.22"/>
-</segment>
+<pinref part="U91" gate="G$1" pin="A1"/></segment>
 </net>
 <net name="FPGA_FLASH_DQ2" class="0">
 <segment>
-<pinref part="U9" gate="A" pin="W/DQ2"/>
+
 <pinref part="R53" gate="G$1" pin="1"/>
 <wire x1="607.06" y1="30.48" x2="614.68" y2="30.48" width="0.1524" layer="91"/>
 <wire x1="614.68" y1="30.48" x2="617.22" y2="30.48" width="0.1524" layer="91"/>
@@ -32852,11 +32852,11 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <label x="127" y="129.54" size="1.778" layer="95"/>
 <pinref part="U42" gate="G$2" pin="IO_L2P_T0_D02_14"/>
 <junction x="152.4" y="129.54"/>
-</segment>
+<pinref part="U90" gate="G$1" pin="A3"/></segment>
 </net>
 <net name="FPGA_FLASH_DQ1" class="0">
 <segment>
-<pinref part="U9" gate="A" pin="DQ1"/>
+
 <wire x1="607.06" y1="38.1" x2="612.14" y2="38.1" width="0.1524" layer="91"/>
 <label x="612.14" y="38.1" size="1.778" layer="95"/>
 </segment>
@@ -32865,11 +32865,11 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <label x="127" y="132.08" size="1.778" layer="95"/>
 <pinref part="U42" gate="G$2" pin="IO_L1N_T0_D01_DIN_14"/>
 <junction x="152.4" y="132.08"/>
-</segment>
+<pinref part="U90" gate="G$1" pin="A2"/></segment>
 </net>
 <net name="FPGA_FLASH_DQ0" class="0">
 <segment>
-<pinref part="U9" gate="A" pin="DQ0"/>
+
 <wire x1="607.06" y1="40.64" x2="612.14" y2="40.64" width="0.1524" layer="91"/>
 <label x="612.14" y="40.64" size="1.778" layer="95"/>
 </segment>
@@ -32878,11 +32878,11 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <label x="127" y="134.62" size="1.778" layer="95"/>
 <pinref part="U42" gate="G$2" pin="IO_L1P_T0_D00_MOSI_14"/>
 <junction x="152.4" y="134.62"/>
-</segment>
+<pinref part="U90" gate="G$1" pin="A1"/></segment>
 </net>
 <net name="FPGA_FLASH_DQ3" class="0">
 <segment>
-<pinref part="U9" gate="A" pin="DQ3/HOLD"/>
+
 <pinref part="R54" gate="G$1" pin="2"/>
 <wire x1="607.06" y1="43.18" x2="614.68" y2="43.18" width="0.1524" layer="91"/>
 <wire x1="614.68" y1="43.18" x2="617.22" y2="43.18" width="0.1524" layer="91"/>
@@ -32894,7 +32894,7 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <label x="127" y="127" size="1.778" layer="95"/>
 <pinref part="U42" gate="G$2" pin="IO_L2N_T0_D03_14"/>
 <junction x="152.4" y="127"/>
-</segment>
+<pinref part="U90" gate="G$1" pin="A4"/></segment>
 </net>
 <net name="FPGA_PUDC_B" class="0">
 <segment>
@@ -33593,7 +33593,7 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <label x="223.52" y="167.64" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="U42" gate="G$2" pin="VCCO_14"/>
+
 <wire x1="238.76" y1="142.24" x2="238.76" y2="147.32" width="0.1524" layer="91"/>
 <label x="238.76" y="147.32" size="1.778" layer="95"/>
 </segment>
@@ -48893,7 +48893,7 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <attribute name="NAME" x="836.93" y="306.2986" size="1.778" layer="95"/>
 <attribute name="VALUE" x="839.47" y="301.498" size="1.778" layer="96"/>
 </instance>
-<instance part="U89" gate="A" x="185.42" y="388.62" smashed="yes">
+<instance part="U90" gate="G$1" x="57.68" y="191.28" smashed="yes"><attribute name="NAME" x="55.68" y="192.78" size="1.524" layer="95"/></instance><instance part="U91" gate="G$1" x="30.04" y="191.82" smashed="yes"><attribute name="NAME" x="28.04" y="193.32" size="1.524" layer="95"/></instance><instance part="R176" gate="G$1" x="64.0" y="204.0" smashed="yes"><attribute name="NAME" x="62.0" y="205.5" size="1.524" layer="95"/></instance><instance part="R177" gate="G$1" x="36.0" y="204.0" smashed="yes"><attribute name="NAME" x="34.0" y="205.5" size="1.524" layer="95"/></instance><instance part="C354" gate="G$1" x="52.0" y="178.0" smashed="yes"><attribute name="NAME" x="50.0" y="179.5" size="1.524" layer="95"/></instance><instance part="C355" gate="G$1" x="60.0" y="178.0" smashed="yes"><attribute name="NAME" x="58.0" y="179.5" size="1.524" layer="95"/></instance><instance part="C356" gate="G$1" x="52.0" y="206.0" smashed="yes"><attribute name="NAME" x="50.0" y="207.5" size="1.524" layer="95"/></instance><instance part="C357" gate="G$1" x="60.0" y="206.0" smashed="yes"><attribute name="NAME" x="58.0" y="207.5" size="1.524" layer="95"/></instance><instance part="C358" gate="G$1" x="44.0" y="178.0" smashed="yes"><attribute name="NAME" x="42.0" y="179.5" size="1.524" layer="95"/></instance><instance part="C359" gate="G$1" x="44.0" y="206.0" smashed="yes"><attribute name="NAME" x="42.0" y="207.5" size="1.524" layer="95"/></instance><instance part="X57" gate="G$1" x="14.02" y="236.0" smashed="yes"><attribute name="NAME" x="12.02" y="237.5" size="1.524" layer="95"/></instance><instance part="X57" gate="-2" x="14.02" y="233.46" smashed="yes"><attribute name="NAME" x="12.02" y="232.7" size="1.524" layer="95"/></instance><instance part="U89" gate="A" x="185.42" y="388.62" smashed="yes">
 <attribute name="NAME" x="218.7956" y="397.7386" size="2.0828" layer="95" ratio="6" rot="SR0"/>
 <attribute name="VALUE" x="218.1606" y="395.1986" size="2.0828" layer="96" ratio="6" rot="SR0"/>
 </instance>

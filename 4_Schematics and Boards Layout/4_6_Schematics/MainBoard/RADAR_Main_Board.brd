@@ -12271,7 +12271,7 @@ Your PCBWay Team
 <param name="cfChangeDir" value="25"/>
 </pass>
 </autorouter>
-<elements><element name="J56" library="142-0731-211" package="1420731211" value="142-0731-211" x="100.86" y="212.01" smashed="yes"/><element name="J57" library="142-0731-211" package="1420731211" value="142-0731-211" x="101.86" y="233.0" smashed="yes"/><element name="J58" library="142-0731-211" package="1420731211" value="142-0731-211" x="71.0" y="162.0" smashed="yes"/><element name="J59" library="142-0731-211" package="1420731211" value="142-0731-211" x="84.0" y="160.0" smashed="yes"/><element name="R174" library="rcl" package="R0201" value="0R" x="110.0" y="220.0" smashed="yes"/><element name="R175" library="rcl" package="R0201" value="0R" x="77.0" y="169.0" smashed="yes"/>
+<elements><element name="U90" library="My_Library_RADAR" package="PW0014A-MFG" value="TXS0104EPWR" x="36.68" y="149.28" smashed="yes"/><element name="U91" library="My_Library_RADAR" package="DCU0008A-MFG" value="TXS0102DCUR" x="23.04" y="192.82" smashed="yes"/><element name="R176" library="rcl" package="R0201" value="10k" x="56.0" y="196.0" smashed="yes"/><element name="R177" library="rcl" package="R0201" value="10k" x="32.0" y="200.0" smashed="yes"/><element name="C354" library="rcl" package="C0201" value="0.1uF" x="44.0" y="170.0" smashed="yes"/><element name="C355" library="rcl" package="C0201" value="0.1uF" x="52.0" y="170.0" smashed="yes"/><element name="C356" library="rcl" package="C0201" value="0.1uF" x="44.0" y="198.0" smashed="yes"/><element name="C357" library="rcl" package="C0201" value="0.1uF" x="52.0" y="198.0" smashed="yes"/><element name="C358" library="rcl" package="C0201" value="0.1uF" x="36.0" y="170.0" smashed="yes"/><element name="C359" library="rcl" package="C0201" value="0.1uF" x="36.0" y="198.0" smashed="yes"/><element name="X57" library="con-molex" package="22-23-2021" value="22-23-2021" x="6.02" y="230.0" smashed="yes"/><element name="J56" library="142-0731-211" package="1420731211" value="142-0731-211" x="100.86" y="212.01" smashed="yes"/><element name="J57" library="142-0731-211" package="1420731211" value="142-0731-211" x="101.86" y="233.0" smashed="yes"/><element name="J58" library="142-0731-211" package="1420731211" value="142-0731-211" x="71.0" y="162.0" smashed="yes"/><element name="J59" library="142-0731-211" package="1420731211" value="142-0731-211" x="84.0" y="160.0" smashed="yes"/><element name="R174" library="rcl" package="R0201" value="0R" x="110.0" y="220.0" smashed="yes"/><element name="R175" library="rcl" package="R0201" value="0R" x="77.0" y="169.0" smashed="yes"/>
 <element name="C1" library="eagle-ltspice" package="C0201" value="0.1uF" x="64.52" y="156.43" smashed="yes">
 <attribute name="NAME" x="63.885" y="157.065" size="1.27" layer="25"/>
 <attribute name="SPICEMODEL" value="NONE" x="158.5" y="-140.75" size="1.778" layer="27" display="off"/>
@@ -17412,7 +17412,7 @@ Your PCBWay Team
 <attribute name="SPICEPREFIX" value="C" x="53.7469375" y="136.535715625" size="1.778" layer="27" rot="R180" display="off"/>
 </element>
 </elements>
-<signals>
+<signals><signal name="N$U91_OE" class="0"><contactref element="U91" pad="6"/><contactref element="R177" pad="1"/></signal><signal name="N$U90_OE" class="0"><contactref element="U90" pad="8"/><contactref element="R176" pad="1"/></signal><signal name="+2V5_FPGA" class="0"><contactref element="U90" pad="1"/><contactref element="U91" pad="3"/><contactref element="R176" pad="2"/><contactref element="R177" pad="2"/><contactref element="C354" pad="1"/><contactref element="C355" pad="1"/><contactref element="C358" pad="1"/><contactref element="C359" pad="1"/><contactref element="X57" pad="1"/><contactref element="U42" pad="L16"/><contactref element="U42" pad="M13"/><contactref element="U42" pad="N10"/><contactref element="U42" pad="P7"/><contactref element="U42" pad="R14"/><contactref element="U42" pad="T11"/></signal><signal name="FLASH_NRST_F" class="0"><contactref element="U9" pad="A4"/><contactref element="U91" pad="1"/></signal><signal name="FLASH_NCS_F" class="0"><contactref element="U9" pad="C2"/><contactref element="U91" pad="8"/></signal><signal name="FLASH_DQ3_F" class="0"><contactref element="U9" pad="D4"/><contactref element="U90" pad="10"/></signal><signal name="FLASH_DQ2_F" class="0"><contactref element="U9" pad="C4"/><contactref element="U90" pad="11"/></signal><signal name="FLASH_DQ1_F" class="0"><contactref element="U9" pad="D2"/><contactref element="U90" pad="12"/></signal><signal name="FLASH_DQ0_F" class="0"><contactref element="U9" pad="D3"/><contactref element="U90" pad="13"/></signal>
 <signal name="+3V3">
 <contactref element="X24" pad="1"/>
 <contactref element="JP2" pad="1"/>
@@ -25575,7 +25575,7 @@ Your PCBWay Team
 <wire x1="53.047809375" y1="145.40843125" x2="52.948040625" y2="145.5082" width="0.2" layer="1"/>
 <wire x1="52.948040625" y1="145.5082" x2="52.948040625" y2="146.0495" width="0.2" layer="1"/>
 <wire x1="52.948040625" y1="146.0495" x2="52.962915625" y2="146.064375" width="0.2" layer="1"/>
-<contactref element="J56" pad="2"/><contactref element="J56" pad="3"/><contactref element="J56" pad="4"/><contactref element="J56" pad="5"/><contactref element="J57" pad="2"/><contactref element="J57" pad="3"/><contactref element="J57" pad="4"/><contactref element="J57" pad="5"/><contactref element="J58" pad="2"/><contactref element="J58" pad="3"/><contactref element="J58" pad="4"/><contactref element="J58" pad="5"/><contactref element="J59" pad="2"/><contactref element="J59" pad="3"/><contactref element="J59" pad="4"/><contactref element="J59" pad="5"/></signal>
+<contactref element="J56" pad="2"/><contactref element="J56" pad="3"/><contactref element="J56" pad="4"/><contactref element="J56" pad="5"/><contactref element="J57" pad="2"/><contactref element="J57" pad="3"/><contactref element="J57" pad="4"/><contactref element="J57" pad="5"/><contactref element="J58" pad="2"/><contactref element="J58" pad="3"/><contactref element="J58" pad="4"/><contactref element="J58" pad="5"/><contactref element="J59" pad="2"/><contactref element="J59" pad="3"/><contactref element="J59" pad="4"/><contactref element="J59" pad="5"/><contactref element="U90" pad="7"/><contactref element="U91" pad="2"/><contactref element="C354" pad="2"/><contactref element="C355" pad="2"/><contactref element="C356" pad="2"/><contactref element="C357" pad="2"/><contactref element="C358" pad="2"/><contactref element="C359" pad="2"/><contactref element="X57" pad="2"/></signal>
 <signal name="+1V8_FPGA">
 <contactref element="X10" pad="1"/>
 <contactref element="U42" pad="G8"/>
@@ -26654,7 +26654,7 @@ Your PCBWay Team
 </signal>
 <signal name="+3V3_FPGA">
 <contactref element="X16" pad="1"/>
-<contactref element="U42" pad="L6"/>
+
 <contactref element="C176" pad="2"/>
 <contactref element="C182" pad="2"/>
 <contactref element="C181" pad="2"/>
@@ -26662,17 +26662,12 @@ Your PCBWay Team
 <contactref element="C179" pad="2"/>
 <contactref element="C177" pad="2"/>
 <contactref element="C178" pad="2"/>
-<contactref element="U42" pad="L16"/>
-<contactref element="U42" pad="M13"/>
-<contactref element="U42" pad="N10"/>
-<contactref element="U42" pad="P7"/>
-<contactref element="U42" pad="R14"/>
-<contactref element="U42" pad="T11"/>
-<contactref element="C17" pad="2"/>
+
+>
+>
+
 <contactref element="C113" pad="2"/>
-<contactref element="C112" pad="2"/>
 <contactref element="C111" pad="2"/>
-<contactref element="C110" pad="2"/>
 <contactref element="C108" pad="2"/>
 <contactref element="C109" pad="2"/>
 <contactref element="U42" pad="A16"/>
@@ -26958,7 +26953,7 @@ Your PCBWay Team
 <wire x1="57.12" y1="184.72" x2="60.52" y2="184.72" width="0.1" layer="12"/>
 <wire x1="60.52" y1="184.72" x2="60.925" y2="184.315" width="0.1" layer="12"/>
 <wire x1="60.925" y1="184.315" x2="60.925" y2="184.025" width="0.1" layer="12"/>
-</signal>
+<contactref element="U90" pad="14"/><contactref element="U91" pad="7"/><contactref element="C356" pad="1"/><contactref element="C357" pad="1"/><contactref element="U42" pad="L6"/></signal>
 <signal name="-5V5_PA">
 <contactref element="X19" pad="1"/>
 <contactref element="OPA_4" pad="11"/>
@@ -28406,7 +28401,7 @@ Your PCBWay Team
 <wire x1="56.6" y1="191.2" x2="56.551234375" y2="191.151234375" width="0.1" layer="12"/>
 </signal>
 <signal name="FPGA_FLASH_NRST">
-<contactref element="U9" pad="A4"/>
+
 <contactref element="R50" pad="1"/>
 <contactref element="U42" pad="L13"/>
 <wire x1="21.135" y1="178.245" x2="21.04" y2="178.34" width="0.204" layer="1"/>
@@ -28496,7 +28491,7 @@ Your PCBWay Team
 <wire x1="72.345165625" y1="183.998165625" x2="71.201834375" y2="183.998165625" width="0.1" layer="16"/>
 <wire x1="71.201834375" y1="183.998165625" x2="71.1" y2="184.1" width="0.1" layer="16"/>
 <via x="71.1" y="184.1" extent="1-16" drill="0.15"/>
-</signal>
+<contactref element="U91" pad="4"/></signal>
 <signal name="N$25" class="2">
 <contactref element="U9" pad="B2"/>
 <contactref element="R51" pad="1"/>
@@ -28553,7 +28548,7 @@ Your PCBWay Team
 <wire x1="48.85" y1="187.15" x2="48.808765625" y2="187.151234375" width="0.204" layer="14"/>
 </signal>
 <signal name="FPGA_FLASH_NCS">
-<contactref element="U9" pad="C2"/>
+
 <contactref element="R52" pad="1"/>
 <contactref element="U42" pad="L12"/>
 <wire x1="23.04" y1="183.82" x2="23.485" y2="183.375" width="0.204" layer="1"/>
@@ -28606,9 +28601,9 @@ Your PCBWay Team
 <via x="41.7" y="182.2" extent="1-16" drill="0.15"/>
 <via x="30.65" y="182.9" extent="1-16" drill="0.15"/>
 <via x="29.4" y="182.9" extent="1-16" drill="0.15"/>
-</signal>
+<contactref element="U91" pad="5"/></signal>
 <signal name="FPGA_FLASH_DQ2">
-<contactref element="U9" pad="C4"/>
+
 <contactref element="R53" pad="1"/>
 <contactref element="U42" pad="K15"/>
 <wire x1="17.51" y1="184.505" x2="19.495" y2="184.505" width="0.204" layer="1"/>
@@ -28656,9 +28651,9 @@ Your PCBWay Team
 <via x="58.35" y="188.1" extent="1-16" drill="0.15"/>
 <via x="39.65" y="182.4" extent="1-16" drill="0.15"/>
 <via x="31.3" y="182.6" extent="1-16" drill="0.15"/>
-</signal>
+<contactref element="U90" pad="4"/></signal>
 <signal name="FPGA_FLASH_DQ1">
-<contactref element="U9" pad="D2"/>
+
 <contactref element="U42" pad="J14"/>
 <wire x1="55.18" y1="182.78" x2="55.551234375" y2="182.408765625" width="0.15" layer="1"/>
 <via x="55.551234375" y="182.408765625" extent="1-16" drill="0.2"/>
@@ -28688,9 +28683,9 @@ Your PCBWay Team
 <wire x1="55.6" y1="182.4" x2="55.6" y2="182.25" width="0.1" layer="14"/>
 <wire x1="23.55" y1="184.3" x2="23.5329" y2="184.3370125" width="0.1" layer="14"/>
 <wire x1="55.6" y1="182.4" x2="55.551234375" y2="182.408765625" width="0.1" layer="14"/>
-</signal>
+<contactref element="U90" pad="3"/></signal>
 <signal name="FPGA_FLASH_DQ0">
-<contactref element="U9" pad="D3"/>
+
 <contactref element="U42" pad="J13"/>
 <wire x1="54.18" y1="182.78" x2="54.551234375" y2="182.408765625" width="0.15" layer="1"/>
 <via x="54.551234375" y="182.408765625" extent="1-16" drill="0.2"/>
@@ -28712,9 +28707,9 @@ Your PCBWay Team
 <wire x1="54.6" y1="182.45" x2="55.2" y2="183.05" width="0.1" layer="12"/>
 <wire x1="22.6" y1="185.3" x2="22.57865625" y2="185.3312625" width="0.1" layer="12"/>
 <wire x1="54.6" y1="182.45" x2="54.551234375" y2="182.408765625" width="0.1" layer="12"/>
-</signal>
+<contactref element="U90" pad="2"/></signal>
 <signal name="FPGA_FLASH_DQ3">
-<contactref element="U9" pad="D4"/>
+
 <contactref element="R54" pad="2"/>
 <contactref element="U42" pad="K16"/>
 <wire x1="17.465" y1="185.55" x2="19.425" y2="185.55" width="0.204" layer="1"/>
@@ -28753,7 +28748,7 @@ Your PCBWay Team
 <via x="58.85" y="188.1" extent="1-16" drill="0.15"/>
 <via x="47.6" y="189.1" extent="1-16" drill="0.15"/>
 <via x="41.3" y="189.1" extent="1-16" drill="0.15"/>
-</signal>
+<contactref element="U90" pad="5"/></signal>
 <signal name="FPGA_PUDC_B">
 <contactref element="U42" pad="L15"/>
 <contactref element="R69" pad="1"/>

@@ -3,7 +3,7 @@ Rail,Boards,BoardsCount,TotalPins,NearDuplicates
 +1V8_CLOCK,FreqSynth MainBoard PowerBoard,3,22,
 +1V8_CLOCK_F,MainBoard,1,29,
 +1V8_FPGA,MainBoard PowerBoard,2,25,
-+2V5_FPGA,PowerBoard,1,6,
++2V5_FPGA,MainBoard PowerBoard,2,16,
 +3V3,MainBoard PowerBoard,2,46,
 +3V3_ADAR12,MainBoard,1,4,+3V3_ADAR_12
 +3V3_ADAR1_F,MainBoard,1,7,
@@ -22,7 +22,7 @@ Rail,Boards,BoardsCount,TotalPins,NearDuplicates
 +3V3_AN5_F,MainBoard,1,17,
 +3V3_AN6_F,MainBoard,1,17,
 +3V3_CLOCK,FreqSynth PowerBoard,2,25,
-+3V3_FPGA,MainBoard PowerBoard,2,71,
++3V3_FPGA,MainBoard PowerBoard,2,74,
 +3V3_LO_1,FreqSynth PowerBoard,2,33,
 +3V3_LO_2,FreqSynth PowerBoard,2,33,
 +3V3_SW,PowerBoard,1,7,
