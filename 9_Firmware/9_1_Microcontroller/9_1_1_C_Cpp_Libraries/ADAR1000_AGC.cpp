@@ -7,6 +7,14 @@
 #include "diag_log.h"
 
 #include <cstring>
+#include <cstdlib>
+
+// Default detector register used by calibrateFromDetectors().  CONFIRM against
+// the ADAR1000 memory map before relying on it: the function treats an all-zero
+// readback as "unusable" and leaves cal_offset untouched, so a wrong address
+// cannot silently corrupt the gain table.
+#define AGC_DETECTOR_REG_DEFAULT 0x040u
+#define AGC_DETECTOR_REG_UNVERIFIED 1
 
 // ---------------------------------------------------------------------------
 // Constructor -- set all config fields to safe defaults
@@ -14,43 +22,78 @@
 ADAR1000_AGC::ADAR1000_AGC()
     : agc_base_gain(ADAR1000Manager::kDefaultRxVgaGain) // 30
     , gain_step_down(4)
-    , gain_step_up(1)
+    , gain_step_down_hard(8)
+    , gain_step_up(2)
     , min_gain(0)
     , max_gain(127)
-    , holdoff_frames(4)
+    , holdoff_frames(1)
+    , detector_reg(AGC_DETECTOR_REG_DEFAULT)
     , enabled(false)
     , holdoff_counter(0)
     , last_saturated(false)
+    , last_hard_overload(false)
     , saturation_event_count(0)
+    , hard_overload_count(0)
 {
     memset(cal_offset, 0, sizeof(cal_offset));
 }
 
 // ---------------------------------------------------------------------------
-// update -- called once per frame with the FPGA DIG_5 saturation flag
-//
-// Returns true if agc_base_gain changed (caller should then applyGain).
+// validate -- make the configuration self-consistent before use
 // ---------------------------------------------------------------------------
-void ADAR1000_AGC::update(bool fpga_saturation)
+bool ADAR1000_AGC::validate()
+{
+    bool changed = false;
+
+    if (max_gain > 127) { max_gain = 127; changed = true; }   // VGA-only range
+    if (min_gain > max_gain) { uint8_t t = min_gain; min_gain = max_gain; max_gain = t; changed = true; }
+    if (gain_step_down == 0) { gain_step_down = 1; changed = true; }        // attack must exist
+    if (gain_step_down_hard < gain_step_down) { gain_step_down_hard = gain_step_down; changed = true; }
+    if (gain_step_down > 15) { gain_step_down = 15; changed = true; }
+    if (gain_step_down_hard > 15) { gain_step_down_hard = 15; changed = true; }
+    if (gain_step_up == 0) { gain_step_up = 1; changed = true; }
+    if (gain_step_up > 15) { gain_step_up = 15; changed = true; }
+    if (holdoff_frames == 0) { holdoff_frames = 1; changed = true; }        // holdoff must exist
+    if (holdoff_frames > 60) { holdoff_frames = 60; changed = true; }
+    if (agc_base_gain < min_gain) { agc_base_gain = min_gain; changed = true; }
+    if (agc_base_gain > max_gain) { agc_base_gain = max_gain; changed = true; }
+
+    return changed;
+}
+
+// ---------------------------------------------------------------------------
+// update -- called once per frame with the FPGA saturation flags
+// ---------------------------------------------------------------------------
+void ADAR1000_AGC::update(bool fpga_saturation, bool hard_overload)
 {
     if (!enabled)
         return;
 
     last_saturated = fpga_saturation;
+    last_hard_overload = fpga_saturation && hard_overload;
 
     if (fpga_saturation) {
-        // Attack: reduce gain immediately
+        // Attack: reduce gain immediately.  A hard overload (many clipped
+        // samples in the frame) takes a bigger step than a marginal clip, which
+        // stops the loop from crawling down 4 codes at a time on a strong
+        // transient.
         saturation_event_count++;
+        if (last_hard_overload)
+            hard_overload_count++;
         holdoff_counter = 0;
 
-        if (agc_base_gain >= gain_step_down + min_gain) {
-            agc_base_gain -= gain_step_down;
+        uint8_t step = last_hard_overload ? gain_step_down_hard : gain_step_down;
+
+        if (agc_base_gain >= step + min_gain) {
+            agc_base_gain -= step;
         } else {
             agc_base_gain = min_gain;
         }
 
-        DIAG("AGC", "SAT detected -- gain_base -> %u  (events=%lu)",
-             (unsigned)agc_base_gain, (unsigned long)saturation_event_count);
+        DIAG("AGC", "SAT detected (%s) -- gain_base -> %u  (step=%u events=%lu hard=%lu)",
+             last_hard_overload ? "hard" : "soft",
+             (unsigned)agc_base_gain, (unsigned)step,
+             (unsigned long)saturation_event_count, (unsigned long)hard_overload_count);
 
     } else {
         // Recovery: wait for holdoff, then increase gain
@@ -88,13 +131,47 @@ void ADAR1000_AGC::applyGain(ADAR1000Manager &mgr)
 }
 
 // ---------------------------------------------------------------------------
+// applyGainVerified -- write, then read back; count channels that did not take
+// ---------------------------------------------------------------------------
+int ADAR1000_AGC::applyGainVerified(ADAR1000Manager &mgr)
+{
+    static const uint32_t rx_gain_reg[AGC_NUM_CHANNELS] = {
+        REG_CH1_RX_GAIN, REG_CH2_RX_GAIN, REG_CH3_RX_GAIN, REG_CH4_RX_GAIN
+    };
+    int failures = 0;
+
+    for (uint8_t dev = 0; dev < AGC_NUM_DEVICES; ++dev) {
+        for (uint8_t ch = 0; ch < AGC_NUM_CHANNELS; ++ch) {
+            uint8_t gain = effectiveGain(dev * AGC_NUM_CHANNELS + ch);
+            uint32_t addr = rx_gain_reg[ch];
+
+            mgr.adarSetRxVgaGain(dev, ch + 1, gain, BROADCAST_OFF);
+            uint8_t rb = mgr.readRegister(dev, addr);
+            if (rb != gain) {
+                // one retry, then report
+                mgr.adarSetRxVgaGain(dev, ch + 1, gain, BROADCAST_OFF);
+                rb = mgr.readRegister(dev, addr);
+                if (rb != gain) {
+                    failures++;
+                    DIAG_ERR("AGC", "VGA write verify FAILED dev%u ch%u want=%u got=%u",
+                             (unsigned)dev, (unsigned)ch, (unsigned)gain, (unsigned)rb);
+                }
+            }
+        }
+    }
+    return failures;
+}
+
+// ---------------------------------------------------------------------------
 // resetState -- clear runtime counters, preserve configuration
 // ---------------------------------------------------------------------------
 void ADAR1000_AGC::resetState()
 {
     holdoff_counter = 0;
     last_saturated = false;
+    last_hard_overload = false;
     saturation_event_count = 0;
+    hard_overload_count = 0;
 }
 
 // ---------------------------------------------------------------------------
@@ -113,4 +190,79 @@ uint8_t ADAR1000_AGC::effectiveGain(uint8_t channel_index) const
         return max_gain;
 
     return static_cast<uint8_t>(raw);
+}
+
+// ---------------------------------------------------------------------------
+// recoverySecondsFor -- how long a gain-up walk takes at the current settings
+//
+// One decay step is applied per holdoff window, i.e. every holdoff_frames
+// frames.  With the defaults (holdoff 4, ~258 ms frames) one VGA code takes
+// ~1.03 s, so recovering 30 codes takes ~31 s.  Printed at boot.
+// ---------------------------------------------------------------------------
+float ADAR1000_AGC::recoverySecondsFor(int codes, uint32_t frame_ms) const
+{
+    if (codes <= 0 || gain_step_up == 0 || holdoff_frames == 0)
+        return 0.0f;
+    float steps = (float)codes / (float)gain_step_up;
+    float seconds_per_step = (float)holdoff_frames * (float)frame_ms / 1000.0f;
+    return steps * seconds_per_step;
+}
+
+// ---------------------------------------------------------------------------
+// computeOffsetsFromDetectors -- equalise detector readings via gain offsets
+//
+// A reading of 0 is treated as "no signal / unusable" and yields no offset, so
+// an unpopulated channel or a bad register read cannot poison the table.
+// ---------------------------------------------------------------------------
+void ADAR1000_AGC::computeOffsetsFromDetectors(const uint16_t det[AGC_TOTAL_CHANNELS],
+                                               int8_t out[AGC_TOTAL_CHANNELS],
+                                               int8_t limit)
+{
+    if (limit < 0) limit = 0;
+
+    // Reference = strongest readable channel.
+    uint16_t ref = 0;
+    for (uint8_t i = 0; i < AGC_TOTAL_CHANNELS; ++i)
+        if (det[i] > ref) ref = det[i];
+
+    for (uint8_t i = 0; i < AGC_TOTAL_CHANNELS; ++i) {
+        if (det[i] == 0 || ref == 0) { out[i] = 0; continue; }
+
+        // Channels weaker than the reference get positive gain; the reference
+        // itself gets a small negative offset so the array average is kept.
+        float ratio = (float)det[i] / (float)ref;          // 0..1
+        float db = 20.0f * (float)__builtin_log10((double)ratio);  // negative
+        int offset = (int)(-db * 2.0f);                    // ~2 codes per dB
+
+        if (offset > limit) offset = limit;
+        if (offset < -limit) offset = -limit;
+        out[i] = (int8_t)offset;
+    }
+}
+
+// ---------------------------------------------------------------------------
+// calibrateFromDetectors -- receive-only per-channel gain calibration
+// ---------------------------------------------------------------------------
+int ADAR1000_AGC::calibrateFromDetectors(ADAR1000Manager &mgr, int8_t limit)
+{
+    uint16_t det[AGC_TOTAL_CHANNELS];
+    int calibrated = 0;
+
+    for (uint8_t dev = 0; dev < AGC_NUM_DEVICES; ++dev) {
+        for (uint8_t ch = 0; ch < AGC_NUM_CHANNELS; ++ch) {
+            det[dev * AGC_NUM_CHANNELS + ch] = mgr.readRegister(dev, detector_reg);
+        }
+    }
+
+#if AGC_DETECTOR_REG_UNVERIFIED
+    DIAG("AGC", "Detector calibration read from reg 0x%03X (address unverified)",
+         (unsigned)detector_reg);
+#endif
+
+    computeOffsetsFromDetectors(det, cal_offset, limit);
+
+    for (uint8_t i = 0; i < AGC_TOTAL_CHANNELS; ++i)
+        if (cal_offset[i] != 0) calibrated++;
+
+    return calibrated;
 }

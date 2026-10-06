@@ -35,6 +35,7 @@ test_bug11_platform_spi_transmit_only
 
 # TESTS_WITH_CXX
 test_agc_outer_loop
+test_pa_sense
 
 # Manual / one-off test builds
 test_um982_gps

@@ -23,6 +23,7 @@
 #include "usbd_cdc_if.h"
 #include "ADAR1000_Manager.h"
 #include "ADAR1000_AGC.h"
+#include "PA_SENSE.h"
 extern "C" {
 #include "ad9523.h"
 }
@@ -734,14 +735,14 @@ SystemError_t checkSystemHealth(void) {
     // 7. Check RF Power Amplifier Current
     if (PowerAmplifier) {
         for (int i = 0; i < 16; i++) {
-            if (Idq_reading[i] > 2.5f) {
+            if (Idq_reading[i] > PA_IDQ_OC_TRIP_A) {
                 current_error = ERROR_RF_PA_OVERCURRENT;
-                DIAG_ERR("PA", "Health check: PA ch%d OVERCURRENT Idq=%.3fA > 2.5A", i, Idq_reading[i]);
+                DIAG_ERR("PA", "Health check: PA ch%d OVERCURRENT Idq=%.3fA > %.1fA", i, Idq_reading[i], (double)PA_IDQ_OC_TRIP_A);
                 return current_error;
             }
-            if (Idq_reading[i] < 0.1f) {
+            if (Idq_reading[i] < PA_IDQ_BIAS_FAULT_A) {
                 current_error = ERROR_RF_PA_BIAS;
-                DIAG_ERR("PA", "Health check: PA ch%d BIAS FAULT Idq=%.3fA < 0.1A", i, Idq_reading[i]);
+                DIAG_ERR("PA", "Health check: PA ch%d BIAS FAULT Idq=%.3fA < %.1fA", i, Idq_reading[i], (double)PA_IDQ_BIAS_FAULT_A);
                 return current_error;
             }
         }
@@ -1917,7 +1918,7 @@ int main(void)
 	  DIAG("PA", "Reading initial Idq from ADC1 channels 0-7");
 	  for (uint8_t channel = 0; channel < 8; channel++) {
 		  adc1_readings[channel] = ADS7830_Measure_SingleEnded(&hadc1, channel);
-		  Idq_reading[channel]= (3.3/255)*adc1_readings[channel]/(50*0.005);//Idq=Vadc/(GxRshunt)//G_INA241A3=50;Rshunt=5mOhms
+		  Idq_reading[channel]= paSenseCodeToAmps(adc1_readings[channel]);// Idq = Vadc/(G*Rshunt); constants live in PA_SENSE.h
 		  DIAG("PA", "  ADC1 ch%d: raw=%d Idq=%.3fA", channel, adc1_readings[channel], Idq_reading[channel]);
 	  }
 
@@ -1925,7 +1926,7 @@ int main(void)
 	  DIAG("PA", "Reading initial Idq from ADC2 channels 0-7");
 	  for (uint8_t channel = 0; channel < 8; channel++) {
 		  adc2_readings[channel] = ADS7830_Measure_SingleEnded(&hadc2, channel);
-		  Idq_reading[channel+8]= (3.3/255)*adc2_readings[channel]/(50*0.005);//Idq=Vadc/(GxRshunt)//G_INA241A3=50;Rshunt=5mOhms
+		  Idq_reading[channel+8]= paSenseCodeToAmps(adc2_readings[channel]);// Idq = Vadc/(G*Rshunt); constants live in PA_SENSE.h
 		  DIAG("PA", "  ADC2 ch%d: raw=%d Idq=%.3fA", channel, adc2_readings[channel], Idq_reading[channel+8]);
 	  }
 
@@ -1943,8 +1944,8 @@ int main(void)
 	          DAC_val = DAC_val - 4;
 	          DAC5578_WriteAndUpdateChannelValue(&hdac1, channel, DAC_val);
 	          adc1_readings[channel] = ADS7830_Measure_SingleEnded(&hadc1, channel);
-	          Idq_reading[channel] = (3.3/255) * adc1_readings[channel] / (50 * 0.005);
-	      } while (DAC_val > 38 && abs(Idq_reading[channel] - 1.680) > 0.2); // B12 fix: loop while FAR from target
+	          Idq_reading[channel] = paSenseCodeToAmps(adc1_readings[channel]);
+	      } while (DAC_val > 38 && abs(Idq_reading[channel] - (double)PA_IDQ_TARGET_A) > 0.2); // B12 fix: loop while FAR from target
 	      DIAG("PA", "  DAC1 ch%d calibrated: DAC_val=%d Idq=%.3fA iters=%d",
 	           channel, DAC_val, Idq_reading[channel], safety_counter);
 	  }
@@ -1963,8 +1964,8 @@ int main(void)
 	          DAC_val = DAC_val - 4;
 	          DAC5578_WriteAndUpdateChannelValue(&hdac2, channel, DAC_val);
 	          adc2_readings[channel] = ADS7830_Measure_SingleEnded(&hadc2, channel); // B13 fix: was adc1_readings
-	          Idq_reading[channel+8] = (3.3/255) * adc2_readings[channel] / (50 * 0.005);
-	      } while (DAC_val > 38 && abs(Idq_reading[channel+8] - 1.680) > 0.2); // B12 fix: loop while FAR from target
+	          Idq_reading[channel+8] = paSenseCodeToAmps(adc2_readings[channel]);
+	      } while (DAC_val > 38 && abs(Idq_reading[channel+8] - (double)PA_IDQ_TARGET_A) > 0.2); // B12 fix: loop while FAR from target
 	      DIAG("PA", "  DAC2 ch%d calibrated: DAC_val=%d Idq=%.3fA iters=%d",
 	           channel, DAC_val, Idq_reading[channel+8], safety_counter);
 	  }
@@ -2147,11 +2148,11 @@ int main(void)
 		      DIAG("PA", "Periodic IDQ re-read (ADC1 + ADC2, 16 channels)");
 		      for (uint8_t ch = 0; ch < 8; ch++) {
 		          adc1_readings[ch] = ADS7830_Measure_SingleEnded(&hadc1, ch);
-		          Idq_reading[ch] = (3.3f/255.0f) * adc1_readings[ch] / (50.0f * 0.005f);
+		          Idq_reading[ch] = paSenseCodeToAmps(adc1_readings[ch]);
 		      }
 		      for (uint8_t ch = 0; ch < 8; ch++) {
 		          adc2_readings[ch] = ADS7830_Measure_SingleEnded(&hadc2, ch);
-		          Idq_reading[ch + 8] = (3.3f/255.0f) * adc2_readings[ch] / (50.0f * 0.005f);
+		          Idq_reading[ch + 8] = paSenseCodeToAmps(adc2_readings[ch]);
 		      }
 		      DIAG("PA", "IDQ[0..3]=%.3f %.3f %.3f %.3f  [4..7]=%.3f %.3f %.3f %.3f",
 		           (double)Idq_reading[0], (double)Idq_reading[1],
@@ -2197,11 +2198,44 @@ int main(void)
           }
           dig6_prev = dig6_now;
       }
+      /* [FIX WP4.3] One-time configuration validation + documented recovery
+       * time. gain_step_down == 0 used to silently disable the attack and the
+       * decay rate was never visible anywhere: print both at boot so the loop
+       * behaviour is known instead of inferred from field behaviour. */
+      {
+          static bool agc_cfg_checked = false;
+          if (!agc_cfg_checked) {
+              agc_cfg_checked = true;
+              if (outerAgc.validate()) {
+                  DIAG_WARN("AGC", "Configuration was invalid and has been clamped "
+                                  "(attack/decay/holdoff/min/max bounds)");
+              }
+              DIAG("AGC", "config: base=%u attack=%u (hard=%u) decay=%u holdoff=%u "
+                          "min=%u max=%u -> recovery of 30 codes = %.1f s",
+                   (unsigned)outerAgc.agc_base_gain,
+                   (unsigned)outerAgc.gain_step_down,
+                   (unsigned)outerAgc.gain_step_down_hard,
+                   (unsigned)outerAgc.gain_step_up,
+                   (unsigned)outerAgc.holdoff_frames,
+                   (unsigned)outerAgc.min_gain,
+                   (unsigned)outerAgc.max_gain,
+                   (double)outerAgc.recoverySecondsFor(30, 258));
+          }
+      }
       if (outerAgc.enabled) {
           bool sat = HAL_GPIO_ReadPin(FPGA_DIG5_SAT_GPIO_Port,
                                       FPGA_DIG5_SAT_Pin) == GPIO_PIN_SET;
-          outerAgc.update(sat);
-          outerAgc.applyGain(adarManager);
+          /* [FIX WP4.2] DIG_7 (PD15) now carries "hard overload" (many clipped
+           * samples this frame) instead of being tied low, so a strong
+           * transient takes a bigger attack step than a marginal clip. */
+          bool hard = HAL_GPIO_ReadPin(FPGA_DIG7_GPIO_Port,
+                                       FPGA_DIG7_Pin) == GPIO_PIN_SET;
+          outerAgc.update(sat, hard);
+          /* [FIX WP4.5] verify every VGA write instead of trusting it */
+          int agc_fail = outerAgc.applyGainVerified(adarManager);
+          if (agc_fail > 0) {
+              DIAG_ERR("AGC", "%d/16 VGA writes failed read-back verification", agc_fail);
+          }
       }
 
       /* [GAP-3 FIX 2] Kick hardware watchdog — if we don't reach here within

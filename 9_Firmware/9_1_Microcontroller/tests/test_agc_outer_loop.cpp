@@ -46,10 +46,10 @@ static void test_defaults()
 
     assert(agc.agc_base_gain == 30);  // kDefaultRxVgaGain
     assert(agc.gain_step_down == 4);
-    assert(agc.gain_step_up == 1);
+    assert(agc.gain_step_up == 2);   // Phase 1: was 1 -> ~31 s blind window
     assert(agc.min_gain == 0);
     assert(agc.max_gain == 127);
-    assert(agc.holdoff_frames == 4);
+    assert(agc.holdoff_frames == 1); // Phase 1: was 4
     assert(agc.enabled == false);  // disabled by default — FPGA DIG_6 is source of truth
     assert(agc.holdoff_counter == 0);
     assert(agc.last_saturated == false);
@@ -344,6 +344,143 @@ static void test_effective_gain_edge_cases()
 }
 
 // ---------------------------------------------------------------------------
+// validate() -- configuration guards (feasibility-review WP4.3)
+// ---------------------------------------------------------------------------
+static void test_validate_repairs_bad_config()
+{
+    ADAR1000_AGC agc;
+    agc.gain_step_down = 0;        // disables the attack entirely
+    agc.gain_step_up = 0;          // disables recovery
+    agc.holdoff_frames = 0;        // disables the holdoff
+    agc.min_gain = 40;
+    agc.max_gain = 10;             // min > max
+    agc.agc_base_gain = 200;       // above max
+
+    bool changed = agc.validate();
+    assert(changed);
+    assert(agc.gain_step_down >= 1);
+    assert(agc.gain_step_up >= 1);
+    assert(agc.holdoff_frames >= 1);
+    assert(agc.min_gain <= agc.max_gain);
+    assert(agc.agc_base_gain >= agc.min_gain && agc.agc_base_gain <= agc.max_gain);
+
+    // A sane configuration must not be flagged as changed.
+    ADAR1000_AGC ok;
+    assert(ok.validate() == false);
+}
+
+static void test_max_gain_clamped_to_vga_range()
+{
+    ADAR1000_AGC agc;
+    agc.max_gain = 255;            // the 8th bit is the switched attenuator
+    assert(agc.validate());
+    assert(agc.max_gain == 127);
+}
+
+// ---------------------------------------------------------------------------
+// Hard overload (DIG_7) -- larger attack step (feasibility-review WP4.2)
+// ---------------------------------------------------------------------------
+static void test_hard_overload_uses_larger_step()
+{
+    ADAR1000_AGC agc;
+    agc.enabled = true;
+    agc.agc_base_gain = 60;
+    agc.holdoff_frames = 4;                        // keep decline out of this test
+
+    agc.update(false, true);                       // hard flag without saturation
+    assert(agc.agc_base_gain == 60);               // -> ignored, no attack
+    assert(agc.hard_overload_count == 0);
+    assert(agc.last_hard_overload == false);
+
+    agc.update(true, true);                        // hard overload
+    assert(agc.agc_base_gain == 60 - agc.gain_step_down_hard);
+    assert(agc.hard_overload_count == 1);
+    assert(agc.saturation_event_count == 1);
+    assert(agc.last_hard_overload);
+
+    agc.update(true, false);                       // soft clip -> normal step
+    assert(agc.agc_base_gain == 60 - agc.gain_step_down_hard - agc.gain_step_down);
+    assert(agc.hard_overload_count == 1);
+    assert(agc.last_hard_overload == false);
+
+    // Backwards-compatible single-argument call still behaves as a soft clip.
+    ADAR1000_AGC legacy;
+    legacy.enabled = true;
+    legacy.update(true);
+    assert(legacy.agc_base_gain == ADAR1000Manager::kDefaultRxVgaGain - legacy.gain_step_down);
+}
+
+static void test_hard_overload_cannot_underflow()
+{
+    ADAR1000_AGC agc;
+    agc.enabled = true;
+    agc.agc_base_gain = 3;
+    agc.update(true, true);                        // step 8 > 3
+    assert(agc.agc_base_gain == agc.min_gain);     // clamped, no uint8 wrap
+}
+
+// ---------------------------------------------------------------------------
+// Recovery time -- the number that must be visible at boot (WP4.3)
+// ---------------------------------------------------------------------------
+static void test_recovery_time_matches_documented_rate()
+{
+    ADAR1000_AGC agc;                              // defaults: up 2, holdoff 1
+    agc.validate();
+    float seconds = agc.recoverySecondsFor(30, 258 /* ms frame */);
+    // 30 codes at 2 codes per 1-frame window = 15 frames * 258 ms ~= 3.87 s
+    assert(seconds > 3.5f && seconds < 4.2f);
+
+    // Regression guard against the old behaviour: the documented blind window
+    // used to be ~31 s (1 code per 4 frames).  If a future edit restores that
+    // asymmetry, fail here rather than in the field.
+    assert(seconds < 5.0f);
+
+    // A slower configuration is measurably slower.
+    agc.gain_step_up = 1;
+    agc.holdoff_frames = 4;
+    float slow = agc.recoverySecondsFor(30, 258);
+    assert(slow > seconds * 5.0f);
+
+    // Degenerate settings must not divide by zero.
+    agc.gain_step_up = 0;
+    assert(agc.recoverySecondsFor(30, 258) == 0.0f);
+}
+
+// ---------------------------------------------------------------------------
+// Detector-based per-channel calibration (WP4.4) -- pure helper
+// ---------------------------------------------------------------------------
+static void test_compute_offsets_equalises_detectors()
+{
+    uint16_t det[AGC_TOTAL_CHANNELS];
+    int8_t off[AGC_TOTAL_CHANNELS];
+
+    // Channel 0 is the reference (strongest), channel 1 is 6 dB weaker -> should
+    // get a positive offset, channel 2 is unread (0) -> no offset at all.
+    for (int i = 0; i < AGC_TOTAL_CHANNELS; ++i) det[i] = 100;
+    det[0] = 200;
+    det[1] = 100;
+    det[2] = 0;
+
+    ADAR1000_AGC::computeOffsetsFromDetectors(det, off, 12);
+
+    assert(off[0] <= 0);                 // reference is not boosted
+    assert(off[1] > 0);                  // weaker channel gets gain
+    assert(off[2] == 0);                 // unreadable channel is left alone
+    for (int i = 0; i < AGC_TOTAL_CHANNELS; ++i)
+        assert(off[i] >= -12 && off[i] <= 12);   // limit honoured
+}
+
+static void test_compute_offsets_all_zero_is_noop()
+{
+    uint16_t det[AGC_TOTAL_CHANNELS] = {0};
+    int8_t off[AGC_TOTAL_CHANNELS];
+    for (int i = 0; i < AGC_TOTAL_CHANNELS; ++i) off[i] = 7;
+    ADAR1000_AGC::computeOffsetsFromDetectors(det, off, 12);
+    for (int i = 0; i < AGC_TOTAL_CHANNELS; ++i)
+        assert(off[i] == 0);             // a wrong register read cannot poison the table
+}
+
+// ---------------------------------------------------------------------------
 // main
 // ---------------------------------------------------------------------------
 int main()
@@ -363,6 +500,14 @@ int main()
     RUN_TEST(test_saturation_counter);
     RUN_TEST(test_mixed_sequence);
     RUN_TEST(test_effective_gain_edge_cases);
+    // --- Phase 1 additions (feasibility-review WP4.2/4.3/4.4) ---
+    RUN_TEST(test_validate_repairs_bad_config);
+    RUN_TEST(test_max_gain_clamped_to_vga_range);
+    RUN_TEST(test_hard_overload_uses_larger_step);
+    RUN_TEST(test_hard_overload_cannot_underflow);
+    RUN_TEST(test_recovery_time_matches_documented_rate);
+    RUN_TEST(test_compute_offsets_equalises_detectors);
+    RUN_TEST(test_compute_offsets_all_zero_is_noop);
 
     printf("=== Results: %d/%d passed ===\n", tests_passed, tests_total);
     return (tests_passed == tests_total) ? 0 : 1;

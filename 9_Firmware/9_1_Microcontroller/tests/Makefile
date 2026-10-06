@@ -75,8 +75,8 @@ TESTS_STANDALONE := test_bug12_pa_cal_loop_inverted \
 # Tests that need platform_noos_stm32.o + mocks
 TESTS_WITH_PLATFORM := test_bug11_platform_spi_transmit_only
 
-# C++ tests (AGC outer loop)
-TESTS_WITH_CXX := test_agc_outer_loop
+# C++ tests (AGC outer loop + PA current-sense chain)
+TESTS_WITH_CXX := test_agc_outer_loop test_pa_sense
 
 # GPS driver tests (need mocks + GPS source + -lm)
 TESTS_GPS := test_um982_gps
@@ -194,6 +194,10 @@ ADAR1000_Manager.o: $(CXX_LIB_DIR)/ADAR1000_Manager.cpp $(CXX_LIB_DIR)/ADAR1000_
 
 test_agc_outer_loop: test_agc_outer_loop.cpp $(CXX_OBJS) $(MOCK_OBJS)
 	$(CXX) $(CXXFLAGS) $(INCLUDES) $< $(CXX_OBJS) $(MOCK_OBJS) -o $@
+
+# PA current-sense chain: header-only logic, no mocks needed
+test_pa_sense: test_pa_sense.cpp
+	$(CXX) $(CXXFLAGS) $(INCLUDES) $< -o $@
 
 # Convenience target
 .PHONY: test_agc
