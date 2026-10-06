@@ -67,6 +67,7 @@ extern "C" {
 }
 #include <cmath>
 #include "DAC5578.h"
+#include "PA_GATE_BIAS.h"
 #include "ADS7830.h"
 #include "gps_handler.h"
 
@@ -1882,8 +1883,23 @@ int main(void)
 
 	  /* Configure clear code behavior */
 	  DIAG("PA", "Setting clear code to ZERO on both DACs");
-	  DAC5578_SetClearCode(&hdac1, DAC5578_CLR_CODE_ZERO); // Clear to 0V on CLR pulse
-	  DAC5578_SetClearCode(&hdac2, DAC5578_CLR_CODE_ZERO); // Clear to 0V on CLR pulse
+	  /* MID, not ZERO: Emergency_Stop() asserts CLR while the PA drain rail is still
+	   * live, so the clear state has to be the device's shutdown bias (-4.0 V), not
+	   * 0 V.  Zero-scale would turn every PA hard on for the length of the shutdown
+	   * sequence.  See PA_GATE_BIAS.h. */
+	  if (!DAC5578_SetClearCode(&hdac1, DAC5578_CLR_CODE_MID) ||
+	      !DAC5578_SetClearCode(&hdac2, DAC5578_CLR_CODE_MID)) {
+	      DIAG_ERR("PA", "Could not set a fail-safe CLR clear code; not arming the PAs");
+	      Error_Handler();
+	      return 0;   /* never reach the arming path with an unsafe CLR state */
+	  }
+	  /* verify it stuck rather than trusting the write (WP4.5 pattern) */
+	  if (!PA_GATE_BIAS_ClearCodeIsFailSafe((int)DAC5578_GetClearCode(&hdac1)) ||
+	      !PA_GATE_BIAS_ClearCodeIsFailSafe((int)DAC5578_GetClearCode(&hdac2))) {
+	      DIAG_ERR("PA", "CLR clear code read back unsafe; not arming the PAs");
+	      Error_Handler();
+	      return 0;
+	  }
 
 	  /* Configure LDAC so all channels update simultaneously on hardware LDAC */
 	  DIAG("PA", "Setting LDAC mask=0xFF on both DACs (all channels respond)");
@@ -1891,15 +1907,19 @@ int main(void)
 	  DAC5578_SetupLDAC(&hdac2, 0xFF); // All channels respond to LDAC
 
 	  //set Vg [1-8] to -3.98V -> input opamp = 1.63058V->126(8bits)
-	  DIAG("PA", "Writing initial DAC_val=%d to DAC1 channels 0-7", DAC_val);
+	  DIAG("PA", "Writing initial DAC_val=%d (Vg=%.2fV) to DAC1 channels 0-7",
+		       DAC_val, PA_GATE_BIAS_VggFromCode(DAC_val));
 	  for(int channel = 0; channel < 8; channel++){
-		  DAC5578_WriteAndUpdateChannelValue(&hdac1, channel, DAC_val);
+		  DAC5578_WriteAndUpdateChannelValue(&hdac1, channel,
+			       PA_GATE_BIAS_ClampCode(DAC_val));   /* already inside the window */
 	  }
 
 	  //set Vg [9-16] to -3.98V -> input opamp = 1.63058V->126(8bits)
-	  DIAG("PA", "Writing initial DAC_val=%d to DAC2 channels 0-7", DAC_val);
+	  DIAG("PA", "Writing initial DAC_val=%d (Vg=%.2fV) to DAC2 channels 0-7",
+		       DAC_val, PA_GATE_BIAS_VggFromCode(DAC_val));
 	  for(int channel = 0; channel < 8; channel++){
-		  DAC5578_WriteAndUpdateChannelValue(&hdac2, channel, DAC_val);
+		  DAC5578_WriteAndUpdateChannelValue(&hdac2, channel,
+			       PA_GATE_BIAS_ClampCode(DAC_val));   /* already inside the window */
 	  }
 
 	  /* Optional: Use hardware LDAC for simultaneous update of all channels */
@@ -1961,10 +1981,12 @@ int main(void)
 	              break;
 	          }
 	          DAC_val = DAC_val - 4;
-	          DAC5578_WriteAndUpdateChannelValue(&hdac1, channel, DAC_val);
+	          DAC5578_WriteAndUpdateChannelValue(&hdac1, channel,
+	               PA_GATE_BIAS_ClampCode(DAC_val));   /* floor = rated gate edge */
 	          adc1_readings[channel] = ADS7830_Measure_SingleEnded(&hadc1, channel);
 	          Idq_reading[channel] = paSenseCodeToAmps(adc1_readings[channel]);
-	      } while (DAC_val > 38 && abs(Idq_reading[channel] - (double)PA_IDQ_TARGET_A) > 0.2); // B12 fix: loop while FAR from target
+	      } while (DAC_val > PA_GATE_BIAS_CODE_MIN &&
+	               abs(Idq_reading[channel] - (double)PA_IDQ_TARGET_A) > 0.2); // B12 fix: loop while FAR from target
 	      DIAG("PA", "  DAC1 ch%d calibrated: DAC_val=%d Idq=%.3fA iters=%d",
 	           channel, DAC_val, Idq_reading[channel], safety_counter);
 	  }
@@ -1981,10 +2003,12 @@ int main(void)
 	              break;
 	          }
 	          DAC_val = DAC_val - 4;
-	          DAC5578_WriteAndUpdateChannelValue(&hdac2, channel, DAC_val);
+	          DAC5578_WriteAndUpdateChannelValue(&hdac2, channel,
+	               PA_GATE_BIAS_ClampCode(DAC_val));   /* floor = rated gate edge */
 	          adc2_readings[channel] = ADS7830_Measure_SingleEnded(&hadc2, channel); // B13 fix: was adc1_readings
 	          Idq_reading[channel+8] = paSenseCodeToAmps(adc2_readings[channel]);
-	      } while (DAC_val > 38 && abs(Idq_reading[channel+8] - (double)PA_IDQ_TARGET_A) > 0.2); // B12 fix: loop while FAR from target
+	      } while (DAC_val > PA_GATE_BIAS_CODE_MIN &&
+	               abs(Idq_reading[channel+8] - (double)PA_IDQ_TARGET_A) > 0.2); // B12 fix: loop while FAR from target
 	      DIAG("PA", "  DAC2 ch%d calibrated: DAC_val=%d Idq=%.3fA iters=%d",
 	           channel, DAC_val, Idq_reading[channel+8], safety_counter);
 	  }

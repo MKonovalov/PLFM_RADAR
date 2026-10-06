@@ -63,7 +63,8 @@ TESTS_MOCK_ONLY := test_bug2_ad9523_double_setup \
                    test_gap3_emergency_stop_rails
 
 # Tests that are standalone (no mocks needed, pure logic)
-TESTS_STANDALONE := test_bug12_pa_cal_loop_inverted \
+TESTS_STANDALONE := test_pa_gate_bias \
+                    test_bug12_pa_cal_loop_inverted \
                     test_bug13_dac2_adc_buffer_mismatch \
                     test_gap3_iwdg_config \
                     test_gap3_temperature_max \
@@ -160,6 +161,10 @@ test_gap3_emergency_stop_rails: test_gap3_emergency_stop_rails.c $(MOCK_OBJS)
 	$(CC) $(CFLAGS) $(INCLUDES) $< $(MOCK_OBJS) -o $@
 
 # Gap-3 safety tests -- standalone (pure logic)
+# gate-bias contract: needs the library headers (PA_GATE_BIAS.h)
+test_pa_gate_bias: test_pa_gate_bias.cpp
+	$(CXX) $(CXXFLAGS) $(INCLUDES) $< -lm -o $@
+
 test_gap3_iwdg_config: test_gap3_iwdg_config.c
 	$(CC) $(CFLAGS) $< -lm -o $@
 

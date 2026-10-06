@@ -76,6 +76,10 @@ bool DAC5578_SoftwareLDAC(DAC5578_HandleTypeDef *hdac);
 /* CLR Pin Functions */
 bool DAC5578_SetClearCode(DAC5578_HandleTypeDef *hdac, DAC5578_ClearCode_t clear_code);
 DAC5578_ClearCode_t DAC5578_GetClearCode(DAC5578_HandleTypeDef *hdac);
+
+/** Diagnostic name for a clear-code setting ("zero"/"mid"/"full"/"nop"). */
+const char *DAC5578_ClearCodeName(DAC5578_ClearCode_t clear_code);
+#define DAC5578_CLEAR_CODE_NAME(c) DAC5578_ClearCodeName(c)
 void DAC5578_ActivateClearPin(DAC5578_HandleTypeDef *hdac);
 void DAC5578_DeactivateClearPin(DAC5578_HandleTypeDef *hdac);
 void DAC5578_ClearOutputs(DAC5578_HandleTypeDef *hdac); // Pulse CLR pin to clear outputs

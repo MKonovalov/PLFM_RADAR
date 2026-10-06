@@ -1,4 +1,13 @@
 #include "DAC5578.h"
+#include "PA_GATE_BIAS.h"
+
+/* The gate-bias contract and this driver's enum must not drift apart: a mismatch
+ * would let the emergency stop pick a clear code the contract thinks is safe.
+ * (portable compile-time assert -- works on any C dialect) */
+typedef char pa_gate_bias_clearcode_check_zero[(DAC5578_CLR_CODE_ZERO == PA_GATE_BIAS_CLEAR_CODE_ZERO) ? 1 : -1];
+typedef char pa_gate_bias_clearcode_check_mid [(DAC5578_CLR_CODE_MID  == PA_GATE_BIAS_CLEAR_CODE_MID ) ? 1 : -1];
+typedef char pa_gate_bias_clearcode_check_full[(DAC5578_CLR_CODE_FULL == PA_GATE_BIAS_CLEAR_CODE_FULL) ? 1 : -1];
+typedef char pa_gate_bias_clearcode_check_nop [(DAC5578_CLR_CODE_NOP  == PA_GATE_BIAS_CLEAR_CODE_NOP ) ? 1 : -1];
 #include "diag_log.h"
 #include <string.h>
 
@@ -27,7 +36,11 @@ bool DAC5578_Init(DAC5578_HandleTypeDef *hdac, I2C_HandleTypeDef *hi2c, uint8_t 
     
     /* DAC5578 is 8-bit only */
     hdac->resolution_bits = 8;
-    hdac->clear_code = DAC5578_CLR_CODE_ZERO; // Default clear to zero
+    /* Mid-scale, not zero.  On this array the CLR pin is an emergency stop: the
+     * clear code decides where an asserted CLR parks the 16 GaN gates.  Zero-scale
+     * means 0 V, which is fully enhanced with 22 V on the drain; mid-scale means
+     * -4.0 V, the device's documented shutdown condition.  See PA_GATE_BIAS.h. */
+    hdac->clear_code = DAC5578_CLR_CODE_MID;
     
     hdac->hi2c = hi2c;
     hdac->i2c_addr = i2c_addr << 1; // HAL requires 7-bit address shifted left
@@ -51,15 +64,20 @@ bool DAC5578_Init(DAC5578_HandleTypeDef *hdac, I2C_HandleTypeDef *hi2c, uint8_t 
     DIAG("PA", "  Resetting DAC5578...");
     bool success = DAC5578_Reset(hdac);
     if (success) {
-        DIAG("PA", "  Enabling internal reference...");
-        success = DAC5578_SetInternalReference(hdac, true);
+        /* No internal-reference command is issued here.  The DAC5578 has no internal
+         * reference -- the pin-compatible DAC7678 is the part that has one -- and
+         * VREFIN is driven by the external 3V3_AN3_F rail.  Writing an
+         * internal-reference opcode this device does not implement risks being
+         * decoded as some other command.  DAC5578_Reset() above already leaves the
+         * device in its documented default state. */
     } else {
         DIAG_ERR("PA", "  DAC5578_Reset FAILED");
     }
 
     /* Set the clear code in the device */
     if (success) {
-        DIAG("PA", "  Setting clear code to ZERO...");
+        DIAG("PA", "  Setting clear code to %s (fail-safe: MID parks the gates off)",
+                    DAC5578_CLEAR_CODE_NAME(hdac->clear_code));
         success = DAC5578_SetClearCode(hdac, hdac->clear_code);
     }
 
@@ -296,6 +314,12 @@ bool DAC5578_SetClearCode(DAC5578_HandleTypeDef *hdac, DAC5578_ClearCode_t clear
     if (clear_code > DAC5578_CLR_CODE_NOP) {
         return false;
     }
+    if (!PA_GATE_BIAS_ClearCodeIsFailSafe((int)clear_code)) {
+        DIAG_ERR("PA", "Refusing clear code %d: CLR would not fail safe"
+                       " (zero-scale/retain leave the GaN gates un-pinched);"
+                       " use MID or FULL (PA_GATE_BIAS.h)", (int)clear_code);
+        return false;
+    }
 
     /* The clear code is set using the RESET command with specific data bits */
     uint8_t buffer[3];
@@ -318,6 +342,16 @@ bool DAC5578_SetClearCode(DAC5578_HandleTypeDef *hdac, DAC5578_ClearCode_t clear
   * @param  hdac: pointer to a DAC5578_HandleTypeDef structure
   * @retval DAC5578_ClearCode_t: current clear code setting
   */
+const char *DAC5578_ClearCodeName(DAC5578_ClearCode_t clear_code) {
+    switch (clear_code) {
+        case DAC5578_CLR_CODE_ZERO: return "ZERO-SCALE (not fail-safe for GaN gates)";
+        case DAC5578_CLR_CODE_MID:  return "MID-SCALE (-4.0 V: gates off)";
+        case DAC5578_CLR_CODE_FULL: return "FULL-SCALE (gates off, clamped by the op-amp)";
+        case DAC5578_CLR_CODE_NOP:  return "NOP (retains the last value: not fail-safe)";
+        default:                    return "UNKNOWN";
+    }
+}
+
 DAC5578_ClearCode_t DAC5578_GetClearCode(DAC5578_HandleTypeDef *hdac) {
     return hdac->clear_code;
 }

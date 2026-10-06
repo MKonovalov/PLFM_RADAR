@@ -21,6 +21,7 @@ test_bug14_diag_section_args
 test_gap3_emergency_stop_rails
 
 # TESTS_STANDALONE
+test_pa_gate_bias
 test_bug12_pa_cal_loop_inverted
 test_bug13_dac2_adc_buffer_mismatch
 test_gap3_iwdg_config
