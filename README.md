@@ -152,6 +152,16 @@ built unit.  They are only meaningful with their detection assumptions attached,
 3. **Data interface.** The FT2232H interface runs at 60 MHz (≈40 MB/s), while the
    400 MSPS ADC produces ≈3.2 Gbit/s raw.  The link therefore carries **processed
    detections/Doppler products only — there is no raw IQ streaming path** at full rate.
+4. **The waveguide array's dimensions do not agree inside its own spec.**
+   `Dielectric_Filled_Waveguide_Array_Spec.docx` states an inter-column pitch of
+   λ₀/2 ≈ 14.28 mm and a **panel height (16 columns) of 223 mm**.  Sixteen columns at
+   that pitch span 16 × 14.28 = **228.5 mm**, and the centre-to-centre aperture is
+   15 × 14.28 = **214.2 mm** — so 223 mm matches neither convention (5.5 mm and 8.8 mm
+   apart respectively).  The spec's own directivity (27.73 dBi) and EIRP (54.8 dBW) are
+   derived from A = 0.173 m × 0.223 m = 0.0385 m², i.e. they use the 223 mm height.
+   The fabrication drawing has to say which convention it uses before a panel is cut:
+   the directivity difference is only ~0.2 dB, so the performance number stands either
+   way — it is the drawing that needs reconciling with the spec table.
 
 ## 🚀 Getting Started
 
