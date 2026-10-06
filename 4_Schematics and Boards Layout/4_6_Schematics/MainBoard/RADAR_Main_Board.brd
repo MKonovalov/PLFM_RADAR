@@ -12271,7 +12271,7 @@ Your PCBWay Team
 <param name="cfChangeDir" value="25"/>
 </pass>
 </autorouter>
-<elements>
+<elements><element name="J56" library="142-0731-211" package="1420731211" value="142-0731-211" x="100.86" y="212.01" smashed="yes"/><element name="J57" library="142-0731-211" package="1420731211" value="142-0731-211" x="101.86" y="233.0" smashed="yes"/><element name="J58" library="142-0731-211" package="1420731211" value="142-0731-211" x="71.0" y="162.0" smashed="yes"/><element name="J59" library="142-0731-211" package="1420731211" value="142-0731-211" x="84.0" y="160.0" smashed="yes"/><element name="R174" library="rcl" package="R0201" value="0R" x="110.0" y="220.0" smashed="yes"/><element name="R175" library="rcl" package="R0201" value="0R" x="77.0" y="169.0" smashed="yes"/>
 <element name="C1" library="eagle-ltspice" package="C0201" value="0.1uF" x="64.52" y="156.43" smashed="yes">
 <attribute name="NAME" x="63.885" y="157.065" size="1.27" layer="25"/>
 <attribute name="SPICEMODEL" value="NONE" x="158.5" y="-140.75" size="1.778" layer="27" display="off"/>
@@ -16058,8 +16058,8 @@ Your PCBWay Team
 <element name="RF_SW_13" library="My_Library_RADAR" package="16_QFN" value="M3SWA2-34DR+" x="137.05" y="127.2" smashed="yes" rot="R315">
 <attribute name="VALUE" x="137.768421875" y="129.355259375" size="0.508" layer="27" rot="R315"/>
 </element>
-<element name="U$2" library="My_Library_RADAR" package="BPF2" value="BPF2" x="100.86" y="212.01" smashed="yes" rot="R180"/>
-<element name="U$3" library="My_Library_RADAR" package="BPF2" value="BPF2" x="82.72" y="146.97" smashed="yes"/>
+
+
 <element name="RF_SW_3" library="My_Library_RADAR" package="16_QFN" value="M3SWA2-34DR+" x="136.16" y="230.16" smashed="yes" rot="R225">
 <attribute name="VALUE" x="138.315259375" y="229.441578125" size="0.508" layer="27" rot="R225"/>
 </element>
@@ -25575,7 +25575,7 @@ Your PCBWay Team
 <wire x1="53.047809375" y1="145.40843125" x2="52.948040625" y2="145.5082" width="0.2" layer="1"/>
 <wire x1="52.948040625" y1="145.5082" x2="52.948040625" y2="146.0495" width="0.2" layer="1"/>
 <wire x1="52.948040625" y1="146.0495" x2="52.962915625" y2="146.064375" width="0.2" layer="1"/>
-</signal>
+<contactref element="J56" pad="2"/><contactref element="J56" pad="3"/><contactref element="J56" pad="4"/><contactref element="J56" pad="5"/><contactref element="J57" pad="2"/><contactref element="J57" pad="3"/><contactref element="J57" pad="4"/><contactref element="J57" pad="5"/><contactref element="J58" pad="2"/><contactref element="J58" pad="3"/><contactref element="J58" pad="4"/><contactref element="J58" pad="5"/><contactref element="J59" pad="2"/><contactref element="J59" pad="3"/><contactref element="J59" pad="4"/><contactref element="J59" pad="5"/></signal>
 <signal name="+1V8_FPGA">
 <contactref element="X10" pad="1"/>
 <contactref element="U42" pad="G8"/>
@@ -32909,10 +32909,10 @@ Your PCBWay Team
 </signal>
 <signal name="RF_RX" class="2">
 <contactref element="U13" pad="5"/>
-<contactref element="U$3" pad="P$1"/>
+
 <wire x1="82.72" y1="147.07" x2="82.754690625" y2="147.035309375" width="0.204" layer="1"/>
 <wire x1="82.76" y1="145.5025" x2="82.754690625" y2="147.035309375" width="0.204" layer="1"/>
-</signal>
+<contactref element="J58" pad="1"/><contactref element="R175" pad="1"/></signal>
 <signal name="DAC_IOUT_F_P" class="1">
 <contactref element="U5" pad="2"/>
 <contactref element="L26" pad="2"/>
@@ -32935,10 +32935,10 @@ Your PCBWay Team
 </signal>
 <signal name="RF_TX" class="2">
 <contactref element="U5" pad="5"/>
-<contactref element="U$2" pad="P$2"/>
+
 <wire x1="82.49" y1="213.0575" x2="82.49" y2="212.018640625" width="0.204" layer="1"/>
 <wire x1="82.49" y1="212.018640625" x2="82.445" y2="211.91" width="0.204" layer="1" curve="-45"/>
-</signal>
+<contactref element="J57" pad="1"/><contactref element="R174" pad="2"/></signal>
 <signal name="N$21" class="2">
 <contactref element="U$1" pad="3"/>
 <contactref element="C83" pad="2"/>
@@ -32953,12 +32953,11 @@ Your PCBWay Team
 </signal>
 <signal name="RF_TX_FIL" class="2">
 <contactref element="C83" pad="1"/>
-<contactref element="U$2" pad="P$1"/>
-<wire x1="111.220275" y1="212.15" x2="101.1" y2="212.15" width="0.204" layer="1"/>
+="101.1" y2="212.15" width="0.204" layer="1"/>
 <wire x1="111.220275" y1="212.15" x2="115.910275" y2="207.46" width="0.204" layer="1" curve="-90"/>
 <wire x1="115.910275" y1="207.46" x2="115.910275" y2="182.418484375" width="0.204" layer="1"/>
 <wire x1="101.1" y1="212.15" x2="100.86" y2="211.91" width="0.204" layer="1" curve="90"/>
-</signal>
+<contactref element="J56" pad="1"/><contactref element="R174" pad="1"/></signal>
 <signal name="RF_IO" class="2">
 <contactref element="C85" pad="2"/>
 <contactref element="U16" pad="21"/>
@@ -32967,12 +32966,11 @@ Your PCBWay Team
 </signal>
 <signal name="RF_RX_FIL" class="2">
 <contactref element="C84" pad="2"/>
-<contactref element="U$3" pad="P$2"/>
-<wire x1="115.93445" y1="151.57" x2="110.93445" y2="146.57" width="0.204" layer="1" curve="-90"/>
+"110.93445" y2="146.57" width="0.204" layer="1" curve="-90"/>
 <wire x1="115.93445" y1="151.57" x2="115.93445" y2="176.76614375" width="0.204" layer="1"/>
 <wire x1="110.93445" y1="146.57" x2="101.635" y2="146.57" width="0.204" layer="1"/>
 <wire x1="101.635" y1="146.57" x2="101.135" y2="147.07" width="0.204" layer="1" curve="-90"/>
-</signal>
+<contactref element="J59" pad="1"/><contactref element="R175" pad="2"/></signal>
 <signal name="RF_IO_2" class="2">
 <contactref element="U16" pad="10"/>
 <contactref element="ADAR2_" pad="A7"/>

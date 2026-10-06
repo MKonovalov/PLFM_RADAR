@@ -17,7 +17,7 @@ MainBoard,JP6,1X03,,Do Not Put
 MainBoard,JP7,1X08,,Do Not Put
 MainBoard,JP8,1X04,,Do Not Put
 MainBoard,JP9,1X04,,Do Not Put
+MainBoard,R174,R0201,0R,DNP in production: fit only when the cavity filters are not fitted
+MainBoard,R175,R0201,0R,DNP in production: fit only when the cavity filters are not fitted
 MainBoard,SJ1,SJ_2,,Do Not Put
 MainBoard,SV1,MA10-2,,[DNP不要贴];
-MainBoard,U$2,BPF2,BPF2,Not a component
-MainBoard,U$3,BPF2,BPF2,Not a component

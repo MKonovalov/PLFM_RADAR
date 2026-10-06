@@ -28376,9 +28376,9 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <part name="R145" library="eagle-ltspice" deviceset="R" device="R0201" value="10k"/>
 <part name="R146" library="eagle-ltspice" deviceset="R" device="R0201" value="2.2k"/>
 <part name="GND754" library="supply1" deviceset="GND" device=""/>
-<part name="C159" library="eagle-ltspice" deviceset="C" device="C0201" value="0.1uF"/>
-<part name="U$2" library="My_Library_RADAR" deviceset="BPF2" device=""/>
-<part name="U$3" library="My_Library_RADAR" deviceset="BPF2" device=""/>
+<part name="C159" library="eagle-ltspice" deviceset="C" device="C0201" value="0.1uF"/><part name="J56" library="142-0731-211" deviceset="142-0731-211" device=""/><part name="J57" library="142-0731-211" deviceset="142-0731-211" device=""/><part name="J58" library="142-0731-211" deviceset="142-0731-211" device=""/><part name="J59" library="142-0731-211" deviceset="142-0731-211" device=""/><part name="R174" library="rcl" deviceset="R-EU_" device="R0201" value="0R"/><part name="R175" library="rcl" deviceset="R-EU_" device="R0201" value="0R"/>
+
+
 <part name="L22" library="eagle-ltspice" deviceset="L" device="L0201" value="107.3nH"/>
 <part name="C127" library="eagle-ltspice" deviceset="C" device="C0201" value="32.8pF"/>
 <part name="L25" library="eagle-ltspice" deviceset="L" device="L0201" value="107.3nH"/>
@@ -29628,7 +29628,7 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <text x="289.56" y="40.64" size="1.778" layer="98">6 X INA241A3</text>
 </plain>
 <instances>
-<instance part="X4" gate="-1" x="83.82" y="210.82" smashed="yes">
+<instance part="J56" gate="G$1" x="452.12" y="241.3" smashed="yes"><attribute name="NAME" x="449.62" y="242.8" size="1.27" layer="95"/></instance><instance part="J57" gate="G$1" x="452.12" y="254.0" smashed="yes"><attribute name="NAME" x="449.62" y="255.5" size="1.27" layer="95"/></instance><instance part="J58" gate="G$1" x="700.0" y="90.0" smashed="yes"><attribute name="NAME" x="697.5" y="91.5" size="1.27" layer="95"/></instance><instance part="J59" gate="G$1" x="720.0" y="78.0" smashed="yes"><attribute name="NAME" x="717.5" y="79.5" size="1.27" layer="95"/></instance><instance part="R174" gate="G$1" x="440.0" y="248.0" smashed="yes"><attribute name="NAME" x="437.5" y="249.5" size="1.27" layer="95"/></instance><instance part="R175" gate="G$1" x="710.0" y="105.0" smashed="yes"><attribute name="NAME" x="707.5" y="106.5" size="1.27" layer="95"/></instance><instance part="X4" gate="-1" x="83.82" y="210.82" smashed="yes">
 <attribute name="NAME" x="86.36" y="210.058" size="1.524" layer="95"/>
 <attribute name="VALUE" x="83.058" y="212.217" size="1.778" layer="96"/>
 </instance>
@@ -37078,14 +37078,8 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <instance part="GND68" gate="1" x="553.72" y="431.8" smashed="yes" rot="R90">
 <attribute name="VALUE" x="556.26" y="429.26" size="1.778" layer="96" rot="R90"/>
 </instance>
-<instance part="U$2" gate="G$1" x="452.12" y="241.3" smashed="yes">
-<attribute name="NAME" x="449.58" y="254" size="1.27" layer="95"/>
-<attribute name="VALUE" x="449.58" y="231.14" size="1.27" layer="96"/>
-</instance>
-<instance part="U$3" gate="G$1" x="728.98" y="101.6" smashed="yes">
-<attribute name="NAME" x="726.44" y="114.3" size="1.27" layer="95"/>
-<attribute name="VALUE" x="726.44" y="91.44" size="1.27" layer="96"/>
-</instance>
+
+
 <instance part="L22" gate="G$1" x="269.24" y="251.46" smashed="yes" rot="R90">
 <attribute name="NAME" x="273.05" y="249.9614" size="1.778" layer="95" rot="R180"/>
 <attribute name="VALUE" x="273.05" y="254.762" size="1.778" layer="96" rot="R180"/>
@@ -43623,7 +43617,7 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <segment>
 <pinref part="C353" gate="G$1" pin="2"/>
 <pinref part="GND1099" gate="1" pin="GND"/>
-</segment>
+<segment><pinref part="J56" gate="G$1" pin="2"/><pinref part="J56" gate="G$1" pin="3"/><pinref part="J56" gate="G$1" pin="4"/><pinref part="J56" gate="G$1" pin="5"/><pinref part="J57" gate="G$1" pin="2"/><pinref part="J57" gate="G$1" pin="3"/><pinref part="J57" gate="G$1" pin="4"/><pinref part="J57" gate="G$1" pin="5"/><pinref part="J58" gate="G$1" pin="2"/><pinref part="J58" gate="G$1" pin="3"/><pinref part="J58" gate="G$1" pin="4"/><pinref part="J58" gate="G$1" pin="5"/><pinref part="J59" gate="G$1" pin="2"/><pinref part="J59" gate="G$1" pin="3"/><pinref part="J59" gate="G$1" pin="4"/><pinref part="J59" gate="G$1" pin="5"/></segment></segment>
 </net>
 <net name="+5V0_PA_1" class="0">
 <segment>
@@ -43660,9 +43654,9 @@ You are welcome to use this library for commercial purposes. For attribution, we
 </segment>
 <segment>
 <label x="698.5" y="104.14" size="1.778" layer="95"/>
-<pinref part="U$3" gate="G$1" pin="IN"/>
+<pinref part="J58" gate="G$1" pin="1"/>
 <wire x1="713.74" y1="104.14" x2="706.12" y2="104.14" width="0.1524" layer="91"/>
-</segment>
+<pinref part="R175" gate="G$1" pin="1"/></segment>
 </net>
 <net name="MIX_RX_EN" class="0">
 <segment>
@@ -43707,9 +43701,9 @@ You are welcome to use this library for commercial purposes. For attribution, we
 </segment>
 <segment>
 <label x="472.44" y="243.84" size="1.778" layer="95"/>
-<pinref part="U$2" gate="G$1" pin="OUT"/>
+<pinref part="J57" gate="G$1" pin="1"/>
 <wire x1="472.44" y1="243.84" x2="467.36" y2="243.84" width="0.1524" layer="91"/>
-</segment>
+<pinref part="R174" gate="G$1" pin="2"/></segment>
 </net>
 <net name="MIX_TX_EN" class="0">
 <segment>
@@ -43822,9 +43816,9 @@ You are welcome to use this library for commercial purposes. For attribution, we
 </segment>
 <segment>
 <label x="421.64" y="243.84" size="1.778" layer="95"/>
-<pinref part="U$2" gate="G$1" pin="IN"/>
+<pinref part="J56" gate="G$1" pin="1"/>
 <wire x1="429.26" y1="243.84" x2="436.88" y2="243.84" width="0.1524" layer="91"/>
-</segment>
+<pinref part="R174" gate="G$1" pin="1"/></segment>
 </net>
 <net name="RF_IO" class="2">
 <segment>
@@ -43846,9 +43840,9 @@ You are welcome to use this library for commercial purposes. For attribution, we
 </segment>
 <segment>
 <label x="749.3" y="104.14" size="1.778" layer="95"/>
-<pinref part="U$3" gate="G$1" pin="OUT"/>
+<pinref part="J59" gate="G$1" pin="1"/>
 <wire x1="749.3" y1="104.14" x2="744.22" y2="104.14" width="0.1524" layer="91"/>
-</segment>
+<pinref part="R175" gate="G$1" pin="2"/></segment>
 </net>
 <net name="RF_IO_2" class="2">
 <segment>
