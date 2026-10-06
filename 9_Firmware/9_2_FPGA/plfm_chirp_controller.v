@@ -29,7 +29,12 @@ module plfm_chirp_controller_enhanced (
     output reg adar_tr_4,
     output reg [5:0] chirp_counter,
     output reg [5:0] elevation_counter,
-    output reg [5:0] azimuth_counter
+    output reg [5:0] azimuth_counter,
+    // Toggles on each strobe that arrived while the FSM was not idle, i.e. the
+    // strobe was dropped (this FSM only reads new_chirp in IDLE).  A toggle
+    // rather than a level: it is the same cross-domain pattern the frame
+    // boundary already uses, and it survives even pulses.
+    output reg chirp_reject_toggle
 );
 
 // Chirp parameters
@@ -79,6 +84,19 @@ assign chirp__toggling = new_chirp;
 assign elevation__toggling = new_elevation;
 assign azimuth__toggling = new_azimuth;
 assign new_chirp_frame = (current_state == IDLE && next_state == LONG_CHIRP);
+
+// A strobe is dropped when it does not start a frame -- either because the FSM
+// is mid-sequence, or because it is idle with the mixers disabled.  In both
+// cases the command is silently ignored today; this makes it observable.
+// Resides in the clk_120m domain with current_state, so no CDC is needed here.
+wire chirp_reject = new_chirp && !new_chirp_frame;
+
+always @(posedge clk_120m or negedge reset_n) begin
+    if (!reset_n)
+        chirp_reject_toggle <= 1'b0;
+    else if (chirp_reject)
+        chirp_reject_toggle <= ~chirp_reject_toggle;
+end
 
 // Mixer TX/RX sequencing — mutually exclusive based on chirp FSM state.
 // TX mixer active during chirp transmission, RX mixer during listen.

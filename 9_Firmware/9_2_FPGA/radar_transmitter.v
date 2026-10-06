@@ -75,7 +75,8 @@ module radar_transmitter(
 	 output wire [5:0] current_elevation,
 	 output wire [5:0] current_azimuth,
 	 output wire [5:0] current_chirp,
-	 output wire new_chirp_frame
+	 output wire new_chirp_frame,
+	 output wire chirp_reject_toggle
 
 
     );
@@ -212,6 +213,7 @@ plfm_chirp_controller_enhanced plfm_chirp_inst (
     .new_elevation(new_elevation_pulse),
     .new_azimuth(new_azimuth_pulse),
     .new_chirp_frame(new_chirp_frame),
+    .chirp_reject_toggle(chirp_reject_toggle),
     .mixers_enable(mixers_enable_120m),    // CDC-synchronized level in clk_120m domain
     .chirp_data(chirp_data),
     .chirp_valid(chirp_valid),

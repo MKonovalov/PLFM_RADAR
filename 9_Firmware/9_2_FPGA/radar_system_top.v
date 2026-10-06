@@ -167,6 +167,7 @@ wire [7:0] tx_chirp_data;
 wire tx_chirp_valid;
 wire tx_chirp_done;
 wire tx_new_chirp_frame;        // In clk_120m_dac domain
+wire tx_chirp_reject_toggle;    // Toggles when a strobe was dropped (clk_120m)
 wire tx_new_chirp_frame_sync;   // Synchronized to clk_100m domain
 wire [5:0] tx_current_elevation;
 wire [5:0] tx_current_azimuth;
@@ -430,7 +431,50 @@ always @(posedge clk_100m_buf or negedge sys_reset_n) begin
     else
         chirp_frame_toggle_100m_prev <= chirp_frame_toggle_100m;
 end
-assign tx_new_chirp_frame_sync = chirp_frame_toggle_100m ^ chirp_frame_toggle_100m_prev;
+assign tx_new_chirp_frame_sync = chirp_frame_toggle_100m ^ chirp_frame_toggle_100m_prev;
+
+// ---------------------------------------------------------------------------
+// DROPPED-STROBE MONITOR (host-visible strobe acknowledgement)
+//
+// The chirp FSM reads new_chirp only in IDLE, so a strobe that arrives while a
+// frame is running is dropped without anyone noticing -- the MCU never learns
+// its command was ignored.  The controller raises a toggle when that happens
+// (clk_120m domain); it is brought across with the same toggle CDC the frame
+// boundary uses above, then counted for the host to read out of the status
+// packet (word 5, see strobe_reject_monitor.v and the two USB interfaces).
+// ---------------------------------------------------------------------------
+wire chirp_reject_toggle_100m;
+cdc_single_bit #(
+    .STAGES(3)
+) cdc_chirp_reject (
+    .src_clk(clk_120m_dac_buf),
+    .dst_clk(clk_100m_buf),
+    .reset_n(sys_reset_n),
+    .src_signal(tx_chirp_reject_toggle),
+    .dst_signal(chirp_reject_toggle_100m)
+);
+
+reg chirp_reject_toggle_100m_prev;
+always @(posedge clk_100m_buf or negedge sys_reset_n) begin
+    if (!sys_reset_n)
+        chirp_reject_toggle_100m_prev <= 1'b0;
+    else
+        chirp_reject_toggle_100m_prev <= chirp_reject_toggle_100m;
+end
+
+wire       strobe_reject_pulse = chirp_reject_toggle_100m ^ chirp_reject_toggle_100m_prev;
+wire [7:0] strobe_reject_count;
+wire       strobe_reject_seen;
+
+strobe_reject_monitor strobe_reject_mon_inst (
+    .clk            (clk_100m_buf),
+    .reset_n        (sys_reset_n),
+    .reject_pulse   (strobe_reject_pulse),
+    .frame_boundary (tx_new_chirp_frame_sync),
+    .reject_count   (strobe_reject_count),
+    .reject_seen    (strobe_reject_seen)
+);
+
 
 // ============================================================================
 // RADAR TRANSMITTER INSTANTIATION
@@ -496,7 +540,8 @@ radar_transmitter tx_inst (
     .current_elevation(tx_current_elevation),
     .current_azimuth(tx_current_azimuth),
     .current_chirp(tx_current_chirp),
-    .new_chirp_frame(tx_new_chirp_frame)
+    .new_chirp_frame(tx_new_chirp_frame),
+    .chirp_reject_toggle(tx_chirp_reject_toggle)
 );
 
 // ============================================================================
@@ -783,6 +828,8 @@ if (USB_MODE == 0) begin : gen_ft601
         // Self-test status readback
         .status_self_test_flags(self_test_flags_latched),
         .status_self_test_detail(self_test_detail_latched),
+        .status_strobe_reject_count(strobe_reject_count),
+        .status_strobe_reject_seen(strobe_reject_seen),
         .status_self_test_busy(self_test_busy),
 
         // AGC status readback
@@ -850,6 +897,8 @@ end else begin : gen_ft2232h
         // Self-test status readback
         .status_self_test_flags(self_test_flags_latched),
         .status_self_test_detail(self_test_detail_latched),
+        .status_strobe_reject_count(strobe_reject_count),
+        .status_strobe_reject_seen(strobe_reject_seen),
         .status_self_test_busy(self_test_busy),
 
         // AGC status readback

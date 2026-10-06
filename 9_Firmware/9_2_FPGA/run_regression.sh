@@ -78,6 +78,7 @@ PROD_RTL=(
     mti_canceller.v
     fpga_self_test.v
     agc_magnitude_link.v
+    strobe_reject_monitor.v
 )
 
 # Source-only RTL (not instantiated at top level, but should still be lint-clean)
@@ -114,6 +115,7 @@ SYSTEM_RTL=(
     usb_data_interface.v usb_data_interface_ft2232h.v edge_detector.v
     cfar_ca.v fpga_self_test.v
     agc_magnitude_link.v
+    strobe_reject_monitor.v
 )
 
 # ---- Layer A: iverilog -Wall compilation ----
@@ -452,6 +454,17 @@ if [[ "$QUICK" -eq 0 ]]; then
     run_test "Receiver (golden compare)" \
         tb/tb_rx_compare_reg.vvp \
         tb/tb_radar_receiver_final.v "${RECEIVER_RTL[@]}"
+
+    # Dropped-strobe monitor (WP4.6 host-visible half): the chirp FSM drops a
+    # strobe that arrives mid-sequence; this counts them for the status packet
+    run_test "Strobe Reject Monitor" \
+        tb/tb_strobe_reject_monitor.vvp \
+        tb/tb_strobe_reject_monitor.v strobe_reject_monitor.v
+
+    # ...and the detector that feeds it, driving the real chirp FSM
+    run_test "Chirp Strobe Reject Detector" \
+        tb/tb_chirp_reject.vvp \
+        tb/tb_chirp_reject.v plfm_chirp_controller.v
 
     # AGC magnitude link (WP4.2): severity class -> pulse count on DIG_7
     run_test "AGC Magnitude Link (DIG_7 pulse encoding)" \

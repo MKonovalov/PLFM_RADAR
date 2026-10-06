@@ -74,6 +74,8 @@ module tb_usb_data_interface;
     reg  [4:0]  status_self_test_flags;
     reg  [7:0]  status_self_test_detail;
     reg         status_self_test_busy;
+    reg  [7:0]  status_strobe_reject_count;   // dropped-strobe monitor
+    reg         status_strobe_reject_seen;
 
     // AGC status readback inputs
     reg  [3:0]  status_agc_current_gain;
@@ -137,6 +139,8 @@ module tb_usb_data_interface;
         .status_self_test_flags (status_self_test_flags),
         .status_self_test_detail(status_self_test_detail),
         .status_self_test_busy  (status_self_test_busy),
+        .status_strobe_reject_count(status_strobe_reject_count),
+        .status_strobe_reject_seen (status_strobe_reject_seen),
 
         // AGC status readback
         .status_agc_current_gain    (status_agc_current_gain),
@@ -202,6 +206,8 @@ module tb_usb_data_interface;
             status_self_test_flags  = 5'b00000;
             status_self_test_detail = 8'd0;
             status_self_test_busy   = 1'b0;
+            status_strobe_reject_count = 8'd0;
+            status_strobe_reject_seen  = 1'b0;
             status_agc_current_gain     = 4'd0;
             status_agc_peak_magnitude   = 8'd0;
             status_agc_saturation_count = 8'd0;
@@ -910,6 +916,10 @@ module tb_usb_data_interface;
         status_self_test_flags  = 5'b11111;
         status_self_test_detail = 8'hA5;
         status_self_test_busy   = 1'b0;
+        // Dropped-strobe monitor: a recognisable non-zero count, so this check
+        // proves the field travels rather than merely defaulting to zero.
+        status_strobe_reject_count = 8'h07;
+        status_strobe_reject_seen  = 1'b1;
         // AGC status: gain=5, peak=180, sat_count=12, enabled
         status_agc_current_gain     = 4'd5;
         status_agc_peak_magnitude   = 8'd180;
@@ -951,9 +961,11 @@ module tb_usb_data_interface;
               "Status readback: word 3 = {short_listen, 0, chirps_per_elev}");
         check(uut.status_words[4] === {4'd5, 8'd180, 8'd12, 1'b1, 9'd0, 2'b10},
               "Status readback: word 4 = {agc_gain=5, peak=180, sat=12, en=1, range_mode=2}");
-        // status_words[5] = {7'd0, busy, 8'd0, detail[7:0], 3'd0, flags[4:0]}
-        // = {7'd0, 1'b0, 8'd0, 8'hA5, 3'd0, 5'b11111}
-        check(uut.status_words[5] === {7'd0, 1'b0, 8'd0, 8'hA5, 3'd0, 5'b11111},
+        // status_words[5] = {7'd0, busy, reject_count[7:0], detail[7:0], 2'd0,
+        //                    reject_seen, flags[4:0]}
+        // The reject fields sit in bits that used to be reserved-zero: the packet
+        // length and every other field are unchanged.
+        check(uut.status_words[5] === {7'd0, 1'b0, 8'h07, 8'hA5, 2'd0, 1'b1, 5'b11111},
               "Status readback: word 5 = self-test {busy=0, detail=A5, flags=1F}");
 
         // ════════════════════════════════════════════════════════
@@ -1024,6 +1036,8 @@ module tb_usb_data_interface;
         status_self_test_flags  = 5'b10110;  // T0 fail, T3 fail
         status_self_test_detail = 8'h42;
         status_self_test_busy   = 1'b1;
+        status_strobe_reject_count = 8'd0;   // no dropped strobes in this case
+        status_strobe_reject_seen  = 1'b0;
 
         // Trigger status readback
         @(posedge clk);
@@ -1042,8 +1056,9 @@ module tb_usb_data_interface;
         check(uut.current_state === S_IDLE,
               "Self-test readback A: returned to IDLE");
 
-        // Verify word 5: {7'd0, busy=1, 8'd0, detail=0x42, 3'd0, flags=5'b10110}
-        check(uut.status_words[5] === {7'd0, 1'b1, 8'd0, 8'h42, 3'd0, 5'b10110},
+        // Verify word 5: {7'd0, busy=1, reject_count=0, detail=0x42, 2'd0,
+        //                 reject_seen=0, flags=5'b10110}
+        check(uut.status_words[5] === {7'd0, 1'b1, 8'd0, 8'h42, 2'd0, 1'b0, 5'b10110},
               "Self-test readback A: word 5 = {busy=1, detail=42, flags=16}");
 
         // ════════════════════════════════════════════════════════

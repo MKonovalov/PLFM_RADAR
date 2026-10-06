@@ -99,6 +99,10 @@ module usb_data_interface_ft2232h (
     // Self-test status readback
     input wire [4:0]  status_self_test_flags,
     input wire [7:0]  status_self_test_detail,
+    // Dropped-strobe monitor (strobe_reject_monitor.v): a strobe that arrived
+    // while the chirp FSM was busy is dropped, and nothing else reports it.
+    input wire [7:0]  status_strobe_reject_count, // rejections in the last frame
+    input wire        status_strobe_reject_seen,  // sticky: ever happened
     input wire        status_self_test_busy,
 
     // AGC status readback
@@ -386,8 +390,10 @@ always @(posedge ft_clk or negedge ft_effective_reset_n) begin
                                 9'd0,                           // [10:2] reserved
                                 status_range_mode};             // [1:0]
             status_words[5] <= {7'd0, status_self_test_busy,
-                                8'd0, status_self_test_detail,
-                                3'd0, status_self_test_flags};
+                                status_strobe_reject_count,        // [23:16] was reserved 0
+                                status_self_test_detail,
+                                2'd0, status_strobe_reject_seen,   // [7:5] was reserved 0
+                                status_self_test_flags};
         end
     end
 end

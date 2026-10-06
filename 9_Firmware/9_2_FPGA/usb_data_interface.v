@@ -96,6 +96,10 @@ module usb_data_interface (
     // Self-test status readback (opcode 0x31 / included in 0xFF status packet)
     input wire [4:0]  status_self_test_flags,  // Per-test PASS(1)/FAIL(0) latched
     input wire [7:0]  status_self_test_detail, // Diagnostic detail byte latched
+    // Dropped-strobe monitor (strobe_reject_monitor.v): a strobe that arrived
+    // while the chirp FSM was busy is dropped, and nothing else reports it.
+    input wire [7:0]  status_strobe_reject_count, // rejections in the last frame
+    input wire        status_strobe_reject_seen,  // sticky: ever happened
     input wire        status_self_test_busy,   // Self-test FSM still running
 
     // AGC status readback
@@ -380,8 +384,10 @@ always @(posedge ft601_clk_in or negedge ft601_effective_reset_n) begin
                                 status_range_mode};             // [1:0]
             // Word 5: Self-test results {reserved[6:0], busy, reserved[7:0], detail[7:0], reserved[2:0], flags[4:0]}
             status_words[5] <= {7'd0, status_self_test_busy,
-                                8'd0, status_self_test_detail,
-                                3'd0, status_self_test_flags};
+                                status_strobe_reject_count,        // [23:16] was reserved 0
+                                status_self_test_detail,
+                                2'd0, status_strobe_reject_seen,   // [7:5] was reserved 0
+                                status_self_test_flags};
         end
 
         // Delayed version of sync[1] for edge detection
