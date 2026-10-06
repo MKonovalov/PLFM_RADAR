@@ -18,18 +18,27 @@ obtained earlier from PCBWay.
 |---|---|---|---|---|
 | Main board | `RADAR_Main_Board.brd` | **10** (1–5, 12–16) | **Rogers RO4350B**, h = 0.102 mm | the RF board: carries the 10.5 GHz TX/RX paths, the ADC LVDS and the FPGA |
 | Frequency synthesizer | `Clocks_Freq_Synth_board.brd` | **6** (1–3, 14–16) | FR-4 unless a controlled-impedance run is required | clocks to 3.6 GHz internal, 300/400 MHz outputs; LVDS pairs benefit from impedance control |
-| Power amplifier | `RF_PA.brd` | **4** (1, 2, 15, 16) | **FR-4 as drawn — see the open question below** | carries the 10.5 GHz RF in/out and the 22 V drain network |
+| Power amplifier | `RF_PA.brd` | **4** (1, 2, 15, 16) | **Rogers RO4350B, h = 0.102 mm** (decided; see below) | carries the 10.5 GHz RF in/out and the 22 V drain network |
 | Power board | `PowerBoard.brd` | **2** (1, 16) | FR-4 | DC only |
-| Patch antenna array | (gerbers only) | 4 | FR-4 as drawn — see the open question below | the radiating surface itself is at 10.5 GHz |
+| Patch antenna array | (gerbers only) | 4 | **to be re-specified on any redraw** (see below) | the radiating surface itself is at 10.5 GHz |
 
-**Open question that this file surfaces rather than answers:** the PA board and the patch
-array both handle 10.5 GHz, and neither has a laminate callout. On FR-4 (tan δ ≈ 0.02 at
-10 GHz, and Dk that varies ±0.2 lot to lot) the RF insertion loss and the phase repeatability
-between the 16 elements are both worse than on RO4350B. This was raised as an observation, not
-a measured claim — but the decision to keep those two boards on FR-4 should be a decision, and
-the array's phase calibration budget is where it would show up.
+**Decided: the PA board moves to RO4350B.** Both RF boards were carrying 10.5 GHz with no
+laminate callout. FR-4's loss tangent is ~0.02 at 10 GHz against RO4350B's ~0.0037, and — more
+important for a 16-element array — FR-4's Dk varies meaningfully lot to lot, which lands
+directly in the element-to-element phase calibration budget. The PA board is 4 layers at
+60 × 35 mm, so the material delta is small against the array it feeds.
 
-## 2. Controlled impedance (RF boards)
+The PA board therefore uses the same stackup as the main board, and the controlled-impedance
+section below applies to its RF traces as well. Its RF geometry should be re-solved for the
+0.102 mm core rather than copied from the main board, because the trace widths depend on the
+layer's distance to the reference plane.
+
+**The patch array cannot be changed the same way**: it ships gerbers only, with no `.brd`, so
+it cannot be re-spun from this repo at all. Any redraw must carry the laminate callout, and
+until then its material is whatever those gerbers were cut on. That is recorded here rather
+than silently inherited.
+
+## 2. Controlled impedance (RF boards: main board and PA board)
 
 From `PCBWay_Impedance_Note_RO4350B_h0p102mm.pdf`:
 

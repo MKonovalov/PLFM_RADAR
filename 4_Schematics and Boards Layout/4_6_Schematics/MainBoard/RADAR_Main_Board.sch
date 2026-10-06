@@ -3638,7 +3638,34 @@
 <text x="22.5806" y="6.5786" size="2.0828" layer="96" ratio="6" rot="SR0">&gt;Value</text>
 </symbol>
 </symbols>
-<devicesets>
+<devicesets><deviceset name="22-23-2041" prefix="X">
+<description>.100" (2.54mm) Center Header - 4 Pin</description>
+<gates>
+<gate name="-1" symbol="MV" x="0" y="2.54" addlevel="always" swaplevel="1"/>
+<gate name="-2" symbol="M" x="0" y="0.0" addlevel="always" swaplevel="1"/>
+<gate name="-3" symbol="M" x="0" y="-2.54" addlevel="always" swaplevel="1"/>
+<gate name="-4" symbol="M" x="0" y="-5.08" addlevel="always" swaplevel="1"/>
+</gates>
+<devices>
+<device name="" package="22-23-2041">
+<connects>
+<connect gate="-1" pin="S" pad="1"/>
+<connect gate="-2" pin="S" pad="2"/>
+<connect gate="-3" pin="S" pad="3"/>
+<connect gate="-4" pin="S" pad="4"/>
+</connects>
+<technologies>
+<technology name="">
+<attribute name="MF" value="MOLEX" constant="no"/>
+<attribute name="MPN" value="22-23-2041" constant="no"/>
+<attribute name="OC_FARNELL" value="1462950" constant="no"/>
+<attribute name="OC_NEWARK" value="30C0862" constant="no"/>
+<attribute name="POPULARITY" value="35" constant="no"/>
+</technology>
+</technologies>
+</device>
+</devices>
+</deviceset>
 <deviceset name="STM32F746ZGT7" prefix="U">
 <gates>
 <gate name="A" symbol="STM32F746ZGT7_A" x="0" y="0"/>
@@ -28300,7 +28327,7 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <part name="C157" library="eagle-ltspice" deviceset="C" device="C0201" value="0.47uF"/>
 <part name="C158" library="eagle-ltspice" deviceset="C" device="C0201" value="0.47uF"/>
 <part name="GND113" library="supply1" deviceset="GND" device=""/>
-<part name="X2" library="con-cypressindustries" deviceset="MINI-USB-" device="32005-201"/>
+<part name="X27" library="con-molex" deviceset="22-23-2021" device="22-23-2021"/><part name="X26" library="con-molex" deviceset="22-23-2021" device="22-23-2021"/><part name="X25" library="con-molex" deviceset="22-23-2021" device="22-23-2021"/><part name="X2" library="con-cypressindustries" deviceset="MINI-USB-" device="32005-201"/>
 <part name="GND709" library="supply1" deviceset="GND" device=""/>
 <part name="S1" library="SparkFun-Switches" deviceset="MOMENTARY-SWITCH-SPST" device="-SMD-4.6X2.8MM"/>
 <part name="C164" library="eagle-ltspice" deviceset="C" device="C0201" value="2.2uF"/>
@@ -29348,11 +29375,11 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <part name="GND1141" library="supply1" deviceset="GND" device=""/>
 <part name="X4" library="con-molex" deviceset="22-23-2021" device=""/>
 <part name="GND2" library="supply1" deviceset="GND" device=""/>
-<part name="X5" library="con-molex" deviceset="22-23-2021" device=""/>
+<part name="X5" library="con-molex" deviceset="22-23-2041" device="22-23-2041"/>
 <part name="GND3" library="supply1" deviceset="GND" device=""/>
-<part name="X6" library="con-molex" deviceset="22-23-2021" device=""/>
+<part name="X6" library="con-molex" deviceset="22-23-2031" device="22-23-2031"/>
 <part name="GND4" library="supply1" deviceset="GND" device=""/>
-<part name="X7" library="con-molex" deviceset="22-23-2021" device=""/>
+<part name="X7" library="con-molex" deviceset="22-23-2041" device="22-23-2041"/>
 <part name="GND5" library="supply1" deviceset="GND" device=""/>
 <part name="X8" library="con-molex" deviceset="22-23-2021" device=""/>
 <part name="GND6" library="supply1" deviceset="GND" device=""/>
@@ -29360,15 +29387,15 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <part name="GND7" library="supply1" deviceset="GND" device=""/>
 <part name="X10" library="con-molex" deviceset="22-23-2021" device=""/>
 <part name="GND8" library="supply1" deviceset="GND" device=""/>
-<part name="X11" library="con-molex" deviceset="22-23-2021" device=""/>
+<part name="X11" library="con-molex" deviceset="22-23-2031" device="22-23-2031"/>
 <part name="GND9" library="supply1" deviceset="GND" device=""/>
 <part name="X12" library="con-molex" deviceset="22-23-2021" device=""/>
 <part name="GND10" library="supply1" deviceset="GND" device=""/>
-<part name="X13" library="con-molex" deviceset="22-23-2021" device=""/>
+<part name="X13" library="con-molex" deviceset="22-23-2031" device="22-23-2031"/>
 <part name="GND11" library="supply1" deviceset="GND" device=""/>
-<part name="X14" library="con-molex" deviceset="22-23-2021" device=""/>
+<part name="X14" library="con-molex" deviceset="22-23-2041" device="22-23-2041"/>
 <part name="GND12" library="supply1" deviceset="GND" device=""/>
-<part name="X15" library="con-molex" deviceset="22-23-2021" device=""/>
+<part name="X15" library="con-molex" deviceset="22-23-2031" device="22-23-2031"/>
 <part name="GND13" library="supply1" deviceset="GND" device=""/>
 <part name="X16" library="con-molex" deviceset="22-23-2021" device=""/>
 <part name="GND14" library="supply1" deviceset="GND" device=""/>
@@ -29376,7 +29403,7 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <part name="GND15" library="supply1" deviceset="GND" device=""/>
 <part name="X18" library="con-molex" deviceset="22-23-2021" device=""/>
 <part name="GND16" library="supply1" deviceset="GND" device=""/>
-<part name="X19" library="con-molex" deviceset="22-23-2021" device=""/>
+<part name="X19" library="con-molex" deviceset="22-23-2031" device="22-23-2031"/>
 <part name="GND17" library="supply1" deviceset="GND" device=""/>
 <part name="X20" library="con-molex" deviceset="22-23-2021" device=""/>
 <part name="GND18" library="supply1" deviceset="GND" device=""/>
@@ -29597,7 +29624,7 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <part name="C283" library="rcl" deviceset="C-EU" device="C1206" value="22µF"/>
 <part name="GND1069" library="supply1" deviceset="GND" device=""/>
 <part name="X1" library="con-molex" deviceset="22-23-2021" device=""/>
-<part name="X22" library="con-molex" deviceset="22-23-2021" device=""/>
+<part name="X22" library="con-molex" deviceset="22-23-2031" device="22-23-2031"/>
 <part name="GND1074" library="supply1" deviceset="GND" device=""/>
 <part name="GND1079" library="supply1" deviceset="GND" device=""/>
 <part name="JP20" library="pinhead" deviceset="PINHD-1X2" device=""/>
@@ -29628,7 +29655,7 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <text x="289.56" y="40.64" size="1.778" layer="98">8 X INA241A4</text>
 </plain>
 <instances>
-<instance part="J56" gate="G$1" x="452.12" y="241.3" smashed="yes"><attribute name="NAME" x="449.62" y="242.8" size="1.27" layer="95"/></instance><instance part="J57" gate="G$1" x="452.12" y="254.0" smashed="yes"><attribute name="NAME" x="449.62" y="255.5" size="1.27" layer="95"/></instance><instance part="J58" gate="G$1" x="700.0" y="90.0" smashed="yes"><attribute name="NAME" x="697.5" y="91.5" size="1.27" layer="95"/></instance><instance part="J59" gate="G$1" x="720.0" y="78.0" smashed="yes"><attribute name="NAME" x="717.5" y="79.5" size="1.27" layer="95"/></instance><instance part="R174" gate="G$1" x="440.0" y="248.0" smashed="yes"><attribute name="NAME" x="437.5" y="249.5" size="1.27" layer="95"/></instance><instance part="R175" gate="G$1" x="710.0" y="105.0" smashed="yes"><attribute name="NAME" x="707.5" y="106.5" size="1.27" layer="95"/></instance><instance part="X4" gate="-1" x="83.82" y="210.82" smashed="yes">
+<instance part="J56" gate="G$1" x="452.12" y="241.3" smashed="yes"><attribute name="NAME" x="449.62" y="242.8" size="1.27" layer="95"/></instance><instance part="J57" gate="G$1" x="452.12" y="254.0" smashed="yes"><attribute name="NAME" x="449.62" y="255.5" size="1.27" layer="95"/></instance><instance part="J58" gate="G$1" x="700.0" y="90.0" smashed="yes"><attribute name="NAME" x="697.5" y="91.5" size="1.27" layer="95"/></instance><instance part="J59" gate="G$1" x="720.0" y="78.0" smashed="yes"><attribute name="NAME" x="717.5" y="79.5" size="1.27" layer="95"/></instance><instance part="R174" gate="G$1" x="440.0" y="248.0" smashed="yes"><attribute name="NAME" x="437.5" y="249.5" size="1.27" layer="95"/></instance><instance part="R175" gate="G$1" x="710.0" y="105.0" smashed="yes"><attribute name="NAME" x="707.5" y="106.5" size="1.27" layer="95"/></instance><instance part="X27" gate="-1" x="72" y="252.54" smashed="yes"><attribute name="NAME" x="70" y="253.5" size="1.524" layer="95"/></instance><instance part="X27" gate="-2" x="72" y="250" smashed="yes"><attribute name="NAME" x="70" y="251.5" size="1.524" layer="95"/></instance><instance part="X26" gate="-1" x="66" y="252.54" smashed="yes"><attribute name="NAME" x="64" y="253.5" size="1.524" layer="95"/></instance><instance part="X26" gate="-2" x="66" y="250" smashed="yes"><attribute name="NAME" x="64" y="251.5" size="1.524" layer="95"/></instance><instance part="X25" gate="-1" x="60" y="252.54" smashed="yes"><attribute name="NAME" x="58" y="253.5" size="1.524" layer="95"/></instance><instance part="X25" gate="-2" x="60" y="250" smashed="yes"><attribute name="NAME" x="58" y="251.5" size="1.524" layer="95"/></instance><instance part="X4" gate="-1" x="83.82" y="210.82" smashed="yes">
 <attribute name="NAME" x="86.36" y="210.058" size="1.524" layer="95"/>
 <attribute name="VALUE" x="83.058" y="212.217" size="1.778" layer="96"/>
 </instance>
@@ -29644,6 +29671,12 @@ You are welcome to use this library for commercial purposes. For attribution, we
 </instance>
 <instance part="X5" gate="-2" x="83.82" y="190.5" smashed="yes">
 <attribute name="NAME" x="86.36" y="189.738" size="1.524" layer="95"/>
+</instance><instance part="X5" gate="-3" x="83.8200" y="193.0400" smashed="yes">
+<attribute name="NAME" x="86.3600" y="192.2780" size="1.524" layer="95"/>
+<attribute name="VALUE" x="83.0580" y="194.4370" size="1.778" layer="96"/>
+</instance><instance part="X5" gate="-4" x="83.8200" y="195.5800" smashed="yes">
+<attribute name="NAME" x="86.3600" y="194.8180" size="1.524" layer="95"/>
+<attribute name="VALUE" x="83.0580" y="196.9770" size="1.778" layer="96"/>
 </instance>
 <instance part="GND3" gate="1" x="81.28" y="187.96" smashed="yes">
 <attribute name="VALUE" x="78.74" y="185.42" size="1.778" layer="96"/>
@@ -29654,6 +29687,9 @@ You are welcome to use this library for commercial purposes. For attribution, we
 </instance>
 <instance part="X6" gate="-2" x="124.46" y="208.28" smashed="yes">
 <attribute name="NAME" x="127" y="207.518" size="1.524" layer="95"/>
+</instance><instance part="X6" gate="-3" x="124.4600" y="210.8200" smashed="yes">
+<attribute name="NAME" x="127.0000" y="210.0580" size="1.524" layer="95"/>
+<attribute name="VALUE" x="123.6980" y="212.2170" size="1.778" layer="96"/>
 </instance>
 <instance part="GND4" gate="1" x="121.92" y="205.74" smashed="yes">
 <attribute name="VALUE" x="119.38" y="203.2" size="1.778" layer="96"/>
@@ -29664,6 +29700,12 @@ You are welcome to use this library for commercial purposes. For attribution, we
 </instance>
 <instance part="X7" gate="-2" x="124.46" y="190.5" smashed="yes">
 <attribute name="NAME" x="127" y="189.738" size="1.524" layer="95"/>
+</instance><instance part="X7" gate="-3" x="124.4600" y="193.0400" smashed="yes">
+<attribute name="NAME" x="127.0000" y="192.2780" size="1.524" layer="95"/>
+<attribute name="VALUE" x="123.6980" y="194.4370" size="1.778" layer="96"/>
+</instance><instance part="X7" gate="-4" x="124.4600" y="195.5800" smashed="yes">
+<attribute name="NAME" x="127.0000" y="194.8180" size="1.524" layer="95"/>
+<attribute name="VALUE" x="123.6980" y="196.9770" size="1.778" layer="96"/>
 </instance>
 <instance part="GND5" gate="1" x="121.92" y="187.96" smashed="yes">
 <attribute name="VALUE" x="119.38" y="185.42" size="1.778" layer="96"/>
@@ -29704,6 +29746,9 @@ You are welcome to use this library for commercial purposes. For attribution, we
 </instance>
 <instance part="X11" gate="-2" x="124.46" y="228.6" smashed="yes">
 <attribute name="NAME" x="127" y="227.838" size="1.524" layer="95"/>
+</instance><instance part="X11" gate="-3" x="124.4600" y="231.1400" smashed="yes">
+<attribute name="NAME" x="127.0000" y="230.3780" size="1.524" layer="95"/>
+<attribute name="VALUE" x="123.6980" y="232.5370" size="1.778" layer="96"/>
 </instance>
 <instance part="GND9" gate="1" x="121.92" y="226.06" smashed="yes">
 <attribute name="VALUE" x="119.38" y="223.52" size="1.778" layer="96"/>
@@ -29724,6 +29769,9 @@ You are welcome to use this library for commercial purposes. For attribution, we
 </instance>
 <instance part="X13" gate="-2" x="165.1" y="190.5" smashed="yes">
 <attribute name="NAME" x="167.64" y="189.738" size="1.524" layer="95"/>
+</instance><instance part="X13" gate="-3" x="165.1000" y="193.0400" smashed="yes">
+<attribute name="NAME" x="167.6400" y="192.2780" size="1.524" layer="95"/>
+<attribute name="VALUE" x="164.3380" y="194.4370" size="1.778" layer="96"/>
 </instance>
 <instance part="GND11" gate="1" x="162.56" y="187.96" smashed="yes">
 <attribute name="VALUE" x="160.02" y="185.42" size="1.778" layer="96"/>
@@ -29734,6 +29782,12 @@ You are welcome to use this library for commercial purposes. For attribution, we
 </instance>
 <instance part="X14" gate="-2" x="205.74" y="208.28" smashed="yes">
 <attribute name="NAME" x="208.28" y="207.518" size="1.524" layer="95"/>
+</instance><instance part="X14" gate="-3" x="205.7400" y="210.8200" smashed="yes">
+<attribute name="NAME" x="208.2800" y="210.0580" size="1.524" layer="95"/>
+<attribute name="VALUE" x="204.9780" y="212.2170" size="1.778" layer="96"/>
+</instance><instance part="X14" gate="-4" x="205.7400" y="213.3600" smashed="yes">
+<attribute name="NAME" x="208.2800" y="212.5980" size="1.524" layer="95"/>
+<attribute name="VALUE" x="204.9780" y="214.7570" size="1.778" layer="96"/>
 </instance>
 <instance part="GND12" gate="1" x="203.2" y="205.74" smashed="yes">
 <attribute name="VALUE" x="200.66" y="203.2" size="1.778" layer="96"/>
@@ -29744,6 +29798,9 @@ You are welcome to use this library for commercial purposes. For attribution, we
 </instance>
 <instance part="X15" gate="-2" x="205.74" y="190.5" smashed="yes">
 <attribute name="NAME" x="208.28" y="189.738" size="1.524" layer="95"/>
+</instance><instance part="X15" gate="-3" x="205.7400" y="193.0400" smashed="yes">
+<attribute name="NAME" x="208.2800" y="192.2780" size="1.524" layer="95"/>
+<attribute name="VALUE" x="204.9780" y="194.4370" size="1.778" layer="96"/>
 </instance>
 <instance part="GND13" gate="1" x="203.2" y="187.96" smashed="yes">
 <attribute name="VALUE" x="200.66" y="185.42" size="1.778" layer="96"/>
@@ -29774,6 +29831,9 @@ You are welcome to use this library for commercial purposes. For attribution, we
 </instance>
 <instance part="X18" gate="-2" x="205.74" y="246.38" smashed="yes">
 <attribute name="NAME" x="208.28" y="245.618" size="1.524" layer="95"/>
+</instance><instance part="X18" gate="-3" x="205.7400" y="248.9200" smashed="yes">
+<attribute name="NAME" x="208.2800" y="248.1580" size="1.524" layer="95"/>
+<attribute name="VALUE" x="204.9780" y="250.3170" size="1.778" layer="96"/>
 </instance>
 <instance part="GND16" gate="1" x="203.2" y="243.84" smashed="yes">
 <attribute name="VALUE" x="200.66" y="241.3" size="1.778" layer="96"/>
@@ -29784,6 +29844,9 @@ You are welcome to use this library for commercial purposes. For attribution, we
 </instance>
 <instance part="X19" gate="-2" x="205.74" y="228.6" smashed="yes">
 <attribute name="NAME" x="208.28" y="227.838" size="1.524" layer="95"/>
+</instance><instance part="X19" gate="-3" x="205.7400" y="231.1400" smashed="yes">
+<attribute name="NAME" x="208.2800" y="230.3780" size="1.524" layer="95"/>
+<attribute name="VALUE" x="204.9780" y="232.5370" size="1.778" layer="96"/>
 </instance>
 <instance part="GND17" gate="1" x="203.2" y="226.06" smashed="yes">
 <attribute name="VALUE" x="200.66" y="223.52" size="1.778" layer="96"/>
@@ -29794,6 +29857,9 @@ You are welcome to use this library for commercial purposes. For attribution, we
 </instance>
 <instance part="X20" gate="-2" x="83.82" y="172.72" smashed="yes">
 <attribute name="NAME" x="86.36" y="171.958" size="1.524" layer="95"/>
+</instance><instance part="X20" gate="-3" x="83.8200" y="175.2600" smashed="yes">
+<attribute name="NAME" x="86.3600" y="174.4980" size="1.524" layer="95"/>
+<attribute name="VALUE" x="83.0580" y="176.6570" size="1.778" layer="96"/>
 </instance>
 <instance part="GND18" gate="1" x="81.28" y="170.18" smashed="yes">
 <attribute name="VALUE" x="78.74" y="167.64" size="1.778" layer="96"/>
@@ -29804,6 +29870,9 @@ You are welcome to use this library for commercial purposes. For attribution, we
 </instance>
 <instance part="X21" gate="-2" x="124.46" y="172.72" smashed="yes">
 <attribute name="NAME" x="127" y="171.958" size="1.524" layer="95"/>
+</instance><instance part="X21" gate="-3" x="124.4600" y="175.2600" smashed="yes">
+<attribute name="NAME" x="127.0000" y="174.4980" size="1.524" layer="95"/>
+<attribute name="VALUE" x="123.6980" y="176.6570" size="1.778" layer="96"/>
 </instance>
 <instance part="GND19" gate="1" x="121.92" y="170.18" smashed="yes">
 <attribute name="VALUE" x="119.38" y="167.64" size="1.778" layer="96"/>
@@ -29814,6 +29883,9 @@ You are welcome to use this library for commercial purposes. For attribution, we
 </instance>
 <instance part="X24" gate="-2" x="205.74" y="172.72" smashed="yes">
 <attribute name="NAME" x="208.28" y="171.958" size="1.524" layer="95"/>
+</instance><instance part="X24" gate="-3" x="205.7400" y="175.2600" smashed="yes">
+<attribute name="NAME" x="208.2800" y="174.4980" size="1.524" layer="95"/>
+<attribute name="VALUE" x="204.9780" y="176.6570" size="1.778" layer="96"/>
 </instance>
 <instance part="GND35" gate="1" x="203.2" y="170.18" smashed="yes">
 <attribute name="VALUE" x="200.66" y="167.64" size="1.778" layer="96"/>
@@ -30275,6 +30347,9 @@ You are welcome to use this library for commercial purposes. For attribution, we
 </instance>
 <instance part="X22" gate="-2" x="139.7" y="233.68" smashed="yes">
 <attribute name="NAME" x="142.24" y="232.918" size="1.524" layer="95"/>
+</instance><instance part="X22" gate="-3" x="139.7000" y="236.2200" smashed="yes">
+<attribute name="NAME" x="142.2400" y="235.4580" size="1.524" layer="95"/>
+<attribute name="VALUE" x="138.9380" y="237.6170" size="1.778" layer="96"/>
 </instance>
 <instance part="GND1074" gate="1" x="96.52" y="231.14" smashed="yes">
 <attribute name="VALUE" x="93.98" y="228.6" size="1.778" layer="96"/>
@@ -30285,7 +30360,7 @@ You are welcome to use this library for commercial purposes. For attribution, we
 </instances>
 <busses>
 </busses>
-<nets><net name="N$U91_OE" class="0"><segment><pinref part="U91" gate="G$1" pin="OE"/><pinref part="R177" gate="G$1" pin="1"/></segment></net><net name="N$U90_OE" class="0"><segment><pinref part="U90" gate="G$1" pin="OE"/><pinref part="R176" gate="G$1" pin="1"/></segment></net><net name="+2V5_FPGA" class="0"><segment><pinref part="U90" gate="G$1" pin="VCCA"/><pinref part="U91" gate="G$1" pin="VCCA"/><pinref part="R176" gate="G$1" pin="2"/><pinref part="R177" gate="G$1" pin="2"/><pinref part="C354" gate="G$1" pin="1"/><pinref part="C355" gate="G$1" pin="1"/><pinref part="C358" gate="G$1" pin="1"/><pinref part="C359" gate="G$1" pin="1"/><pinref part="X57" gate="-1" pin="S"/><pinref part="U42" gate="G$2" pin="VCCO_14"/></segment></net><net name="FLASH_NRST_F" class="0"><segment><pinref part="U9" gate="A" pin="RESET"/><pinref part="U91" gate="G$1" pin="B2"/></segment></net><net name="FLASH_NCS_F" class="0"><segment><pinref part="U9" gate="A" pin="S"/><pinref part="U91" gate="G$1" pin="B1"/></segment></net><net name="FLASH_DQ3_F" class="0"><segment><pinref part="U9" gate="A" pin="DQ3/HOLD"/><pinref part="U90" gate="G$1" pin="B4"/></segment></net><net name="FLASH_DQ2_F" class="0"><segment><pinref part="U9" gate="A" pin="W/DQ2"/><pinref part="U90" gate="G$1" pin="B3"/></segment></net><net name="FLASH_DQ1_F" class="0"><segment><pinref part="U9" gate="A" pin="DQ1"/><pinref part="U90" gate="G$1" pin="B2"/></segment></net><net name="FLASH_DQ0_F" class="0"><segment><pinref part="U9" gate="A" pin="DQ0"/><pinref part="U90" gate="G$1" pin="B1"/></segment></net>
+<nets><net name="PG_2V5_FPGA" class="0"><segment><pinref part="X27" gate="-1" pin="S"/><pinref part="U2" gate="A" pin="PC2"/></segment></net><net name="PG_3V3_XO" class="0"><segment><pinref part="X26" gate="-1" pin="S"/><pinref part="U2" gate="A" pin="PC1"/></segment></net><net name="PG_3V3_ADTR" class="0"><segment><pinref part="X25" gate="-1" pin="S"/><pinref part="U2" gate="A" pin="PC0"/></segment></net><net name="N$U91_OE" class="0"><segment><pinref part="U91" gate="G$1" pin="OE"/><pinref part="R177" gate="G$1" pin="1"/></segment></net><net name="N$U90_OE" class="0"><segment><pinref part="U90" gate="G$1" pin="OE"/><pinref part="R176" gate="G$1" pin="1"/></segment></net><net name="+2V5_FPGA" class="0"><segment><pinref part="U90" gate="G$1" pin="VCCA"/><pinref part="U91" gate="G$1" pin="VCCA"/><pinref part="R176" gate="G$1" pin="2"/><pinref part="R177" gate="G$1" pin="2"/><pinref part="C354" gate="G$1" pin="1"/><pinref part="C355" gate="G$1" pin="1"/><pinref part="C358" gate="G$1" pin="1"/><pinref part="C359" gate="G$1" pin="1"/><pinref part="X57" gate="-1" pin="S"/><pinref part="U42" gate="G$2" pin="VCCO_14"/></segment></net><net name="FLASH_NRST_F" class="0"><segment><pinref part="U9" gate="A" pin="RESET"/><pinref part="U91" gate="G$1" pin="B2"/></segment></net><net name="FLASH_NCS_F" class="0"><segment><pinref part="U9" gate="A" pin="S"/><pinref part="U91" gate="G$1" pin="B1"/></segment></net><net name="FLASH_DQ3_F" class="0"><segment><pinref part="U9" gate="A" pin="DQ3/HOLD"/><pinref part="U90" gate="G$1" pin="B4"/></segment></net><net name="FLASH_DQ2_F" class="0"><segment><pinref part="U9" gate="A" pin="W/DQ2"/><pinref part="U90" gate="G$1" pin="B3"/></segment></net><net name="FLASH_DQ1_F" class="0"><segment><pinref part="U9" gate="A" pin="DQ1"/><pinref part="U90" gate="G$1" pin="B2"/></segment></net><net name="FLASH_DQ0_F" class="0"><segment><pinref part="U9" gate="A" pin="DQ0"/><pinref part="U90" gate="G$1" pin="B1"/></segment></net>
 <net name="+3V3" class="0">
 <segment>
 <pinref part="X24" gate="-1" pin="S"/>
@@ -30597,7 +30672,7 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <segment>
 <pinref part="X22" gate="-2" pin="S"/>
 <pinref part="GND1079" gate="1" pin="GND"/>
-<pinref part="U90" gate="G$1" pin="GND"/><pinref part="U91" gate="G$1" pin="GND"/><pinref part="C354" gate="G$1" pin="2"/><pinref part="C355" gate="G$1" pin="2"/><pinref part="C356" gate="G$1" pin="2"/><pinref part="C357" gate="G$1" pin="2"/><pinref part="C358" gate="G$1" pin="2"/><pinref part="C359" gate="G$1" pin="2"/><pinref part="X57" gate="-2" pin="S"/></segment>
+<pinref part="U90" gate="G$1" pin="GND"/><pinref part="U91" gate="G$1" pin="GND"/><pinref part="C354" gate="G$1" pin="2"/><pinref part="C355" gate="G$1" pin="2"/><pinref part="C356" gate="G$1" pin="2"/><pinref part="C357" gate="G$1" pin="2"/><pinref part="C358" gate="G$1" pin="2"/><pinref part="C359" gate="G$1" pin="2"/><pinref part="X57" gate="-2" pin="S"/><pinref part="X25" gate="-2" pin="S"/><pinref part="X26" gate="-2" pin="S"/><pinref part="X27" gate="-2" pin="S"/><pinref part="X6" gate="-3" pin="S"/><pinref part="X19" gate="-3" pin="S"/><pinref part="X15" gate="-3" pin="S"/><pinref part="X13" gate="-3" pin="S"/><pinref part="X11" gate="-3" pin="S"/><pinref part="X22" gate="-3" pin="S"/><pinref part="X14" gate="-3" pin="S"/><pinref part="X14" gate="-4" pin="S"/><pinref part="X5" gate="-3" pin="S"/><pinref part="X5" gate="-4" pin="S"/><pinref part="X7" gate="-3" pin="S"/><pinref part="X7" gate="-4" pin="S"/></segment>
 </net>
 <net name="+1V8_FPGA" class="0">
 <segment>

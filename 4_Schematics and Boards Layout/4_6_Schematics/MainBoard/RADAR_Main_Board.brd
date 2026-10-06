@@ -5441,7 +5441,24 @@
 <library name="eagle-ltspice">
 <description>Default symbols for import LTspice schematics&lt;p&gt;
 2012-10-29 alf@cadsoft.de&lt;br&gt;</description>
-<packages>
+<packages><package name="22-23-2041">
+<description>&lt;b&gt;KK® 254 Solid Header, Vertical, with Friction Lock, 4 Circuits, Tin (Sn) Plating&lt;/b&gt;&lt;p&gt;&lt;a href =http://www.molex.com/pdm_docs/sd/022232031_sd.pdf&gt;Datasheet &lt;/a&gt;</description>
+<wire x1="-5.08" y1="3.175" x2="5.08" y2="3.175" width="0.254" layer="21"/>
+<wire x1="5.08" y1="3.175" x2="5.08" y2="1.27" width="0.254" layer="21"/>
+<wire x1="5.08" y1="1.27" x2="5.08" y2="-3.175" width="0.254" layer="21"/>
+<wire x1="5.08" y1="-3.175" x2="-5.08" y2="-3.175" width="0.254" layer="21"/>
+<wire x1="-5.08" y1="-3.175" x2="-5.08" y2="1.27" width="0.254" layer="21"/>
+<wire x1="-5.08" y1="1.27" x2="-5.08" y2="3.175" width="0.254" layer="21"/>
+<wire x1="-5.08" y1="1.27" x2="5.08" y2="1.27" width="0.254" layer="21"/>
+<pad name="1" x="-5.08" y="0" drill="1" shape="long" rot="R90"/>
+
+
+<pad name="4" x="5.08" y="0" drill="1" shape="long" rot="R90"/>
+<pad name="2" x="0" y="0" drill="1" shape="long" rot="R90"/>
+<pad name="3" x="2.54" y="0" drill="1" shape="long" rot="R90"/>
+<text x="-5.08" y="5.08" size="1.016" layer="25" ratio="10">&gt;NAME</text>
+<text x="-5.08" y="-5.08" size="1.016" layer="27" ratio="10">&gt;VALUE</text>
+</package>
 <package name="C0201">
 <description>Source: http://www.avxcorp.com/docs/catalogs/cx5r.pdf</description>
 <rectangle x1="-0.3" y1="-0.15" x2="-0.15" y2="0.15" layer="51"/>
@@ -12271,7 +12288,7 @@ Your PCBWay Team
 <param name="cfChangeDir" value="25"/>
 </pass>
 </autorouter>
-<elements><element name="R178" library="rcl" package="R0201" value="10k" x="33.2" y="58.95" smashed="yes"/><element name="R179" library="rcl" package="R0201" value="10k" x="29.200000000000003" y="56.95" smashed="yes"/><element name="R180" library="rcl" package="R0201" value="10k" x="34.2" y="53.95" smashed="yes"/><element name="R181" library="rcl" package="R0201" value="10k" x="38.2" y="57.95" smashed="yes"/><element name="R182" library="rcl" package="R0201" value="10k" x="33.0" y="29.0" smashed="yes"/><element name="R183" library="rcl" package="R0201" value="10k" x="29.0" y="27.0" smashed="yes"/><element name="R184" library="rcl" package="R0201" value="10k" x="34.0" y="24.0" smashed="yes"/><element name="R185" library="rcl" package="R0201" value="10k" x="38.0" y="28.0" smashed="yes"/><element name="R186" library="rcl" package="R0201" value="10k" x="62.9" y="29.2" smashed="yes"/><element name="R187" library="rcl" package="R0201" value="10k" x="58.9" y="27.2" smashed="yes"/><element name="R188" library="rcl" package="R0201" value="10k" x="63.9" y="24.2" smashed="yes"/><element name="R189" library="rcl" package="R0201" value="10k" x="67.9" y="28.2" smashed="yes"/><element name="R190" library="rcl" package="R0201" value="10k" x="63.0" y="59.0" smashed="yes"/><element name="R191" library="rcl" package="R0201" value="10k" x="59.0" y="57.0" smashed="yes"/><element name="R192" library="rcl" package="R0201" value="10k" x="64.0" y="54.0" smashed="yes"/><element name="R193" library="rcl" package="R0201" value="10k" x="68.0" y="58.0" smashed="yes"/><element name="U90" library="My_Library_RADAR" package="PW0014A-MFG" value="TXS0104EPWR" x="36.68" y="149.28" smashed="yes"/><element name="U91" library="My_Library_RADAR" package="DCU0008A-MFG" value="TXS0102DCUR" x="23.04" y="192.82" smashed="yes"/><element name="R176" library="rcl" package="R0201" value="10k" x="56.0" y="196.0" smashed="yes"/><element name="R177" library="rcl" package="R0201" value="10k" x="32.0" y="200.0" smashed="yes"/><element name="C354" library="rcl" package="C0201" value="0.1uF" x="44.0" y="170.0" smashed="yes"/><element name="C355" library="rcl" package="C0201" value="0.1uF" x="52.0" y="170.0" smashed="yes"/><element name="C356" library="rcl" package="C0201" value="0.1uF" x="44.0" y="198.0" smashed="yes"/><element name="C357" library="rcl" package="C0201" value="0.1uF" x="52.0" y="198.0" smashed="yes"/><element name="C358" library="rcl" package="C0201" value="0.1uF" x="36.0" y="170.0" smashed="yes"/><element name="C359" library="rcl" package="C0201" value="0.1uF" x="36.0" y="198.0" smashed="yes"/><element name="X57" library="con-molex" package="22-23-2021" value="22-23-2021" x="6.02" y="230.0" smashed="yes"/><element name="J56" library="142-0731-211" package="1420731211" value="142-0731-211" x="100.86" y="212.01" smashed="yes"/><element name="J57" library="142-0731-211" package="1420731211" value="142-0731-211" x="101.86" y="233.0" smashed="yes"/><element name="J58" library="142-0731-211" package="1420731211" value="142-0731-211" x="71.0" y="162.0" smashed="yes"/><element name="J59" library="142-0731-211" package="1420731211" value="142-0731-211" x="84.0" y="160.0" smashed="yes"/><element name="R174" library="rcl" package="R0201" value="0R" x="110.0" y="220.0" smashed="yes"/><element name="R175" library="rcl" package="R0201" value="0R" x="77.0" y="169.0" smashed="yes"/>
+<elements><element name="X25" library="con-molex" package="22-23-2021" value="22-23-2021" x="30.0" y="227.5" smashed="yes"/><element name="X26" library="con-molex" package="22-23-2021" value="22-23-2021" x="30.0" y="234.0" smashed="yes"/><element name="X27" library="con-molex" package="22-23-2021" value="22-23-2021" x="30.0" y="240.5" smashed="yes"/><element name="R178" library="rcl" package="R0201" value="10k" x="33.2" y="58.95" smashed="yes"/><element name="R179" library="rcl" package="R0201" value="10k" x="29.200000000000003" y="56.95" smashed="yes"/><element name="R180" library="rcl" package="R0201" value="10k" x="34.2" y="53.95" smashed="yes"/><element name="R181" library="rcl" package="R0201" value="10k" x="38.2" y="57.95" smashed="yes"/><element name="R182" library="rcl" package="R0201" value="10k" x="33.0" y="29.0" smashed="yes"/><element name="R183" library="rcl" package="R0201" value="10k" x="29.0" y="27.0" smashed="yes"/><element name="R184" library="rcl" package="R0201" value="10k" x="34.0" y="24.0" smashed="yes"/><element name="R185" library="rcl" package="R0201" value="10k" x="38.0" y="28.0" smashed="yes"/><element name="R186" library="rcl" package="R0201" value="10k" x="62.9" y="29.2" smashed="yes"/><element name="R187" library="rcl" package="R0201" value="10k" x="58.9" y="27.2" smashed="yes"/><element name="R188" library="rcl" package="R0201" value="10k" x="63.9" y="24.2" smashed="yes"/><element name="R189" library="rcl" package="R0201" value="10k" x="67.9" y="28.2" smashed="yes"/><element name="R190" library="rcl" package="R0201" value="10k" x="63.0" y="59.0" smashed="yes"/><element name="R191" library="rcl" package="R0201" value="10k" x="59.0" y="57.0" smashed="yes"/><element name="R192" library="rcl" package="R0201" value="10k" x="64.0" y="54.0" smashed="yes"/><element name="R193" library="rcl" package="R0201" value="10k" x="68.0" y="58.0" smashed="yes"/><element name="U90" library="My_Library_RADAR" package="PW0014A-MFG" value="TXS0104EPWR" x="36.68" y="149.28" smashed="yes"/><element name="U91" library="My_Library_RADAR" package="DCU0008A-MFG" value="TXS0102DCUR" x="23.04" y="192.82" smashed="yes"/><element name="R176" library="rcl" package="R0201" value="10k" x="56.0" y="196.0" smashed="yes"/><element name="R177" library="rcl" package="R0201" value="10k" x="32.0" y="200.0" smashed="yes"/><element name="C354" library="rcl" package="C0201" value="0.1uF" x="44.0" y="170.0" smashed="yes"/><element name="C355" library="rcl" package="C0201" value="0.1uF" x="52.0" y="170.0" smashed="yes"/><element name="C356" library="rcl" package="C0201" value="0.1uF" x="44.0" y="198.0" smashed="yes"/><element name="C357" library="rcl" package="C0201" value="0.1uF" x="52.0" y="198.0" smashed="yes"/><element name="C358" library="rcl" package="C0201" value="0.1uF" x="36.0" y="170.0" smashed="yes"/><element name="C359" library="rcl" package="C0201" value="0.1uF" x="36.0" y="198.0" smashed="yes"/><element name="X57" library="con-molex" package="22-23-2021" value="22-23-2021" x="6.02" y="230.0" smashed="yes"/><element name="J56" library="142-0731-211" package="1420731211" value="142-0731-211" x="100.86" y="212.01" smashed="yes"/><element name="J57" library="142-0731-211" package="1420731211" value="142-0731-211" x="101.86" y="233.0" smashed="yes"/><element name="J58" library="142-0731-211" package="1420731211" value="142-0731-211" x="71.0" y="162.0" smashed="yes"/><element name="J59" library="142-0731-211" package="1420731211" value="142-0731-211" x="84.0" y="160.0" smashed="yes"/><element name="R174" library="rcl" package="R0201" value="0R" x="110.0" y="220.0" smashed="yes"/><element name="R175" library="rcl" package="R0201" value="0R" x="77.0" y="169.0" smashed="yes"/>
 <element name="C1" library="eagle-ltspice" package="C0201" value="0.1uF" x="64.52" y="156.43" smashed="yes">
 <attribute name="NAME" x="63.885" y="157.065" size="1.27" layer="25"/>
 <attribute name="SPICEMODEL" value="NONE" x="158.5" y="-140.75" size="1.778" layer="27" display="off"/>
@@ -16782,7 +16799,7 @@ Your PCBWay Team
 <attribute name="POPULARITY" value="40" x="-218.94" y="137.22" size="1.778" layer="27" rot="R270" display="off"/>
 <attribute name="VALUE" x="-0.5" y="167.7" size="1.016" layer="27" ratio="10" rot="R270"/>
 </element>
-<element name="X11" library="con-molex" package="22-23-2021" value="22-23-2021" x="246.88" y="107.47" smashed="yes" rot="R90">
+<element name="X11" library="con-molex" package="22-23-2031" value="22-23-2021" x="246.88" y="107.47" smashed="yes" rot="R90">
 <attribute name="MF" value="MOLEX" x="470.4" y="144.3" size="1.778" layer="27" rot="R90" display="off"/>
 <attribute name="MPN" value="22-23-2021" x="470.4" y="144.3" size="1.778" layer="27" rot="R90" display="off"/>
 <attribute name="NAME" x="243.07" y="104.93" size="1.016" layer="25" ratio="10" rot="R90"/>
@@ -16800,7 +16817,7 @@ Your PCBWay Team
 <attribute name="POPULARITY" value="40" x="470" y="123.5" size="1.778" layer="27" rot="R90" display="off"/>
 <attribute name="VALUE" x="251.56" y="75.24" size="1.016" layer="27" ratio="10" rot="R90"/>
 </element>
-<element name="X13" library="con-molex" package="22-23-2021" value="22-23-2021" x="202.06" y="277.23" smashed="yes" rot="R180">
+<element name="X13" library="con-molex" package="22-23-2031" value="22-23-2021" x="202.06" y="277.23" smashed="yes" rot="R180">
 <attribute name="MF" value="MOLEX" x="147.45" y="500.75" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="MPN" value="22-23-2021" x="147.45" y="500.75" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="NAME" x="204.6" y="273.42" size="1.016" layer="25" ratio="10" rot="R180"/>
@@ -16809,7 +16826,7 @@ Your PCBWay Team
 <attribute name="POPULARITY" value="40" x="147.45" y="500.75" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="VALUE" x="204.6" y="282.31" size="1.016" layer="27" ratio="10" rot="R180"/>
 </element>
-<element name="X14" library="con-molex" package="22-23-2021" value="22-23-2021" x="118.5" y="278.78" smashed="yes" rot="R180">
+<element name="X14" library="con-molex" package="22-23-2041" value="22-23-2021" x="118.5" y="278.78" smashed="yes" rot="R180">
 <attribute name="MF" value="MOLEX" x="55" y="502.3" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="MPN" value="22-23-2021" x="55" y="502.3" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="NAME" x="121.04" y="274.97" size="1.016" layer="25" ratio="10" rot="R180"/>
@@ -16818,7 +16835,7 @@ Your PCBWay Team
 <attribute name="POPULARITY" value="40" x="55" y="502.3" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="VALUE" x="121.04" y="283.86" size="1.016" layer="27" ratio="10" rot="R180"/>
 </element>
-<element name="X15" library="con-molex" package="22-23-2021" value="22-23-2021" x="186.61" y="90.97" smashed="yes">
+<element name="X15" library="con-molex" package="22-23-2031" value="22-23-2021" x="186.61" y="90.97" smashed="yes">
 <attribute name="MF" value="MOLEX" x="259" y="-132.55" size="1.778" layer="27" display="off"/>
 <attribute name="MPN" value="22-23-2021" x="259" y="-132.55" size="1.778" layer="27" display="off"/>
 <attribute name="NAME" x="184.07" y="94.78" size="1.016" layer="25" ratio="10"/>
@@ -16854,7 +16871,7 @@ Your PCBWay Team
 <attribute name="POPULARITY" value="40" x="-218" y="42.5" size="1.778" layer="27" rot="R270" display="off"/>
 <attribute name="VALUE" x="0.44" y="144.1" size="1.016" layer="27" ratio="10" rot="R270"/>
 </element>
-<element name="X19" library="con-molex" package="22-23-2021" value="22-23-2021" x="4.97" y="47.25" smashed="yes" rot="R270">
+<element name="X19" library="con-molex" package="22-23-2031" value="22-23-2021" x="4.97" y="47.25" smashed="yes" rot="R270">
 <attribute name="MF" value="MOLEX" x="-218.55" y="-60.7" size="1.778" layer="27" rot="R270" display="off"/>
 <attribute name="MPN" value="22-23-2021" x="-218.55" y="-60.7" size="1.778" layer="27" rot="R270" display="off"/>
 <attribute name="NAME" x="8.78" y="49.79" size="1.016" layer="25" ratio="10" rot="R270"/>
@@ -17160,7 +17177,7 @@ Your PCBWay Team
 <attribute name="POPULARITY" value="35" x="55.032584375" y="254.97651875" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="VALUE" x="138.852584375" y="25.10651875" size="1.016" layer="27" ratio="10" rot="R180"/>
 </element>
-<element name="X5" library="con-molex" package="22-23-2021" value="22-23-2021" x="242.67" y="278.03" smashed="yes" rot="R180">
+<element name="X5" library="con-molex" package="22-23-2041" value="22-23-2021" x="242.67" y="278.03" smashed="yes" rot="R180">
 <attribute name="MF" value="MOLEX" x="-38" y="482.5" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="MPN" value="22-23-2021" x="-38" y="482.5" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="NAME" x="245.21" y="274.22" size="1.016" layer="25" ratio="10" rot="R180"/>
@@ -17232,7 +17249,7 @@ Your PCBWay Team
 <attribute name="POPULARITY" value="40" x="-230" y="-117.5" size="1.778" layer="27" rot="R270" display="off"/>
 <attribute name="VALUE" x="-0.13" y="19.66" size="1.016" layer="27" ratio="10" rot="R270"/>
 </element>
-<element name="X6" library="con-molex" package="22-23-2021" value="22-23-2021" x="246.53" y="43.94" smashed="yes" rot="R90">
+<element name="X6" library="con-molex" package="22-23-2031" value="22-23-2021" x="246.53" y="43.94" smashed="yes" rot="R90">
 <attribute name="MF" value="MOLEX" x="451" y="333.5" size="1.778" layer="27" rot="R90" display="off"/>
 <attribute name="MPN" value="22-23-2021" x="451" y="333.5" size="1.778" layer="27" rot="R90" display="off"/>
 <attribute name="NAME" x="242.72" y="41.4" size="1.016" layer="25" ratio="10" rot="R90"/>
@@ -17241,7 +17258,7 @@ Your PCBWay Team
 <attribute name="POPULARITY" value="40" x="451" y="333.5" size="1.778" layer="27" rot="R90" display="off"/>
 <attribute name="VALUE" x="251.61" y="41.4" size="1.016" layer="27" ratio="10" rot="R90"/>
 </element>
-<element name="X7" library="con-molex" package="22-23-2021" value="22-23-2021" x="123.05" y="91.97" smashed="yes">
+<element name="X7" library="con-molex" package="22-23-2041" value="22-23-2021" x="123.05" y="91.97" smashed="yes">
 <attribute name="MF" value="MOLEX" x="421.5" y="-112.5" size="1.778" layer="27" display="off"/>
 <attribute name="MPN" value="22-23-2021" x="421.5" y="-112.5" size="1.778" layer="27" display="off"/>
 <attribute name="NAME" x="120.51" y="95.78" size="1.016" layer="25" ratio="10"/>
@@ -17348,7 +17365,7 @@ Your PCBWay Team
 <attribute name="POPULARITY" value="40" x="190.9" y="276.6" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="VALUE" x="193.44" y="281.68" size="1.016" layer="27" ratio="10" rot="R180"/>
 </element>
-<element name="X22" library="con-molex" package="22-23-2021" value="22-23-2021" x="180.4" y="276.6" smashed="yes" rot="R180">
+<element name="X22" library="con-molex" package="22-23-2031" value="22-23-2021" x="180.4" y="276.6" smashed="yes" rot="R180">
 <attribute name="MF" value="MOLEX" x="180.4" y="276.6" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="MPN" value="22-23-2021" x="180.4" y="276.6" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="NAME" x="182.94" y="272.79" size="1.016" layer="25" ratio="10" rot="R180"/>
@@ -17412,7 +17429,7 @@ Your PCBWay Team
 <attribute name="SPICEPREFIX" value="C" x="53.7469375" y="136.535715625" size="1.778" layer="27" rot="R180" display="off"/>
 </element>
 </elements>
-<signals><signal name="N$U91_OE" class="0"><contactref element="U91" pad="6"/><contactref element="R177" pad="1"/></signal><signal name="N$U90_OE" class="0"><contactref element="U90" pad="8"/><contactref element="R176" pad="1"/></signal><signal name="+2V5_FPGA" class="0"><contactref element="U90" pad="1"/><contactref element="U91" pad="3"/><contactref element="R176" pad="2"/><contactref element="R177" pad="2"/><contactref element="C354" pad="1"/><contactref element="C355" pad="1"/><contactref element="C358" pad="1"/><contactref element="C359" pad="1"/><contactref element="X57" pad="1"/><contactref element="U42" pad="L16"/><contactref element="U42" pad="M13"/><contactref element="U42" pad="N10"/><contactref element="U42" pad="P7"/><contactref element="U42" pad="R14"/><contactref element="U42" pad="T11"/></signal><signal name="FLASH_NRST_F" class="0"><contactref element="U9" pad="A4"/><contactref element="U91" pad="1"/></signal><signal name="FLASH_NCS_F" class="0"><contactref element="U9" pad="C2"/><contactref element="U91" pad="8"/></signal><signal name="FLASH_DQ3_F" class="0"><contactref element="U9" pad="D4"/><contactref element="U90" pad="10"/></signal><signal name="FLASH_DQ2_F" class="0"><contactref element="U9" pad="C4"/><contactref element="U90" pad="11"/></signal><signal name="FLASH_DQ1_F" class="0"><contactref element="U9" pad="D2"/><contactref element="U90" pad="12"/></signal><signal name="FLASH_DQ0_F" class="0"><contactref element="U9" pad="D3"/><contactref element="U90" pad="13"/></signal>
+<signals><signal name="PG_2V5_FPGA" class="0"><contactref element="X27" pad="1"/></signal><signal name="PG_3V3_XO" class="0"><contactref element="X26" pad="1"/></signal><signal name="PG_3V3_ADTR" class="0"><contactref element="X25" pad="1"/></signal><signal name="N$U91_OE" class="0"><contactref element="U91" pad="6"/><contactref element="R177" pad="1"/></signal><signal name="N$U90_OE" class="0"><contactref element="U90" pad="8"/><contactref element="R176" pad="1"/></signal><signal name="+2V5_FPGA" class="0"><contactref element="U90" pad="1"/><contactref element="U91" pad="3"/><contactref element="R176" pad="2"/><contactref element="R177" pad="2"/><contactref element="C354" pad="1"/><contactref element="C355" pad="1"/><contactref element="C358" pad="1"/><contactref element="C359" pad="1"/><contactref element="X57" pad="1"/><contactref element="U42" pad="L16"/><contactref element="U42" pad="M13"/><contactref element="U42" pad="N10"/><contactref element="U42" pad="P7"/><contactref element="U42" pad="R14"/><contactref element="U42" pad="T11"/></signal><signal name="FLASH_NRST_F" class="0"><contactref element="U9" pad="A4"/><contactref element="U91" pad="1"/></signal><signal name="FLASH_NCS_F" class="0"><contactref element="U9" pad="C2"/><contactref element="U91" pad="8"/></signal><signal name="FLASH_DQ3_F" class="0"><contactref element="U9" pad="D4"/><contactref element="U90" pad="10"/></signal><signal name="FLASH_DQ2_F" class="0"><contactref element="U9" pad="C4"/><contactref element="U90" pad="11"/></signal><signal name="FLASH_DQ1_F" class="0"><contactref element="U9" pad="D2"/><contactref element="U90" pad="12"/></signal><signal name="FLASH_DQ0_F" class="0"><contactref element="U9" pad="D3"/><contactref element="U90" pad="13"/></signal>
 <signal name="+3V3">
 <contactref element="X24" pad="1"/>
 <contactref element="JP2" pad="1"/>
@@ -25575,7 +25592,7 @@ Your PCBWay Team
 <wire x1="53.047809375" y1="145.40843125" x2="52.948040625" y2="145.5082" width="0.2" layer="1"/>
 <wire x1="52.948040625" y1="145.5082" x2="52.948040625" y2="146.0495" width="0.2" layer="1"/>
 <wire x1="52.948040625" y1="146.0495" x2="52.962915625" y2="146.064375" width="0.2" layer="1"/>
-<contactref element="J56" pad="2"/><contactref element="J56" pad="3"/><contactref element="J56" pad="4"/><contactref element="J56" pad="5"/><contactref element="J57" pad="2"/><contactref element="J57" pad="3"/><contactref element="J57" pad="4"/><contactref element="J57" pad="5"/><contactref element="J58" pad="2"/><contactref element="J58" pad="3"/><contactref element="J58" pad="4"/><contactref element="J58" pad="5"/><contactref element="J59" pad="2"/><contactref element="J59" pad="3"/><contactref element="J59" pad="4"/><contactref element="J59" pad="5"/><contactref element="U90" pad="7"/><contactref element="U91" pad="2"/><contactref element="C354" pad="2"/><contactref element="C355" pad="2"/><contactref element="C356" pad="2"/><contactref element="C357" pad="2"/><contactref element="C358" pad="2"/><contactref element="C359" pad="2"/><contactref element="X57" pad="2"/></signal>
+<contactref element="J56" pad="2"/><contactref element="J56" pad="3"/><contactref element="J56" pad="4"/><contactref element="J56" pad="5"/><contactref element="J57" pad="2"/><contactref element="J57" pad="3"/><contactref element="J57" pad="4"/><contactref element="J57" pad="5"/><contactref element="J58" pad="2"/><contactref element="J58" pad="3"/><contactref element="J58" pad="4"/><contactref element="J58" pad="5"/><contactref element="J59" pad="2"/><contactref element="J59" pad="3"/><contactref element="J59" pad="4"/><contactref element="J59" pad="5"/><contactref element="U90" pad="7"/><contactref element="U91" pad="2"/><contactref element="C354" pad="2"/><contactref element="C355" pad="2"/><contactref element="C356" pad="2"/><contactref element="C357" pad="2"/><contactref element="C358" pad="2"/><contactref element="C359" pad="2"/><contactref element="X57" pad="2"/><contactref element="X25" pad="2"/><contactref element="X26" pad="2"/><contactref element="X27" pad="2"/><contactref element="X6" pad="3"/><contactref element="X19" pad="3"/><contactref element="X15" pad="3"/><contactref element="X13" pad="3"/><contactref element="X11" pad="3"/><contactref element="X22" pad="3"/><contactref element="X14" pad="3"/><contactref element="X14" pad="4"/><contactref element="X5" pad="3"/><contactref element="X5" pad="4"/><contactref element="X7" pad="3"/><contactref element="X7" pad="4"/></signal>
 <signal name="+1V8_FPGA">
 <contactref element="X10" pad="1"/>
 <contactref element="U42" pad="G8"/>

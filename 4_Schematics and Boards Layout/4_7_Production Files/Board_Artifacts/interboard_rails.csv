@@ -5,14 +5,12 @@ Rail,Boards,BoardsCount,TotalPins,NearDuplicates
 +1V8_FPGA,MainBoard PowerBoard,2,25,
 +2V5_FPGA,MainBoard PowerBoard,2,16,
 +3V3,MainBoard PowerBoard,2,49,
-+3V3_ADAR12,MainBoard,1,4,+3V3_ADAR_12
++3V3_ADAR12,MainBoard PowerBoard,2,10,
 +3V3_ADAR1_F,MainBoard,1,7,
 +3V3_ADAR2_F,MainBoard,1,8,
-+3V3_ADAR34,MainBoard,1,4,+3V3_ADAR_34
++3V3_ADAR34,MainBoard PowerBoard,2,10,
 +3V3_ADAR3_F,MainBoard,1,8,
 +3V3_ADAR4_F,MainBoard,1,9,
-+3V3_ADAR_12,PowerBoard,1,6,+3V3_ADAR12
-+3V3_ADAR_34,PowerBoard,1,6,+3V3_ADAR34
 +3V3_ADTR,MainBoard PowerBoard,2,23,
 +3V3_AN,MainBoard PowerBoard,2,16,
 +3V3_AN1_F,MainBoard,1,5,
@@ -35,7 +33,7 @@ Rail,Boards,BoardsCount,TotalPins,NearDuplicates
 +5V0_3,PowerBoard,1,8,
 +5V0_4,PowerBoard,1,8,
 +5V0_5,PowerBoard,1,15,
-+5V0_ADAR,PowerBoard,1,7,
++5V0_ADAR,PowerBoard,1,9,
 +5V0_ADTR,PowerBoard,1,9,
 +5V0_LO,FreqSynth PowerBoard,2,10,
 +5V0_PA_1,MainBoard PowerBoard,2,11,
@@ -44,8 +42,8 @@ Rail,Boards,BoardsCount,TotalPins,NearDuplicates
 +5V5_PA,MainBoard PowerBoard,2,11,
 -3V3_SW,MainBoard PowerBoard,2,20,
 -3V4,MainBoard PowerBoard,2,73,
--5V0_ADAR12,MainBoard PowerBoard,2,6,
--5V0_ADAR34,MainBoard PowerBoard,2,6,
+-5V0_ADAR12,MainBoard PowerBoard,2,7,
+-5V0_ADAR34,MainBoard PowerBoard,2,7,
 -5V5_PA,MainBoard PowerBoard,2,24,
 VIN,PowerBoard,1,76,
 VIN_M,PA,1,18,

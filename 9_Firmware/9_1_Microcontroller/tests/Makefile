@@ -64,7 +64,9 @@ TESTS_MOCK_ONLY := test_pa_gate_bias_contract \
                    test_gap3_emergency_stop_rails
 
 # Tests that are standalone (no mocks needed, pure logic)
-TESTS_STANDALONE := test_pa_gate_bias \
+TESTS_STANDALONE := test_rail_fault \
+                    test_pa_bias_sequence \
+                    test_pa_gate_bias \
                     test_bug12_pa_cal_loop_inverted \
                     test_bug13_dac2_adc_buffer_mismatch \
                     test_gap3_iwdg_config \
@@ -170,6 +172,14 @@ test_gap3_emergency_stop_rails: test_gap3_emergency_stop_rails.c $(MOCK_OBJS)
 	$(CC) $(CFLAGS) $(INCLUDES) $< $(MOCK_OBJS) -o $@
 
 # Gap-3 safety tests -- standalone (pure logic)
+# rail-good monitor: latch behaviour (RAIL_FAULT.c + its header)
+test_rail_fault: test_rail_fault.c ../9_1_1_C_Cpp_Libraries/RAIL_FAULT.c
+	$(CC) $(CFLAGS) $(INCLUDES) $< ../9_1_1_C_Cpp_Libraries/RAIL_FAULT.c -o $@
+
+# PA bias sequence: the order is the safety property (PA_BIAS_SEQUENCE.c + its header)
+test_pa_bias_sequence: test_pa_bias_sequence.c ../9_1_1_C_Cpp_Libraries/PA_BIAS_SEQUENCE.c
+	$(CC) $(CFLAGS) $(INCLUDES) $< ../9_1_1_C_Cpp_Libraries/PA_BIAS_SEQUENCE.c -o $@
+
 # gate-bias contract: needs the library headers (PA_GATE_BIAS.h)
 test_pa_gate_bias: test_pa_gate_bias.cpp
 	$(CXX) $(CXXFLAGS) $(INCLUDES) $< -lm -o $@

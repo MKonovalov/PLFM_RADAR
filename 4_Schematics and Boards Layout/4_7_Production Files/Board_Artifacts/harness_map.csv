@@ -1,173 +1,259 @@
 Board,Connector,Part,Pin,Net,CounterpartBoard,Keying,Notes
-Main board,X1,22-23-2021,-1.S,+3V4,MainBoard PowerBoard,,rail spans 2 boards
-Main board,X1,22-23-2021,-2.S,GND,local,,
-Main board,X4,22-23-2021,-1.S,+3V3_ADTR,MainBoard PowerBoard,,rail spans 2 boards
-Main board,X4,22-23-2021,-2.S,GND,local,,
-Main board,X5,22-23-2021,-1.S,+5V0_PA_2,MainBoard PowerBoard,,rail spans 2 boards
-Main board,X5,22-23-2021,-2.S,GND,local,,
-Main board,X6,22-23-2021,-1.S,-3V3_SW,MainBoard PowerBoard,,rail spans 2 boards
-Main board,X6,22-23-2021,-2.S,GND,local,,
-Main board,X7,22-23-2021,-1.S,+5V0_PA_3,MainBoard PowerBoard,,rail spans 2 boards
-Main board,X7,22-23-2021,-2.S,GND,local,,
-Main board,X8,22-23-2021,-1.S,+1V0_FPGA,MainBoard PowerBoard,,rail spans 2 boards
-Main board,X8,22-23-2021,-2.S,GND,local,,
-Main board,X9,22-23-2021,-1.S,+3V3_AN,MainBoard PowerBoard,,rail spans 2 boards
-Main board,X9,22-23-2021,-2.S,GND,local,,
-Main board,X10,22-23-2021,-1.S,+1V8_FPGA,MainBoard PowerBoard,,rail spans 2 boards
-Main board,X10,22-23-2021,-2.S,GND,local,,
-Main board,X11,22-23-2021,-1.S,-3V4,MainBoard PowerBoard,,rail spans 2 boards
-Main board,X11,22-23-2021,-2.S,GND,local,,
-Main board,X12,22-23-2021,-1.S,+3V3_VDD_SW,MainBoard PowerBoard,,rail spans 2 boards
-Main board,X12,22-23-2021,-2.S,GND,local,,
-Main board,X13,22-23-2021,-1.S,-5V0_ADAR12,MainBoard PowerBoard,,rail spans 2 boards
-Main board,X13,22-23-2021,-2.S,GND,local,,
-Main board,X14,22-23-2021,-1.S,+5V0_PA_1,MainBoard PowerBoard,,rail spans 2 boards
-Main board,X14,22-23-2021,-2.S,GND,local,,
-Main board,X15,22-23-2021,-1.S,-5V0_ADAR34,MainBoard PowerBoard,,rail spans 2 boards
-Main board,X15,22-23-2021,-2.S,GND,local,,
-Main board,X16,22-23-2021,-1.S,+3V3_FPGA,MainBoard PowerBoard,,rail spans 2 boards
-Main board,X16,22-23-2021,-2.S,GND,local,,
-Main board,X17,22-23-2021,-1.S,+1V8_CLOCK,FreqSynth MainBoard PowerBoard,,rail spans 3 boards
-Main board,X17,22-23-2021,-2.S,GND,local,,
-Main board,X18,22-23-2021,-1.S,+5V0_0,MainBoard PowerBoard,,rail spans 2 boards
-Main board,X18,22-23-2021,-2.S,GND,local,,
-Main board,X19,22-23-2021,-1.S,-5V5_PA,MainBoard PowerBoard,,rail spans 2 boards
-Main board,X19,22-23-2021,-2.S,GND,local,,
-Main board,X20,22-23-2021,-1.S,+3V3_ADAR12,MainBoard,,
-Main board,X20,22-23-2021,-2.S,GND,local,,
-Main board,X21,22-23-2021,-1.S,+3V3_ADAR34,MainBoard,,
-Main board,X21,22-23-2021,-2.S,GND,local,,
-Main board,X22,22-23-2021,-1.S,-3V4,MainBoard PowerBoard,,rail spans 2 boards
-Main board,X22,22-23-2021,-2.S,GND,local,,
-Main board,X24,22-23-2021,-1.S,+3V3,MainBoard PowerBoard,,rail spans 2 boards
-Main board,X24,22-23-2021,-2.S,GND,local,,
-Main board,X54,22-23-2021,-1.S,+3V4,MainBoard PowerBoard,,rail spans 2 boards
-Main board,X54,22-23-2021,-2.S,GND,local,,
-Main board,X55,22-23-2021,-1.S,+5V5_PA,MainBoard PowerBoard,,rail spans 2 boards
-Main board,X55,22-23-2021,-2.S,GND,local,,
-Main board,X56,22-23-2021,-1.S,+3V3_AN,MainBoard PowerBoard,,rail spans 2 boards
-Main board,X56,22-23-2021,-2.S,GND,local,,
-Main board,X57,22-23-2021,-1.S,+2V5_FPGA,MainBoard PowerBoard,,rail spans 2 boards
-Main board,X57,22-23-2021,-2.S,GND,local,,
-Main board,X_1,22-23-2021,-1.S,VG_15,local,,
-Main board,X_1,22-23-2021,-2.S,GND,local,,
-Main board,X_2,22-23-2021,-1.S,VG_13,local,,
-Main board,X_2,22-23-2021,-2.S,GND,local,,
-Main board,X_3,22-23-2021,-1.S,VG_7,local,,
-Main board,X_3,22-23-2021,-2.S,GND,local,,
-Main board,X_4,22-23-2021,-1.S,VG_5,local,,
-Main board,X_4,22-23-2021,-2.S,GND,local,,
-Main board,X_5,22-23-2021,-1.S,VG_9,local,,
-Main board,X_5,22-23-2021,-2.S,GND,local,,
-Main board,X_6,22-23-2021,-1.S,VG_11,local,,
-Main board,X_6,22-23-2021,-2.S,GND,local,,
-Main board,X_7,22-23-2021,-1.S,VG_1,local,,
-Main board,X_7,22-23-2021,-2.S,GND,local,,
-Main board,X_8,22-23-2021,-1.S,VG_3,local,,
-Main board,X_8,22-23-2021,-2.S,GND,local,,
-Main board,X_9,22-23-2021,-1.S,VG_14,local,,
-Main board,X_9,22-23-2021,-2.S,GND,local,,
-Main board,X_10,22-23-2021,-1.S,VG_16,local,,
-Main board,X_10,22-23-2021,-2.S,GND,local,,
-Main board,X_11,22-23-2021,-1.S,VG_6,local,,
-Main board,X_11,22-23-2021,-2.S,GND,local,,
-Main board,X_12,22-23-2021,-1.S,VG_8,local,,
-Main board,X_12,22-23-2021,-2.S,GND,local,,
-Main board,X_13,22-23-2021,-1.S,VG_12,local,,
-Main board,X_13,22-23-2021,-2.S,GND,local,,
-Main board,X_14,22-23-2021,-1.S,VG_10,local,,
-Main board,X_14,22-23-2021,-2.S,GND,local,,
-Main board,X_15,22-23-2021,-1.S,VG_4,local,,
-Main board,X_15,22-23-2021,-2.S,GND,local,,
-Main board,X_16,22-23-2021,-1.S,VG_2,local,,
-Main board,X_16,22-23-2021,-2.S,GND,local,,
-Power board,X1,AK300/2,-1.KL,VIN,PowerBoard,,
-Power board,X1,AK300/2,-2.KL,GND,local,,
-Power board,X2,22-23-2021,-1.S,+5V0_1,PowerBoard,,
-Power board,X2,22-23-2021,-2.S,GND,local,,
-Power board,X3,22-23-2021,-1.S,+5V5_PA,MainBoard PowerBoard,,rail spans 2 boards
-Power board,X3,22-23-2021,-2.S,GND,local,,
-Power board,X4,22-23-2021,-1.S,+1V0_FPGA,MainBoard PowerBoard,,rail spans 2 boards
-Power board,X4,22-23-2021,-2.S,GND,local,,
-Power board,X5,22-23-2021,-1.S,+1V8_FPGA,MainBoard PowerBoard,,rail spans 2 boards
-Power board,X5,22-23-2021,-2.S,GND,local,,
-Power board,X6,22-23-2021,-1.S,+5V0_LO,FreqSynth PowerBoard,,rail spans 2 boards
-Power board,X6,22-23-2021,-2.S,GND,local,,
-Power board,X7,22-23-2021,-1.S,+3V3_LO_2,FreqSynth PowerBoard,,rail spans 2 boards
-Power board,X7,22-23-2021,-2.S,GND,local,,
-Power board,X8,22-23-2021,-1.S,+3V3_LO_1,FreqSynth PowerBoard,,rail spans 2 boards
-Power board,X8,22-23-2021,-2.S,GND,local,,
-Power board,X9,22-23-2021,-1.S,+5V0_2,PowerBoard,,
-Power board,X9,22-23-2021,-2.S,GND,local,,
-Power board,X10,22-23-2021,-1.S,+1V8_CLOCK,FreqSynth MainBoard PowerBoard,,rail spans 3 boards
-Power board,X10,22-23-2021,-2.S,GND,local,,
-Power board,X11,22-23-2021,-1.S,+3V3_CLOCK,FreqSynth PowerBoard,,rail spans 2 boards
-Power board,X11,22-23-2021,-2.S,GND,local,,
-Power board,X12,22-23-2021,-1.S,+3V3_AN,MainBoard PowerBoard,,rail spans 2 boards
-Power board,X12,22-23-2021,-2.S,GND,local,,
-Power board,X13,22-23-2021,-1.S,+5V0_ADAR,PowerBoard,,
-Power board,X13,22-23-2021,-2.S,GND,local,,
-Power board,X14,22-23-2021,-1.S,+3V3_ADAR_12,PowerBoard,,
-Power board,X14,22-23-2021,-2.S,GND,local,,
-Power board,X15,22-23-2021,-1.S,+3V3_ADAR_34,PowerBoard,,
-Power board,X15,22-23-2021,-2.S,GND,local,,
-Power board,X16,22-23-2021,-1.S,+3V3,MainBoard PowerBoard,,rail spans 2 boards
-Power board,X16,22-23-2021,-2.S,GND,local,,
-Power board,X17,22-23-2021,-1.S,+5V0_3,PowerBoard,,
-Power board,X17,22-23-2021,-2.S,GND,local,,
-Power board,X18,22-23-2021,-1.S,-3V3_SW,MainBoard PowerBoard,,rail spans 2 boards
-Power board,X18,22-23-2021,-2.S,GND,local,,
-Power board,X19,22-23-2021,-1.S,-5V5_PA,MainBoard PowerBoard,,rail spans 2 boards
-Power board,X19,22-23-2021,-2.S,GND,local,,
-Power board,X20,22-23-2021,-1.S,-5V0_ADAR34,MainBoard PowerBoard,,rail spans 2 boards
-Power board,X20,22-23-2021,-2.S,GND,local,,
-Power board,X21,22-23-2021,-1.S,-5V0_ADAR12,MainBoard PowerBoard,,rail spans 2 boards
-Power board,X21,22-23-2021,-2.S,GND,local,,
-Power board,X22,22-23-2021,-1.S,+5V0_0,MainBoard PowerBoard,,rail spans 2 boards
-Power board,X22,22-23-2021,-2.S,GND,local,,
-Power board,X23,22-23-2021,-1.S,+3V4,MainBoard PowerBoard,,rail spans 2 boards
-Power board,X23,22-23-2021,-2.S,GND,local,,
-Power board,X24,22-23-2021,-1.S,-3V4,MainBoard PowerBoard,,rail spans 2 boards
-Power board,X24,22-23-2021,-2.S,GND,local,,
-Power board,X25,22-23-2021,-1.S,+5V0_4,PowerBoard,,
-Power board,X25,22-23-2021,-2.S,GND,local,,
-Power board,X26,22-23-2021,-1.S,+5V0_ADTR,PowerBoard,,
-Power board,X26,22-23-2021,-2.S,GND,local,,
-Power board,X27,22-23-2021,-1.S,+3V3_FPGA,MainBoard PowerBoard,,rail spans 2 boards
-Power board,X27,22-23-2021,-2.S,GND,local,,
-Power board,X28,22-23-2021,-1.S,+5V0_5,PowerBoard,,
-Power board,X28,22-23-2021,-2.S,GND,local,,
-Power board,X29,22-23-2021,-1.S,+3V3_SW,PowerBoard,,
-Power board,X29,22-23-2021,-2.S,GND,local,,
-Power board,X30,22-23-2021,-1.S,+3V3_VDD_SW,MainBoard PowerBoard,,rail spans 2 boards
-Power board,X30,22-23-2021,-2.S,GND,local,,
-Power board,X31,22-23-2021,-1.S,+5V0_PA_1,MainBoard PowerBoard,,rail spans 2 boards
-Power board,X31,22-23-2021,-2.S,GND,local,,
-Power board,X32,22-23-2021,-1.S,+5V0_PA_2,MainBoard PowerBoard,,rail spans 2 boards
-Power board,X32,22-23-2021,-2.S,GND,local,,
-Power board,X33,22-23-2021,-1.S,+5V0_PA_3,MainBoard PowerBoard,,rail spans 2 boards
-Power board,X33,22-23-2021,-2.S,GND,local,,
-Power board,X34,22-23-2021,-1.S,+3V3_ADTR,MainBoard PowerBoard,,rail spans 2 boards
-Power board,X34,22-23-2021,-2.S,GND,local,,
-Power board,X35,22-23-2021,-1.S,+3V3_XO,FreqSynth PowerBoard,,rail spans 2 boards
-Power board,X35,22-23-2021,-2.S,GND,local,,
-Power board,X36,22-23-2021,-1.S,+2V5_FPGA,MainBoard PowerBoard,,rail spans 2 boards
-Power board,X36,22-23-2021,-2.S,GND,local,,
-Power board,X37,22-23-2021,-1.S,+5V0_LO,FreqSynth PowerBoard,,rail spans 2 boards
-Power board,X37,22-23-2021,-2.S,GND,local,,
-Frequency synthesizer,X10,22-23-2021,-1.S,N$69,local,,
-Frequency synthesizer,X10,22-23-2021,-2.S,GND,local,,
-Frequency synthesizer,X11,22-23-2021,-1.S,N$71,local,,
-Frequency synthesizer,X11,22-23-2021,-2.S,GND,local,,
-Frequency synthesizer,X12,22-23-2021,-1.S,N$73,local,,
-Frequency synthesizer,X12,22-23-2021,-2.S,GND,local,,
-Frequency synthesizer,X13,22-23-2021,-1.S,N$75,local,,
-Frequency synthesizer,X13,22-23-2021,-2.S,GND,local,,
-Frequency synthesizer,X14,22-23-2021,-1.S,N$77,local,,
-Frequency synthesizer,X14,22-23-2021,-2.S,GND,local,,
-Frequency synthesizer,X15,22-23-2021,-1.S,+5V0_LO,FreqSynth PowerBoard,,rail spans 2 boards
-Frequency synthesizer,X15,22-23-2021,-2.S,GND,local,,
-Power amplifier,X2,22-23-2021,-1.S,VG,local,,
-Power amplifier,X2,22-23-2021,-2.S,GND,local,,
-Power amplifier,22V,AK300/2,-1.KL,VD,local,,
-Power amplifier,22V,AK300/2,-2.KL,GND,local,,
+Main board,X1,22-23-2021,-1.S,+3V4,MainBoard PowerBoard,2-pos,rail spans 2 boards
+Main board,X1,22-23-2021,-2.S,GND,local,2-pos,
+Main board,X3,22-23-2031,-1.S,N$207,local,3-pos,
+Main board,X3,22-23-2031,-2.S,N$209,local,3-pos,
+Main board,X3,22-23-2031,-3.S,GND,local,3-pos,
+Main board,X4,22-23-2021,-1.S,+3V3_ADTR,MainBoard PowerBoard,2-pos,rail spans 2 boards
+Main board,X4,22-23-2021,-2.S,GND,local,2-pos,
+Main board,X5,22-23-2041,-1.S,+5V0_PA_2,MainBoard PowerBoard,4-pos,rail spans 2 boards
+Main board,X5,22-23-2041,-2.S,GND,local,4-pos,
+Main board,X5,22-23-2041,-3.S,GND,local,4-pos,
+Main board,X5,22-23-2041,-4.S,GND,local,4-pos,
+Main board,X6,22-23-2031,-1.S,-3V3_SW,MainBoard PowerBoard,3-pos,rail spans 2 boards
+Main board,X6,22-23-2031,-2.S,GND,local,3-pos,
+Main board,X6,22-23-2031,-3.S,GND,local,3-pos,
+Main board,X7,22-23-2041,-1.S,+5V0_PA_3,MainBoard PowerBoard,4-pos,rail spans 2 boards
+Main board,X7,22-23-2041,-2.S,GND,local,4-pos,
+Main board,X7,22-23-2041,-3.S,GND,local,4-pos,
+Main board,X7,22-23-2041,-4.S,GND,local,4-pos,
+Main board,X8,22-23-2021,-1.S,+1V0_FPGA,MainBoard PowerBoard,2-pos,rail spans 2 boards
+Main board,X8,22-23-2021,-2.S,GND,local,2-pos,
+Main board,X9,22-23-2021,-1.S,+3V3_AN,MainBoard PowerBoard,2-pos,rail spans 2 boards
+Main board,X9,22-23-2021,-2.S,GND,local,2-pos,
+Main board,X10,22-23-2021,-1.S,+1V8_FPGA,MainBoard PowerBoard,2-pos,rail spans 2 boards
+Main board,X10,22-23-2021,-2.S,GND,local,2-pos,
+Main board,X11,22-23-2031,-1.S,-3V4,MainBoard PowerBoard,3-pos,rail spans 2 boards
+Main board,X11,22-23-2031,-2.S,GND,local,3-pos,
+Main board,X11,22-23-2031,-3.S,GND,local,3-pos,
+Main board,X12,22-23-2021,-1.S,+3V3_VDD_SW,MainBoard PowerBoard,2-pos,rail spans 2 boards
+Main board,X12,22-23-2021,-2.S,GND,local,2-pos,
+Main board,X13,22-23-2031,-1.S,-5V0_ADAR12,MainBoard PowerBoard,3-pos,rail spans 2 boards
+Main board,X13,22-23-2031,-2.S,GND,local,3-pos,
+Main board,X13,22-23-2031,-3.S,GND,local,3-pos,
+Main board,X14,22-23-2041,-1.S,+5V0_PA_1,MainBoard PowerBoard,4-pos,rail spans 2 boards
+Main board,X14,22-23-2041,-2.S,GND,local,4-pos,
+Main board,X14,22-23-2041,-3.S,GND,local,4-pos,
+Main board,X14,22-23-2041,-4.S,GND,local,4-pos,
+Main board,X15,22-23-2031,-1.S,-5V0_ADAR34,MainBoard PowerBoard,3-pos,rail spans 2 boards
+Main board,X15,22-23-2031,-2.S,GND,local,3-pos,
+Main board,X15,22-23-2031,-3.S,GND,local,3-pos,
+Main board,X16,22-23-2021,-1.S,+3V3_FPGA,MainBoard PowerBoard,2-pos,rail spans 2 boards
+Main board,X16,22-23-2021,-2.S,GND,local,2-pos,
+Main board,X17,22-23-2021,-1.S,+1V8_CLOCK,FreqSynth MainBoard PowerBoard,2-pos,rail spans 3 boards
+Main board,X17,22-23-2021,-2.S,GND,local,2-pos,
+Main board,X18,22-23-2021,-1.S,+5V0_0,MainBoard PowerBoard,2-pos,rail spans 2 boards
+Main board,X18,22-23-2021,-2.S,GND,local,2-pos,
+Main board,X19,22-23-2031,-1.S,-5V5_PA,MainBoard PowerBoard,3-pos,rail spans 2 boards
+Main board,X19,22-23-2031,-2.S,GND,local,3-pos,
+Main board,X19,22-23-2031,-3.S,GND,local,3-pos,
+Main board,X20,22-23-2021,-1.S,+3V3_ADAR12,MainBoard PowerBoard,2-pos,rail spans 2 boards
+Main board,X20,22-23-2021,-2.S,GND,local,2-pos,
+Main board,X21,22-23-2021,-1.S,+3V3_ADAR34,MainBoard PowerBoard,2-pos,rail spans 2 boards
+Main board,X21,22-23-2021,-2.S,GND,local,2-pos,
+Main board,X22,22-23-2031,-1.S,-3V4,MainBoard PowerBoard,3-pos,rail spans 2 boards
+Main board,X22,22-23-2031,-2.S,GND,local,3-pos,
+Main board,X22,22-23-2031,-3.S,GND,local,3-pos,
+Main board,X24,22-23-2021,-1.S,+3V3,MainBoard PowerBoard,2-pos,rail spans 2 boards
+Main board,X24,22-23-2021,-2.S,GND,local,2-pos,
+Main board,X25,22-23-2021,-1.S,PG_3V3_ADTR,local,2-pos,
+Main board,X25,22-23-2021,-2.S,GND,local,2-pos,
+Main board,X26,22-23-2021,-1.S,PG_3V3_XO,local,2-pos,
+Main board,X26,22-23-2021,-2.S,GND,local,2-pos,
+Main board,X27,22-23-2021,-1.S,PG_2V5_FPGA,local,2-pos,
+Main board,X27,22-23-2021,-2.S,GND,local,2-pos,
+Main board,X38,22-23-2031,-1.S,N$212,local,3-pos,
+Main board,X38,22-23-2031,-2.S,N$214,local,3-pos,
+Main board,X38,22-23-2031,-3.S,GND,local,3-pos,
+Main board,X39,22-23-2031,-1.S,N$218,local,3-pos,
+Main board,X39,22-23-2031,-2.S,N$219,local,3-pos,
+Main board,X39,22-23-2031,-3.S,GND,local,3-pos,
+Main board,X40,22-23-2031,-1.S,N$225,local,3-pos,
+Main board,X40,22-23-2031,-2.S,N$226,local,3-pos,
+Main board,X40,22-23-2031,-3.S,GND,local,3-pos,
+Main board,X41,22-23-2031,-1.S,N$230,local,3-pos,
+Main board,X41,22-23-2031,-2.S,N$232,local,3-pos,
+Main board,X41,22-23-2031,-3.S,GND,local,3-pos,
+Main board,X42,22-23-2031,-1.S,N$235,local,3-pos,
+Main board,X42,22-23-2031,-2.S,N$236,local,3-pos,
+Main board,X42,22-23-2031,-3.S,GND,local,3-pos,
+Main board,X43,22-23-2031,-1.S,N$241,local,3-pos,
+Main board,X43,22-23-2031,-2.S,N$242,local,3-pos,
+Main board,X43,22-23-2031,-3.S,GND,local,3-pos,
+Main board,X44,22-23-2031,-1.S,N$246,local,3-pos,
+Main board,X44,22-23-2031,-2.S,N$248,local,3-pos,
+Main board,X44,22-23-2031,-3.S,GND,local,3-pos,
+Main board,X45,22-23-2031,-1.S,N$255,local,3-pos,
+Main board,X45,22-23-2031,-2.S,N$257,local,3-pos,
+Main board,X45,22-23-2031,-3.S,GND,local,3-pos,
+Main board,X46,22-23-2031,-1.S,N$261,local,3-pos,
+Main board,X46,22-23-2031,-2.S,N$262,local,3-pos,
+Main board,X46,22-23-2031,-3.S,GND,local,3-pos,
+Main board,X47,22-23-2031,-1.S,N$266,local,3-pos,
+Main board,X47,22-23-2031,-2.S,N$267,local,3-pos,
+Main board,X47,22-23-2031,-3.S,GND,local,3-pos,
+Main board,X48,22-23-2031,-1.S,N$270,local,3-pos,
+Main board,X48,22-23-2031,-2.S,N$271,local,3-pos,
+Main board,X48,22-23-2031,-3.S,GND,local,3-pos,
+Main board,X49,22-23-2031,-1.S,N$274,local,3-pos,
+Main board,X49,22-23-2031,-2.S,N$275,local,3-pos,
+Main board,X49,22-23-2031,-3.S,GND,local,3-pos,
+Main board,X50,22-23-2031,-1.S,N$278,local,3-pos,
+Main board,X50,22-23-2031,-2.S,N$279,local,3-pos,
+Main board,X50,22-23-2031,-3.S,GND,local,3-pos,
+Main board,X51,22-23-2031,-1.S,N$282,local,3-pos,
+Main board,X51,22-23-2031,-2.S,N$283,local,3-pos,
+Main board,X51,22-23-2031,-3.S,GND,local,3-pos,
+Main board,X52,22-23-2031,-1.S,N$286,local,3-pos,
+Main board,X52,22-23-2031,-2.S,N$287,local,3-pos,
+Main board,X52,22-23-2031,-3.S,GND,local,3-pos,
+Main board,X54,22-23-2021,-1.S,+3V4,MainBoard PowerBoard,2-pos,rail spans 2 boards
+Main board,X54,22-23-2021,-2.S,GND,local,2-pos,
+Main board,X55,22-23-2021,-1.S,+5V5_PA,MainBoard PowerBoard,2-pos,rail spans 2 boards
+Main board,X55,22-23-2021,-2.S,GND,local,2-pos,
+Main board,X56,22-23-2021,-1.S,+3V3_AN,MainBoard PowerBoard,2-pos,rail spans 2 boards
+Main board,X56,22-23-2021,-2.S,GND,local,2-pos,
+Main board,X57,22-23-2021,-1.S,+2V5_FPGA,MainBoard PowerBoard,2-pos,rail spans 2 boards
+Main board,X57,22-23-2021,-2.S,GND,local,2-pos,
+Main board,X_1,22-23-2021,-1.S,VG_15,local,2-pos,
+Main board,X_1,22-23-2021,-2.S,GND,local,2-pos,
+Main board,X_2,22-23-2021,-1.S,VG_13,local,2-pos,
+Main board,X_2,22-23-2021,-2.S,GND,local,2-pos,
+Main board,X_3,22-23-2021,-1.S,VG_7,local,2-pos,
+Main board,X_3,22-23-2021,-2.S,GND,local,2-pos,
+Main board,X_4,22-23-2021,-1.S,VG_5,local,2-pos,
+Main board,X_4,22-23-2021,-2.S,GND,local,2-pos,
+Main board,X_5,22-23-2021,-1.S,VG_9,local,2-pos,
+Main board,X_5,22-23-2021,-2.S,GND,local,2-pos,
+Main board,X_6,22-23-2021,-1.S,VG_11,local,2-pos,
+Main board,X_6,22-23-2021,-2.S,GND,local,2-pos,
+Main board,X_7,22-23-2021,-1.S,VG_1,local,2-pos,
+Main board,X_7,22-23-2021,-2.S,GND,local,2-pos,
+Main board,X_8,22-23-2021,-1.S,VG_3,local,2-pos,
+Main board,X_8,22-23-2021,-2.S,GND,local,2-pos,
+Main board,X_9,22-23-2021,-1.S,VG_14,local,2-pos,
+Main board,X_9,22-23-2021,-2.S,GND,local,2-pos,
+Main board,X_10,22-23-2021,-1.S,VG_16,local,2-pos,
+Main board,X_10,22-23-2021,-2.S,GND,local,2-pos,
+Main board,X_11,22-23-2021,-1.S,VG_6,local,2-pos,
+Main board,X_11,22-23-2021,-2.S,GND,local,2-pos,
+Main board,X_12,22-23-2021,-1.S,VG_8,local,2-pos,
+Main board,X_12,22-23-2021,-2.S,GND,local,2-pos,
+Main board,X_13,22-23-2021,-1.S,VG_12,local,2-pos,
+Main board,X_13,22-23-2021,-2.S,GND,local,2-pos,
+Main board,X_14,22-23-2021,-1.S,VG_10,local,2-pos,
+Main board,X_14,22-23-2021,-2.S,GND,local,2-pos,
+Main board,X_15,22-23-2021,-1.S,VG_4,local,2-pos,
+Main board,X_15,22-23-2021,-2.S,GND,local,2-pos,
+Main board,X_16,22-23-2021,-1.S,VG_2,local,2-pos,
+Main board,X_16,22-23-2021,-2.S,GND,local,2-pos,
+Power board,X1,AK300/2,-1.KL,VIN,PowerBoard,unkeyed,
+Power board,X1,AK300/2,-2.KL,GND,local,unkeyed,
+Power board,X2,22-23-2021,-1.S,+5V0_1,PowerBoard,2-pos,
+Power board,X2,22-23-2021,-2.S,GND,local,2-pos,
+Power board,X3,22-23-2021,-1.S,+5V5_PA,MainBoard PowerBoard,2-pos,rail spans 2 boards
+Power board,X3,22-23-2021,-2.S,GND,local,2-pos,
+Power board,X4,22-23-2021,-1.S,+1V0_FPGA,MainBoard PowerBoard,2-pos,rail spans 2 boards
+Power board,X4,22-23-2021,-2.S,GND,local,2-pos,
+Power board,X5,22-23-2021,-1.S,+1V8_FPGA,MainBoard PowerBoard,2-pos,rail spans 2 boards
+Power board,X5,22-23-2021,-2.S,GND,local,2-pos,
+Power board,X6,22-23-2021,-1.S,+5V0_LO,FreqSynth PowerBoard,2-pos,rail spans 2 boards
+Power board,X6,22-23-2021,-2.S,GND,local,2-pos,
+Power board,X7,22-23-2021,-1.S,+3V3_LO_2,FreqSynth PowerBoard,2-pos,rail spans 2 boards
+Power board,X7,22-23-2021,-2.S,GND,local,2-pos,
+Power board,X8,22-23-2021,-1.S,+3V3_LO_1,FreqSynth PowerBoard,2-pos,rail spans 2 boards
+Power board,X8,22-23-2021,-2.S,GND,local,2-pos,
+Power board,X9,22-23-2021,-1.S,+5V0_2,PowerBoard,2-pos,
+Power board,X9,22-23-2021,-2.S,GND,local,2-pos,
+Power board,X10,22-23-2021,-1.S,+1V8_CLOCK,FreqSynth MainBoard PowerBoard,2-pos,rail spans 3 boards
+Power board,X10,22-23-2021,-2.S,GND,local,2-pos,
+Power board,X11,22-23-2021,-1.S,+3V3_CLOCK,FreqSynth PowerBoard,2-pos,rail spans 2 boards
+Power board,X11,22-23-2021,-2.S,GND,local,2-pos,
+Power board,X12,22-23-2021,-1.S,+3V3_AN,MainBoard PowerBoard,2-pos,rail spans 2 boards
+Power board,X12,22-23-2021,-2.S,GND,local,2-pos,
+Power board,X13,22-23-2021,-1.S,+5V0_ADAR,PowerBoard,2-pos,
+Power board,X13,22-23-2021,-2.S,GND,local,2-pos,
+Power board,X14,22-23-2021,-1.S,+3V3_ADAR12,MainBoard PowerBoard,2-pos,rail spans 2 boards
+Power board,X14,22-23-2021,-2.S,GND,local,2-pos,
+Power board,X15,22-23-2021,-1.S,+3V3_ADAR34,MainBoard PowerBoard,2-pos,rail spans 2 boards
+Power board,X15,22-23-2021,-2.S,GND,local,2-pos,
+Power board,X16,22-23-2021,-1.S,+3V3,MainBoard PowerBoard,2-pos,rail spans 2 boards
+Power board,X16,22-23-2021,-2.S,GND,local,2-pos,
+Power board,X17,22-23-2021,-1.S,+5V0_3,PowerBoard,2-pos,
+Power board,X17,22-23-2021,-2.S,GND,local,2-pos,
+Power board,X18,22-23-2031,-1.S,-3V3_SW,MainBoard PowerBoard,3-pos,rail spans 2 boards
+Power board,X18,22-23-2031,-2.S,GND,local,3-pos,
+Power board,X18,22-23-2031,-3.S,GND,local,3-pos,
+Power board,X19,22-23-2031,-1.S,-5V5_PA,MainBoard PowerBoard,3-pos,rail spans 2 boards
+Power board,X19,22-23-2031,-2.S,GND,local,3-pos,
+Power board,X19,22-23-2031,-3.S,GND,local,3-pos,
+Power board,X20,22-23-2031,-1.S,-5V0_ADAR34,MainBoard PowerBoard,3-pos,rail spans 2 boards
+Power board,X20,22-23-2031,-2.S,GND,local,3-pos,
+Power board,X20,22-23-2031,-3.S,GND,local,3-pos,
+Power board,X21,22-23-2031,-1.S,-5V0_ADAR12,MainBoard PowerBoard,3-pos,rail spans 2 boards
+Power board,X21,22-23-2031,-2.S,GND,local,3-pos,
+Power board,X21,22-23-2031,-3.S,GND,local,3-pos,
+Power board,X22,22-23-2021,-1.S,+5V0_0,MainBoard PowerBoard,2-pos,rail spans 2 boards
+Power board,X22,22-23-2021,-2.S,GND,local,2-pos,
+Power board,X23,22-23-2021,-1.S,+3V4,MainBoard PowerBoard,2-pos,rail spans 2 boards
+Power board,X23,22-23-2021,-2.S,GND,local,2-pos,
+Power board,X24,22-23-2031,-1.S,-3V4,MainBoard PowerBoard,3-pos,rail spans 2 boards
+Power board,X24,22-23-2031,-2.S,GND,local,3-pos,
+Power board,X24,22-23-2031,-3.S,GND,local,3-pos,
+Power board,X25,22-23-2021,-1.S,+5V0_4,PowerBoard,2-pos,
+Power board,X25,22-23-2021,-2.S,GND,local,2-pos,
+Power board,X26,22-23-2021,-1.S,+5V0_ADTR,PowerBoard,2-pos,
+Power board,X26,22-23-2021,-2.S,GND,local,2-pos,
+Power board,X27,22-23-2021,-1.S,+3V3_FPGA,MainBoard PowerBoard,2-pos,rail spans 2 boards
+Power board,X27,22-23-2021,-2.S,GND,local,2-pos,
+Power board,X28,22-23-2021,-1.S,+5V0_5,PowerBoard,2-pos,
+Power board,X28,22-23-2021,-2.S,GND,local,2-pos,
+Power board,X29,22-23-2021,-1.S,+3V3_SW,PowerBoard,2-pos,
+Power board,X29,22-23-2021,-2.S,GND,local,2-pos,
+Power board,X30,22-23-2021,-1.S,+3V3_VDD_SW,MainBoard PowerBoard,2-pos,rail spans 2 boards
+Power board,X30,22-23-2021,-2.S,GND,local,2-pos,
+Power board,X31,22-23-2041,-1.S,+5V0_PA_1,MainBoard PowerBoard,4-pos,rail spans 2 boards
+Power board,X31,22-23-2041,-2.S,GND,local,4-pos,
+Power board,X31,22-23-2041,-3.S,GND,local,4-pos,
+Power board,X31,22-23-2041,-4.S,GND,local,4-pos,
+Power board,X32,22-23-2041,-1.S,+5V0_PA_2,MainBoard PowerBoard,4-pos,rail spans 2 boards
+Power board,X32,22-23-2041,-2.S,GND,local,4-pos,
+Power board,X32,22-23-2041,-3.S,GND,local,4-pos,
+Power board,X32,22-23-2041,-4.S,GND,local,4-pos,
+Power board,X33,22-23-2041,-1.S,+5V0_PA_3,MainBoard PowerBoard,4-pos,rail spans 2 boards
+Power board,X33,22-23-2041,-2.S,GND,local,4-pos,
+Power board,X33,22-23-2041,-3.S,GND,local,4-pos,
+Power board,X33,22-23-2041,-4.S,GND,local,4-pos,
+Power board,X34,22-23-2021,-1.S,+3V3_ADTR,MainBoard PowerBoard,2-pos,rail spans 2 boards
+Power board,X34,22-23-2021,-2.S,GND,local,2-pos,
+Power board,X35,22-23-2021,-1.S,+3V3_XO,FreqSynth PowerBoard,2-pos,rail spans 2 boards
+Power board,X35,22-23-2021,-2.S,GND,local,2-pos,
+Power board,X36,22-23-2021,-1.S,+2V5_FPGA,MainBoard PowerBoard,2-pos,rail spans 2 boards
+Power board,X36,22-23-2021,-2.S,GND,local,2-pos,
+Power board,X37,22-23-2021,-1.S,+5V0_LO,FreqSynth PowerBoard,2-pos,rail spans 2 boards
+Power board,X37,22-23-2021,-2.S,GND,local,2-pos,
+Power board,X38,22-23-2021,-1.S,PG_3V3_ADTR,local,2-pos,
+Power board,X38,22-23-2021,-2.S,GND,local,2-pos,
+Power board,X39,22-23-2021,-1.S,PG_3V3_XO,local,2-pos,
+Power board,X39,22-23-2021,-2.S,GND,local,2-pos,
+Power board,X40,22-23-2021,-1.S,PG_2V5_FPGA,local,2-pos,
+Power board,X40,22-23-2021,-2.S,GND,local,2-pos,
+Frequency synthesizer,X10,22-23-2021,-1.S,N$69,local,2-pos,
+Frequency synthesizer,X10,22-23-2021,-2.S,GND,local,2-pos,
+Frequency synthesizer,X11,22-23-2021,-1.S,N$71,local,2-pos,
+Frequency synthesizer,X11,22-23-2021,-2.S,GND,local,2-pos,
+Frequency synthesizer,X12,22-23-2021,-1.S,N$73,local,2-pos,
+Frequency synthesizer,X12,22-23-2021,-2.S,GND,local,2-pos,
+Frequency synthesizer,X13,22-23-2021,-1.S,N$75,local,2-pos,
+Frequency synthesizer,X13,22-23-2021,-2.S,GND,local,2-pos,
+Frequency synthesizer,X14,22-23-2021,-1.S,N$77,local,2-pos,
+Frequency synthesizer,X14,22-23-2021,-2.S,GND,local,2-pos,
+Frequency synthesizer,X15,22-23-2021,-1.S,+5V0_LO,FreqSynth PowerBoard,2-pos,rail spans 2 boards
+Frequency synthesizer,X15,22-23-2021,-2.S,GND,local,2-pos,
+Power amplifier,X2,22-23-2021,-1.S,VG,local,2-pos,
+Power amplifier,X2,22-23-2021,-2.S,GND,local,2-pos,
+Power amplifier,X3,22-23-2031,-1.S,VD,local,3-pos,
+Power amplifier,X3,22-23-2031,-2.S,VIN_M,PA,3-pos,
+Power amplifier,X3,22-23-2031,-3.S,GND,local,3-pos,
+Power amplifier,22V,AK300/2,-1.KL,VD,local,unkeyed,
+Power amplifier,22V,AK300/2,-2.KL,GND,local,unkeyed,

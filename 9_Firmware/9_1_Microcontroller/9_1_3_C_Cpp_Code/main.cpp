@@ -68,6 +68,8 @@ extern "C" {
 #include <cmath>
 #include "DAC5578.h"
 #include "PA_GATE_BIAS.h"
+#include "PA_BIAS_SEQUENCE.h"
+#include "RAIL_FAULT.h"
 #include "ADS7830.h"
 #include "gps_handler.h"
 
@@ -203,6 +205,71 @@ float Stepper_steps = 200.0f;//step per revolution
 
 // DAC5578 handles (RF Power Amplifier DAC controlling Vg)
 DAC5578_HandleTypeDef hdac1, hdac2;
+
+/* ---- PA bias sequencing (PA_BIAS_SEQUENCE.h) --------------------------------
+ * The order in which the gate bias and the drain may be applied is a safety
+ * property of the array, so it lives in a tested library rather than inline here.
+ * These callbacks are the only thing in this file that touches both.
+ */
+static bool pa_bias_set_gate_code(uint8_t code)
+{
+    uint8_t c = (uint8_t)PA_GATE_BIAS_ClampCode((int)code);
+    bool ok = true;
+    for (uint8_t ch = 0; ch < 8; ch++) {
+        if (!DAC5578_WriteAndUpdateChannelValue(&hdac1, ch, c)) ok = false;
+        if (!DAC5578_WriteAndUpdateChannelValue(&hdac2, ch, c)) ok = false;
+    }
+    return ok;
+}
+
+static bool pa_bias_set_drain_enable(bool on)
+{
+    GPIO_PinState st = on ? GPIO_PIN_SET : GPIO_PIN_RESET;
+    HAL_GPIO_WritePin(EN_P_5V0_PA1_GPIO_Port, EN_P_5V0_PA1_Pin, st);
+    HAL_GPIO_WritePin(EN_P_5V0_PA2_GPIO_Port, EN_P_5V0_PA2_Pin, st);
+    HAL_GPIO_WritePin(EN_P_5V0_PA3_GPIO_Port, EN_P_5V0_PA3_Pin, st);
+    HAL_GPIO_WritePin(EN_P_5V5_PA_GPIO_Port, EN_P_5V5_PA_Pin, st);
+    HAL_GPIO_WritePin(EN_DIS_RFPA_VDD_GPIO_Port, EN_DIS_RFPA_VDD_Pin, st);
+    return true;
+}
+
+static void pa_bias_delay_ms(uint32_t ms) { HAL_Delay(ms); }
+
+static PA_BiasSequence_IO_t g_pa_bias_io = {
+    pa_bias_set_gate_code, pa_bias_set_drain_enable, pa_bias_delay_ms
+};
+/* off = mid-scale (the documented shutdown state); the boot bias is where calibration starts */
+static PA_BiasSequence_Params_t g_pa_bias_params = {
+    PA_GATE_BIAS_CODE_OFF, PA_GATE_BIAS_CODE_BOOT, 5
+};
+
+/* ---- rail-good monitoring (RAIL_FAULT.h) -----------------------------------
+ * Three regulators report PG on the power board, each on its own connector to PC0/PC1/PC2.
+ * The pins are read with internal pull-downs, so an open harness reads LOW and is reported
+ * as a fault rather than silently as "good".
+ */
+static bool rail_pg_adtr_ok(void) { return HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_0) == GPIO_PIN_SET; }
+static bool rail_pg_xo_ok(void)   { return HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_1) == GPIO_PIN_SET; }
+static bool rail_pg_2v5_ok(void)  { return HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_2) == GPIO_PIN_SET; }
+
+static const RailFault_Source_t g_rail_sources[3] = {
+    { rail_pg_adtr_ok }, { rail_pg_xo_ok }, { rail_pg_2v5_ok }
+};
+static RailFault_Monitor_t g_rails;
+
+static void RailFault_GPIOInit(void)
+{
+    GPIO_InitTypeDef gi = {0};
+    __HAL_RCC_GPIOC_CLK_ENABLE();
+    gi.Pin   = GPIO_PIN_0 | GPIO_PIN_1 | GPIO_PIN_2;
+    gi.Mode  = GPIO_MODE_INPUT;
+    gi.Pull  = GPIO_PULLDOWN;   /* the fail-safe direction: open harness reads as a fault */
+    gi.Speed = GPIO_SPEED_FREQ_LOW;
+    HAL_GPIO_Init(GPIOC, &gi);
+    if (!RailFault_Init(&g_rails, g_rail_sources, 3)) {
+        DIAG_ERR("PWR", "rail-fault monitor could not bind its sources");
+    }
+}
 /* Phase accumulators */
 float phase_dac1[8] = {0};
 float phase_dac2[8] = {0};
@@ -857,6 +924,12 @@ void Emergency_Stop(void) {
     DIAG_ERR("PA", "Disabling TX mixers (GPIOD pin 11 LOW)");
     HAL_GPIO_WritePin(GPIOD, GPIO_PIN_11, GPIO_PIN_RESET);
 
+    /* Take the bias down in the documented order: gate off, then drain off.  The CLR
+     * assertion above already parked the gates at the shutdown bias; this makes the
+     * contract explicit and also covers a case where CLR did not take. */
+    DIAG_ERR("PA", "Applying PA bias sequence (gate off -> drain off)");
+    (void)PA_BiasSequence_Apply(&g_pa_bias_io, &g_pa_bias_params, false);
+
     DIAG_ERR("PA", "Cutting PA 5V supplies (PA1/PA2/PA3 LOW)");
     HAL_GPIO_WritePin(EN_P_5V0_PA1_GPIO_Port, EN_P_5V0_PA1_Pin, GPIO_PIN_RESET);
     HAL_GPIO_WritePin(EN_P_5V0_PA2_GPIO_Port, EN_P_5V0_PA2_Pin, GPIO_PIN_RESET);
@@ -1043,7 +1116,11 @@ void getSystemStatusForGUI(char* status_buffer, size_t buffer_size) {
         }
         avg_current /= 16.0f;
 
-        w = snprintf(status_buffer + off, rem, "PA_AvgCurrent:%.2f|PA_Enabled:%d|",
+        w = snprintf(status_buffer + off, rem, "RailFault:0x%lX|RailFaultLatched:%d|",
+                 (unsigned long)g_rails.current, RailFault_HasLatched(&g_rails) ? 1 : 0);
+    if (w > 0 && (size_t)w < rem) { off += (size_t)w; rem -= (size_t)w; }
+
+    w = snprintf(status_buffer + off, rem, "PA_AvgCurrent:%.2f|PA_Enabled:%d|",
                      avg_current, PowerAmplifier);
         if (w > 0 && (size_t)w < rem) { off += (size_t)w; rem -= (size_t)w; }
     }
@@ -1416,6 +1493,7 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
+  RailFault_GPIOInit();
   MX_TIM1_Init();
   MX_TIM3_Init();  // B15 fix: init DELADJ PWM timer before LO manager uses it
   MX_I2C1_Init();
@@ -1930,9 +2008,14 @@ int main(void)
 	  HAL_GPIO_WritePin(DAC_1_VG_LDAC_GPIO_Port, DAC_1_VG_LDAC_Pin, GPIO_PIN_SET);
 	  HAL_GPIO_WritePin(DAC_2_VG_LDAC_GPIO_Port, DAC_2_VG_LDAC_Pin, GPIO_PIN_SET);
 
-	  //Enable RF Power Amplifier VDD = 22V
-	  DIAG("PA", "Enabling RFPA VDD=22V (EN_DIS_RFPA_VDD HIGH)");
-	  HAL_GPIO_WritePin(EN_DIS_RFPA_VDD_GPIO_Port, EN_DIS_RFPA_VDD_Pin, GPIO_PIN_SET);
+	  /* Bring the array up in the documented order (gate off -> drain -> operating bias)
+	   * through the tested sequence rather than by hand.  Duty-cycling the array -- the
+	   * thermal budget's main lever -- is the same call with enable=false between modes. */
+	  DIAG("PA", "Applying PA bias sequence (gate off -> drain -> bias)");
+	  if (!PA_BiasSequence_Apply(&g_pa_bias_io, &g_pa_bias_params, true)) {
+	      DIAG_ERR("PA", "PA bias sequence FAILED -- array left in the safe state");
+	      Error_Handler();
+	  }
 
 	  /* Initialize ADCs with correct addresses */
 	  /* ADC1: Address 0x48, Single-Ended mode, Internal Ref ON + ADC ON */
@@ -2074,6 +2157,24 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+        /* Rail-good sampling, 100 ms, outside the fast path.  A fault is latched and reported
+         * once per transition; LOW means the rail is bad *or* unmonitored, and both are worth
+         * knowing about. */
+        {
+            static uint32_t rail_next_ms = 0;
+            static uint32_t rail_reported = 0;
+            if ((int32_t)(HAL_GetTick() - rail_next_ms) >= 0) {
+                rail_next_ms = HAL_GetTick() + 100u;
+                bool faulting = RailFault_Sample(&g_rails);
+                if (faulting && g_rails.current != rail_reported) {
+                    DIAG_ERR("PWR", "rail fault: bitmap=0x%lX (bit0=+3V3_ADTR, bit1=+3V3_XO, bit2=+2V5_FPGA)",
+                             (unsigned long)g_rails.current);
+                    rail_reported = g_rails.current;
+                } else if (!faulting) {
+                    rail_reported = 0;
+                }
+            }
+        }
 	  //////////////////////////////////////////////////////////////////////////////////////
 	  //////////////////////// Check system health at the start of each loop////////////////
 	  //////////////////////////////////////////////////////////////////////////////////////

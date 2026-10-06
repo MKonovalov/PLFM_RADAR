@@ -62,8 +62,8 @@ Rail tolerance used for acceptance: **+/-5 % (probe acceptance; the regulators t
 | `+1V8_FPGA` | +1.8 V | X5 pin S (harness connector) |
 | `+2V5_FPGA` | +2.5 V | X36 pin S (harness connector) |
 | `+3V3` | +3.3 V | X16 pin S (harness connector) |
-| `+3V3_ADAR_12` | +3.3 V | X14 pin S (harness connector) |
-| `+3V3_ADAR_34` | +3.3 V | X15 pin S (harness connector) |
+| `+3V3_ADAR12` | +3.3 V | X14 pin S (harness connector) |
+| `+3V3_ADAR34` | +3.3 V | X15 pin S (harness connector) |
 | `+3V3_ADTR` | +3.3 V | X34 pin S (harness connector) |
 | `+3V3_AN` | +3.3 V | X12 pin S (harness connector) |
 | `+3V3_CLOCK` | +3.3 V | X11 pin S (harness connector) |

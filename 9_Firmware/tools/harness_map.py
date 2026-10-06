@@ -7,9 +7,10 @@ memory or from a stale spreadsheet is how a 22 V drain feed ends up in a 3.3 V s
 tool emits the wiring list from the boards themselves, and --check fails when the emitted
 file is stale.
 
-The keying column is deliberately empty: the keying scheme is an open decision (see the
-Lane B remaining-items plan). Filling it in is a one-line change here once that decision
-lands, and until then the file records the mapping without pretending the keying exists.
+The keying column is now generated from the connector part itself: ordinary positive rails keep
+the 2-position housing, the negative rails use the 3-position part and the PA drain feeds the
+4-position part, so a plug can no longer reach a socket of the wrong class. The column is read
+from the netlist rather than typed, so it cannot drift from the boards.
 
 Usage:
     harness_map.py [<repo-root>] [--check]
@@ -31,7 +32,9 @@ BOARDS = [
 SCH_ROOT = "4_Schematics and Boards Layout/4_6_Schematics"
 OUT = ("4_Schematics and Boards Layout/4_7_Production Files/Board_Artifacts/harness_map.csv")
 RAILS = ("4_Schematics and Boards Layout/4_7_Production Files/Board_Artifacts/interboard_rails.csv")
-CONNECTOR_DEVICESETS = ("22-23-2021", "AK300/2")
+CONNECTOR_DEVICESETS = ("22-23-2021", "22-23-2031", "22-23-2041", "AK300/2")
+# keying class, derived from the housing the rail is wired to (see the module docstring)
+KEYING = {"22-23-2021": "2-pos", "22-23-2031": "3-pos", "22-23-2041": "4-pos"}
 
 
 def say(msg):
@@ -83,7 +86,7 @@ def build(root):
                     "Pin": pin,
                     "Net": net,
                     "CounterpartBoard": " ".join(others) if others else "local",
-                    "Keying": "",   # open decision: see aeris10_lane_b_remaining_plan.md
+                    "Keying": KEYING.get(ds, "unkeyed"),
                     "Notes": (f"rail spans {len(boards_of[net])} boards"
                               if net in boards_of and len(boards_of[net]) > 1 else ""),
                 })
