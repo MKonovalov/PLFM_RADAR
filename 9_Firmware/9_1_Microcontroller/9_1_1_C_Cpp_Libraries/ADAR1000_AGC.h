@@ -42,6 +42,10 @@
 // The .cpp includes the real header.
 class ADAR1000Manager;
 
+// A severity class at or above this is a hard overload; it matches the old
+// single-bit DIG_7 threshold of 8 clipped samples (class 4 covers 8..15).
+#define AGC_HARD_OVERLOAD_CLASS 4u
+
 // Number of ADAR1000 devices
 #define AGC_NUM_DEVICES   4
 // Number of channels per ADAR1000
@@ -96,8 +100,12 @@ public:
     // True if the last update() saw saturation.
     bool last_saturated;
 
-    // True if the last update() saw a hard overload (DIG_7).
+    // True if the last update() saw a hard overload (DIG_7 or class >= 4).
     bool last_hard_overload;
+
+    // Severity class reported by the DIG_7 pulse link on the last frame
+    // (0 = no pulses / no information, 0xFF = unusable).
+    uint8_t last_magnitude_class;
 
     // Total saturation events since reset/construction.
     uint32_t saturation_event_count;
@@ -114,6 +122,16 @@ public:
     // hard_overload   : DIG_7 == set (many clipped samples this frame)
     // Defaulted so existing call sites keep compiling.
     void update(bool fpga_saturation, bool hard_overload = false);
+
+    // WP4.2: attack step taken from the severity class reported by the DIG_7
+    // pulse link (see AgcPulseCounter.h).  Class 0 means "no magnitude
+    // information" and falls back to the fixed attack above, so a missing or
+    // mis-configured link degrades to today's behaviour instead of failing.
+    // Classes are 1..7.
+    void updateWithMagnitude(bool fpga_saturation, uint8_t magnitude_class);
+
+    // VGA codes removed per frame for a severity class; 0 for "no information".
+    static uint8_t attackStepForClass(uint8_t magnitude_class);
 
     // Apply the current gain to all 16 RX VGA channels via the Manager.
     void applyGain(ADAR1000Manager &mgr);

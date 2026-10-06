@@ -24,6 +24,7 @@
 #include "ADAR1000_Manager.h"
 #include "ADAR1000_AGC.h"
 #include "PA_SENSE.h"
+#include "AgcPulseCounter.h"
 extern "C" {
 #include "ad9523.h"
 }
@@ -228,6 +229,24 @@ extern SPI_HandleTypeDef hspi4;
 
 ADAR1000Manager adarManager;
 ADAR1000_AGC    outerAgc;
+
+/* [FIX WP4.2] DIG_7 magnitude link: the FPGA emits one pulse per severity
+ * class (0..7) just after each frame boundary, so the edge count carries how
+ * badly the receiver is clipping and the AGC attack becomes proportional to
+ * it instead of two-level.
+ *
+ * The edges must be counted by an interrupt: one pulse is 1 us high with a
+ * 3 us period, all within ~21 us of the frame start, which the per-frame main
+ * loop cannot sample.  To enable: configure PD15 (FPGA_DIG7_Pin) as a
+ * rising-edge EXTI input and register agcPulseCounter.onEdge() through the
+ * project's IRQ layer (no_os_irq_ctrl_init + no_os_irq_register_callback, as
+ * stm32_gpio_irq.c does for other pins).
+ *
+ * Until that interrupt exists consume() returns 0 on every frame, which
+ * updateWithMagnitude() treats as "no magnitude information": the attack then
+ * falls back to the previous fixed step, so shipping this before the hardware
+ * is validated cannot make the loop worse. */
+AgcPulseCounter agcPulseCounter;
 static uint8_t matrix1[15][16];
 static uint8_t matrix2[15][16];
 static uint8_t vector_0[16] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
@@ -2225,12 +2244,13 @@ int main(void)
       if (outerAgc.enabled) {
           bool sat = HAL_GPIO_ReadPin(FPGA_DIG5_SAT_GPIO_Port,
                                       FPGA_DIG5_SAT_Pin) == GPIO_PIN_SET;
-          /* [FIX WP4.2] DIG_7 (PD15) now carries "hard overload" (many clipped
-           * samples this frame) instead of being tied low, so a strong
-           * transient takes a bigger attack step than a marginal clip. */
-          bool hard = HAL_GPIO_ReadPin(FPGA_DIG7_GPIO_Port,
-                                       FPGA_DIG7_Pin) == GPIO_PIN_SET;
-          outerAgc.update(sat, hard);
+          /* [FIX WP4.2] DIG_7 (PD15) is a pulse train now, not a level: do
+           * not read it with HAL_GPIO_ReadPin.  consume() returns the severity
+           * class the FPGA sent (1..7), 0 when no pulses arrived, or
+           * AgcPulseCounter::kUnknown when the line produced more edges than the
+           * encoder can emit.  Both of the latter fall back to the fixed attack. */
+          uint8_t mag_class = agcPulseCounter.consume();
+          outerAgc.updateWithMagnitude(sat, mag_class);
           /* [FIX WP4.5] verify every VGA write instead of trusting it */
           int agc_fail = outerAgc.applyGainVerified(adarManager);
           if (agc_fail > 0) {

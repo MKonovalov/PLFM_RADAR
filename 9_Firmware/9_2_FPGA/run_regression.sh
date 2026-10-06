@@ -77,6 +77,7 @@ PROD_RTL=(
     cfar_ca.v
     mti_canceller.v
     fpga_self_test.v
+    agc_magnitude_link.v
 )
 
 # Source-only RTL (not instantiated at top level, but should still be lint-clean)
@@ -112,6 +113,7 @@ SYSTEM_RTL=(
     "${RECEIVER_RTL[@]}"
     usb_data_interface.v usb_data_interface_ft2232h.v edge_detector.v
     cfar_ca.v fpga_self_test.v
+    agc_magnitude_link.v
 )
 
 # ---- Layer A: iverilog -Wall compilation ----
@@ -450,6 +452,11 @@ if [[ "$QUICK" -eq 0 ]]; then
     run_test "Receiver (golden compare)" \
         tb/tb_rx_compare_reg.vvp \
         tb/tb_radar_receiver_final.v "${RECEIVER_RTL[@]}"
+
+    # AGC magnitude link (WP4.2): severity class -> pulse count on DIG_7
+    run_test "AGC Magnitude Link (DIG_7 pulse encoding)" \
+        tb/tb_agc_magnitude_reg.vvp \
+        tb/tb_agc_magnitude_link.v agc_magnitude_link.v
 
     # ADC analog out-of-range (AD9484 OR) reaching the AGC status path
     run_test "ADC Out-of-Range -> AGC status" \

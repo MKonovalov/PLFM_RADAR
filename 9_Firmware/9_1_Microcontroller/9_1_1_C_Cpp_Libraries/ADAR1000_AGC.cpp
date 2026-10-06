@@ -34,6 +34,7 @@ ADAR1000_AGC::ADAR1000_AGC()
     , last_hard_overload(false)
     , saturation_event_count(0)
     , hard_overload_count(0)
+    , last_magnitude_class(0)
 {
     memset(cal_offset, 0, sizeof(cal_offset));
 }
@@ -108,6 +109,83 @@ void ADAR1000_AGC::update(bool fpga_saturation, bool hard_overload)
                 agc_base_gain = max_gain;
             }
 
+            DIAG("AGC", "Recovery step -- gain_base -> %u", (unsigned)agc_base_gain);
+        }
+    }
+}
+
+
+// ---------------------------------------------------------------------------
+// attackStepForClass -- VGA codes to remove for a severity class
+//
+// This table is the point of WP4.2: a 200-count overload takes 12 codes off in
+// one frame while a single clipped sample takes 1, instead of both costing the
+// same 4.  Index 0 is never applied by updateWithMagnitude -- it signals "no
+// magnitude information" and triggers the fixed fallback.
+// ---------------------------------------------------------------------------
+uint8_t ADAR1000_AGC::attackStepForClass(uint8_t magnitude_class)
+{
+    static const uint8_t kAttackByClass[8] = {
+        0,   // 0: no information (caller falls back)
+        1,   // 1: ~1 clipped sample
+        2,   // 2: 2-3
+        4,   // 3: 4-7
+        6,   // 4: 8-15    (hard overload from here)
+        8,   // 5: 16-31
+        10,  // 6: 32-63
+        12   // 7: 64-255  (the old fixed hard step was 8)
+    };
+    if (magnitude_class == 0 || magnitude_class > 7)
+        return 0;
+    return kAttackByClass[magnitude_class];
+}
+
+// ---------------------------------------------------------------------------
+// updateWithMagnitude -- proportional attack driven by the DIG_7 pulse link
+//
+// Same frame rules as update(): attack immediately on saturation, recover after
+// holdoff_frames clean frames.  Only the attack size is now proportional.
+// ---------------------------------------------------------------------------
+void ADAR1000_AGC::updateWithMagnitude(bool fpga_saturation, uint8_t magnitude_class)
+{
+    if (!enabled)
+        return;
+
+    last_saturated = fpga_saturation;
+    last_magnitude_class = magnitude_class;
+
+    if (fpga_saturation) {
+        saturation_event_count++;
+        holdoff_counter = 0;
+
+        uint8_t step = attackStepForClass(magnitude_class);
+        if (step == 0) {
+            // No usable magnitude: keep the previous fixed attack so the loop
+            // still protects the ADC when the link is absent or noisy.
+            step = gain_step_down;
+            last_hard_overload = false;
+        } else {
+            last_hard_overload = (magnitude_class >= AGC_HARD_OVERLOAD_CLASS);
+        }
+        if (last_hard_overload)
+            hard_overload_count++;
+
+        if (agc_base_gain >= step + min_gain)
+            agc_base_gain -= step;
+        else
+            agc_base_gain = min_gain;
+
+        DIAG("AGC", "SAT detected (class=%u step=%u) -- gain_base -> %u",
+             (unsigned)magnitude_class, (unsigned)step, (unsigned)agc_base_gain);
+
+    } else {
+        holdoff_counter++;
+        if (holdoff_counter >= holdoff_frames) {
+            holdoff_counter = 0;
+            if (agc_base_gain + gain_step_up <= max_gain)
+                agc_base_gain += gain_step_up;
+            else
+                agc_base_gain = max_gain;
             DIAG("AGC", "Recovery step -- gain_base -> %u", (unsigned)agc_base_gain);
         }
     }

@@ -12,6 +12,7 @@
 // Shim headers override real STM32/diag headers
 #include "stm32_hal_mock.h"
 #include "ADAR1000_AGC.h"
+#include "AgcPulseCounter.h"
 #include "ADAR1000_Manager.h"
 
 // ---------------------------------------------------------------------------
@@ -480,6 +481,125 @@ static void test_compute_offsets_all_zero_is_noop()
         assert(off[i] == 0);             // a wrong register read cannot poison the table
 }
 
+
+// ---------------------------------------------------------------------------
+// Proportional attack from the DIG_7 magnitude link (WP4.2)
+// ---------------------------------------------------------------------------
+static void test_attack_table_is_proportional()
+{
+    // The step must grow with the class: this is what stops the loop being
+    // bang-bang on a 1-bit error signal.
+    assert(ADAR1000_AGC::attackStepForClass(1) == 1);
+    assert(ADAR1000_AGC::attackStepForClass(2) == 2);
+    assert(ADAR1000_AGC::attackStepForClass(3) == 4);
+    assert(ADAR1000_AGC::attackStepForClass(4) == 6);
+    assert(ADAR1000_AGC::attackStepForClass(5) == 8);
+    assert(ADAR1000_AGC::attackStepForClass(6) == 10);
+    assert(ADAR1000_AGC::attackStepForClass(7) == 12);
+    for (uint8_t c = 2; c <= 7; ++c)
+        assert(ADAR1000_AGC::attackStepForClass(c) > ADAR1000_AGC::attackStepForClass(c - 1));
+
+    // 0 and out-of-range mean "no information", never a class
+    assert(ADAR1000_AGC::attackStepForClass(0) == 0);
+    assert(ADAR1000_AGC::attackStepForClass(8) == 0);
+    assert(ADAR1000_AGC::attackStepForClass(0xFF) == 0);
+}
+
+static void test_magnitude_attack_uses_the_class()
+{
+    ADAR1000_AGC agc;
+    agc.enabled = true;
+    agc.agc_base_gain = 60;
+
+    // a marginal clip (class 1) barely moves the gain
+    agc.updateWithMagnitude(true, 1);
+    assert(agc.agc_base_gain == 59);
+    assert(agc.last_magnitude_class == 1);
+
+    // a severe overload (class 7) takes 12 codes at once
+    agc.agc_base_gain = 60;
+    agc.updateWithMagnitude(true, 7);
+    assert(agc.agc_base_gain == 48);
+    assert(agc.last_hard_overload == true);
+
+    // class 4 is the hard-overload boundary (matches the old 8-sample threshold)
+    agc.agc_base_gain = 60;
+    agc.updateWithMagnitude(true, 4);
+    assert(agc.last_hard_overload == true);
+    agc.agc_base_gain = 60;
+    agc.updateWithMagnitude(true, 3);
+    assert(agc.last_hard_overload == false);
+}
+
+static void test_magnitude_attack_falls_back_when_link_is_dead()
+{
+    // No pulses / noisy line must degrade to the fixed attack, not to no attack
+    // (the FPGA may be running the new encoder before the MCU interrupt is on).
+    ADAR1000_AGC agc;
+    agc.enabled = true;
+
+    agc.agc_base_gain = 60;
+    agc.updateWithMagnitude(true, 0);
+    assert(agc.agc_base_gain == 60 - agc.gain_step_down);
+    assert(agc.last_hard_overload == false);
+    assert(agc.last_magnitude_class == 0);
+
+    agc.agc_base_gain = 60;
+    agc.updateWithMagnitude(true, AgcPulseCounter::kUnknown);
+    assert(agc.agc_base_gain == 60 - agc.gain_step_down);
+
+    agc.agc_base_gain = 60;
+    agc.updateWithMagnitude(true, 9);           // out of range
+    assert(agc.agc_base_gain == 60 - agc.gain_step_down);
+}
+
+static void test_magnitude_link_converges_deterministically()
+{
+    // From gain 127 down to the 30-code operating point is 97 codes.
+    // class 7 removes 12 per frame -> 9 frames; class 1 removes 1 -> 97 frames.
+    // The exact frame counts are the acceptance criterion for WP4.2.
+    ADAR1000_AGC fast;
+    fast.enabled = true;
+    fast.agc_base_gain = 127;
+    int frames_fast = 0;
+    while (fast.agc_base_gain > 30 && frames_fast < 200) { fast.updateWithMagnitude(true, 7); frames_fast++; }
+    assert(frames_fast == 9);
+
+    ADAR1000_AGC slow;
+    slow.enabled = true;
+    slow.agc_base_gain = 127;
+    int frames_slow = 0;
+    while (slow.agc_base_gain > 30 && frames_slow < 400) { slow.updateWithMagnitude(true, 1); frames_slow++; }
+    assert(frames_slow == 97);
+
+    // and recovery still works on the clean frames in between.  One decay step
+    // per holdoff window: with the default holdoff of 1 frame that is one step
+    // per clean frame, 2 codes each.
+    ADAR1000_AGC agc;
+    agc.enabled = true;
+    agc.validate();
+    agc.agc_base_gain = 60;
+    agc.updateWithMagnitude(true, 7);
+    uint8_t after = agc.agc_base_gain;
+    for (uint8_t f = 0; f < agc.holdoff_frames; ++f)
+        agc.updateWithMagnitude(false, 0);
+    assert(agc.agc_base_gain == after + agc.gain_step_up);
+    // a second full holdoff window recovers again
+    for (uint8_t f = 0; f < agc.holdoff_frames; ++f)
+        agc.updateWithMagnitude(false, 0);
+    assert(agc.agc_base_gain == after + 2 * agc.gain_step_up);
+}
+
+static void test_magnitude_attack_respects_the_floor()
+{
+    ADAR1000_AGC agc;
+    agc.enabled = true;
+    agc.agc_base_gain = 3;
+    agc.min_gain = 2;
+    agc.updateWithMagnitude(true, 7);           // 12 codes off 3
+    assert(agc.agc_base_gain == 2);             // clamped, no underflow
+}
+
 // ---------------------------------------------------------------------------
 // main
 // ---------------------------------------------------------------------------
@@ -508,6 +628,12 @@ int main()
     RUN_TEST(test_recovery_time_matches_documented_rate);
     RUN_TEST(test_compute_offsets_equalises_detectors);
     RUN_TEST(test_compute_offsets_all_zero_is_noop);
+    // --- WP4.2 proportional attack (DIG_7 magnitude link) ---
+    RUN_TEST(test_attack_table_is_proportional);
+    RUN_TEST(test_magnitude_attack_uses_the_class);
+    RUN_TEST(test_magnitude_attack_falls_back_when_link_is_dead);
+    RUN_TEST(test_magnitude_link_converges_deterministically);
+    RUN_TEST(test_magnitude_attack_respects_the_floor);
 
     printf("=== Results: %d/%d passed ===\n", tests_passed, tests_total);
     return (tests_passed == tests_total) ? 0 : 1;

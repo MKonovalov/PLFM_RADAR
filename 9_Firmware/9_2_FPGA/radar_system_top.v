@@ -133,7 +133,7 @@ module radar_system_top (
     // Used by STM32 outer AGC loop to read saturation state without USB polling.
     output wire gpio_dig5,          // DIG_5 (H11→PD13): AGC saturation flag (1=clipping detected)
     output wire gpio_dig6,          // DIG_6 (G12→PD14): AGC enable flag (mirrors host_agc_enable)
-    output wire gpio_dig7           // DIG_7 (H12→PD15): AGC hard-overload flag
+    output wire gpio_dig7           // DIG_7 (H12→PD15): AGC magnitude pulse train
 );
 
 // ============================================================================
@@ -1048,14 +1048,27 @@ assign system_status = status_reg;
 //        STM32 reads PD13 to detect clipping and adjust ADAR1000 VGA gain.
 // DIG_6: AGC enable flag — mirrors host_agc_enable so STM32 outer-loop AGC
 //        tracks the FPGA register as single source of truth.
-// DIG_7: AGC hard-overload flag — high when this frame clipped on
-//        many samples (>= 8), not just one. STM32 PD15 -> larger attack step.
+// DIG_7: AGC magnitude link — a pulse train whose edge count is the severity
+//        class of this frame's saturation count (0..7 pulses, one every 3 us
+//        after the frame boundary).  The STM32 counts the edges and makes its
+//        attack proportional instead of two-level.  An ADC analog overrange
+//        forces at least class 4 so the stronger attack is still guaranteed.
+wire [7:0] agc_mag_count = rx_adc_overrange_seen ? (rx_agc_saturation_count | 8'd8)
+                                                 : rx_agc_saturation_count;
+wire       gpio_dig7_mag;
+agc_magnitude_link u_agc_magnitude_link (
+    .clk         (clk_100m_buf),
+    .reset_n     (sys_reset_n),
+    .frame_start (tx_new_chirp_frame_sync),
+    .sat_count   (agc_mag_count),
+    .mag_out     (gpio_dig7_mag)
+);
 // DIG_5 also asserts on a real ADC analog overrange: the digital clip count
 // only sees the post-digital-gain value, so it can miss an overload the
 // analog front end is still experiencing.
 assign gpio_dig5 = (rx_agc_saturation_count != 8'd0) || rx_adc_overrange_seen;
 assign gpio_dig6 = host_agc_enable;
-assign gpio_dig7 = (rx_agc_saturation_count >= 8'd8) || rx_adc_overrange_seen;
+assign gpio_dig7 = gpio_dig7_mag;
 
 // ============================================================================
 // DEBUG AND VERIFICATION

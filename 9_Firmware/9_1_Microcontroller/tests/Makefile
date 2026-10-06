@@ -76,7 +76,7 @@ TESTS_STANDALONE := test_bug12_pa_cal_loop_inverted \
 TESTS_WITH_PLATFORM := test_bug11_platform_spi_transmit_only
 
 # C++ tests (AGC outer loop + PA current-sense chain)
-TESTS_WITH_CXX := test_agc_outer_loop test_pa_sense
+TESTS_WITH_CXX := test_agc_outer_loop test_pa_sense test_agc_pulse_counter
 
 # GPS driver tests (need mocks + GPS source + -lm)
 TESTS_GPS := test_um982_gps
@@ -197,6 +197,10 @@ test_agc_outer_loop: test_agc_outer_loop.cpp $(CXX_OBJS) $(MOCK_OBJS)
 
 # PA current-sense chain: header-only logic, no mocks needed
 test_pa_sense: test_pa_sense.cpp
+	$(CXX) $(CXXFLAGS) $(INCLUDES) $< -o $@
+
+# AGC magnitude pulse counter: header-only logic, no mocks needed
+test_agc_pulse_counter: test_agc_pulse_counter.cpp
 	$(CXX) $(CXXFLAGS) $(INCLUDES) $< -o $@
 
 # Convenience target
