@@ -12757,7 +12757,7 @@ Your PCBWay Team
 <attribute name="SPICEPREFIX" value="C" x="313.784915625" y="423.531271875" size="1.778" layer="27" rot="R135" display="off"/>
 <attribute name="VALUE" x="166.508715625" y="160.409765625" size="1.27" layer="27" rot="R135"/>
 </element>
-<element name="C17" library="eagle-ltspice" package="C0201" value="47uF" x="59.1121125" y="192.78626875" smashed="yes" rot="R135">
+<element name="C17" library="eagle-ltspice" package="C0201" value="4.7uF" x="59.1121125" y="192.78626875" smashed="yes" rot="R135">
 <attribute name="NAME" x="59.1121125" y="191.88824375" size="1.27" layer="25" rot="R135"/>
 <attribute name="SPICEMODEL" value="NONE" x="82.460778125" y="625.634615625" size="1.778" layer="27" rot="R135" display="off"/>
 <attribute name="SPICEPREFIX" value="C" x="82.460778125" y="625.634615625" size="1.778" layer="27" rot="R135" display="off"/>
@@ -12799,7 +12799,7 @@ Your PCBWay Team
 <attribute name="SPICEPREFIX" value="C" x="232.484915625" y="455.831271875" size="1.778" layer="27" rot="R135" display="off"/>
 <attribute name="VALUE" x="136.396175" y="127.153896875" size="1.27" layer="27" rot="R135"/>
 </element>
-<element name="C176" library="eagle-ltspice" package="C0201" value="47uF" x="62.645" y="174.87" smashed="yes">
+<element name="C176" library="eagle-ltspice" package="C0201" value="4.7uF" x="62.645" y="174.87" smashed="yes">
 <attribute name="NAME" x="62.01" y="175.505" size="1.27" layer="25"/>
 <attribute name="SPICEMODEL" value="NONE" x="175.675" y="-137.55" size="1.778" layer="27" display="off"/>
 <attribute name="SPICEPREFIX" value="C" x="175.675" y="-137.55" size="1.778" layer="27" display="off"/>
@@ -14039,7 +14039,7 @@ Your PCBWay Team
 <attribute name="SPICEPREFIX" value="C" x="-238.43" y="425.175" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="VALUE" x="59.385" y="134.98" size="1.27" layer="27" rot="R180"/>
 </element>
-<element name="C55" library="eagle-ltspice" package="C0201" value="47uF" x="39.629215625" y="193.434096875" smashed="yes" rot="R225">
+<element name="C55" library="eagle-ltspice" package="C0201" value="4.7uF" x="39.629215625" y="193.434096875" smashed="yes" rot="R225">
 <attribute name="NAME" x="40.527240625" y="193.434096875" size="1.27" layer="25" rot="R225"/>
 <attribute name="SPICEMODEL" value="NONE" x="-407.5875375" y="202.414353125" size="1.778" layer="27" rot="R225" display="off"/>
 <attribute name="SPICEPREFIX" value="C" x="-407.5875375" y="202.414353125" size="1.778" layer="27" rot="R225" display="off"/>
@@ -16799,7 +16799,7 @@ Your PCBWay Team
 <attribute name="POPULARITY" value="40" x="-218.94" y="137.22" size="1.778" layer="27" rot="R270" display="off"/>
 <attribute name="VALUE" x="-0.5" y="167.7" size="1.016" layer="27" ratio="10" rot="R270"/>
 </element>
-<element name="X11" library="con-molex" package="22-23-2031" value="22-23-2021" x="246.88" y="107.47" smashed="yes" rot="R90">
+<element name="X11" library="con-molex" package="22-23-2031" value="22-23-2031" x="246.88" y="107.47" smashed="yes" rot="R90">
 <attribute name="MF" value="MOLEX" x="470.4" y="144.3" size="1.778" layer="27" rot="R90" display="off"/>
 <attribute name="MPN" value="22-23-2021" x="470.4" y="144.3" size="1.778" layer="27" rot="R90" display="off"/>
 <attribute name="NAME" x="243.07" y="104.93" size="1.016" layer="25" ratio="10" rot="R90"/>
@@ -16817,7 +16817,7 @@ Your PCBWay Team
 <attribute name="POPULARITY" value="40" x="470" y="123.5" size="1.778" layer="27" rot="R90" display="off"/>
 <attribute name="VALUE" x="251.56" y="75.24" size="1.016" layer="27" ratio="10" rot="R90"/>
 </element>
-<element name="X13" library="con-molex" package="22-23-2031" value="22-23-2021" x="202.06" y="277.23" smashed="yes" rot="R180">
+<element name="X13" library="con-molex" package="22-23-2031" value="22-23-2031" x="202.06" y="277.23" smashed="yes" rot="R180">
 <attribute name="MF" value="MOLEX" x="147.45" y="500.75" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="MPN" value="22-23-2021" x="147.45" y="500.75" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="NAME" x="204.6" y="273.42" size="1.016" layer="25" ratio="10" rot="R180"/>
@@ -16826,7 +16826,7 @@ Your PCBWay Team
 <attribute name="POPULARITY" value="40" x="147.45" y="500.75" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="VALUE" x="204.6" y="282.31" size="1.016" layer="27" ratio="10" rot="R180"/>
 </element>
-<element name="X14" library="con-molex" package="22-23-2041" value="22-23-2021" x="118.5" y="278.78" smashed="yes" rot="R180">
+<element name="X14" library="con-molex" package="22-23-2041" value="22-23-2041" x="118.5" y="278.78" smashed="yes" rot="R180">
 <attribute name="MF" value="MOLEX" x="55" y="502.3" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="MPN" value="22-23-2021" x="55" y="502.3" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="NAME" x="121.04" y="274.97" size="1.016" layer="25" ratio="10" rot="R180"/>
@@ -16835,7 +16835,7 @@ Your PCBWay Team
 <attribute name="POPULARITY" value="40" x="55" y="502.3" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="VALUE" x="121.04" y="283.86" size="1.016" layer="27" ratio="10" rot="R180"/>
 </element>
-<element name="X15" library="con-molex" package="22-23-2031" value="22-23-2021" x="186.61" y="90.97" smashed="yes">
+<element name="X15" library="con-molex" package="22-23-2031" value="22-23-2031" x="186.61" y="90.97" smashed="yes">
 <attribute name="MF" value="MOLEX" x="259" y="-132.55" size="1.778" layer="27" display="off"/>
 <attribute name="MPN" value="22-23-2021" x="259" y="-132.55" size="1.778" layer="27" display="off"/>
 <attribute name="NAME" x="184.07" y="94.78" size="1.016" layer="25" ratio="10"/>
@@ -16871,7 +16871,7 @@ Your PCBWay Team
 <attribute name="POPULARITY" value="40" x="-218" y="42.5" size="1.778" layer="27" rot="R270" display="off"/>
 <attribute name="VALUE" x="0.44" y="144.1" size="1.016" layer="27" ratio="10" rot="R270"/>
 </element>
-<element name="X19" library="con-molex" package="22-23-2031" value="22-23-2021" x="4.97" y="47.25" smashed="yes" rot="R270">
+<element name="X19" library="con-molex" package="22-23-2031" value="22-23-2031" x="4.97" y="47.25" smashed="yes" rot="R270">
 <attribute name="MF" value="MOLEX" x="-218.55" y="-60.7" size="1.778" layer="27" rot="R270" display="off"/>
 <attribute name="MPN" value="22-23-2021" x="-218.55" y="-60.7" size="1.778" layer="27" rot="R270" display="off"/>
 <attribute name="NAME" x="8.78" y="49.79" size="1.016" layer="25" ratio="10" rot="R270"/>
@@ -17177,7 +17177,7 @@ Your PCBWay Team
 <attribute name="POPULARITY" value="35" x="55.032584375" y="254.97651875" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="VALUE" x="138.852584375" y="25.10651875" size="1.016" layer="27" ratio="10" rot="R180"/>
 </element>
-<element name="X5" library="con-molex" package="22-23-2041" value="22-23-2021" x="242.67" y="278.03" smashed="yes" rot="R180">
+<element name="X5" library="con-molex" package="22-23-2041" value="22-23-2041" x="242.67" y="278.03" smashed="yes" rot="R180">
 <attribute name="MF" value="MOLEX" x="-38" y="482.5" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="MPN" value="22-23-2021" x="-38" y="482.5" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="NAME" x="245.21" y="274.22" size="1.016" layer="25" ratio="10" rot="R180"/>
@@ -17249,7 +17249,7 @@ Your PCBWay Team
 <attribute name="POPULARITY" value="40" x="-230" y="-117.5" size="1.778" layer="27" rot="R270" display="off"/>
 <attribute name="VALUE" x="-0.13" y="19.66" size="1.016" layer="27" ratio="10" rot="R270"/>
 </element>
-<element name="X6" library="con-molex" package="22-23-2031" value="22-23-2021" x="246.53" y="43.94" smashed="yes" rot="R90">
+<element name="X6" library="con-molex" package="22-23-2031" value="22-23-2031" x="246.53" y="43.94" smashed="yes" rot="R90">
 <attribute name="MF" value="MOLEX" x="451" y="333.5" size="1.778" layer="27" rot="R90" display="off"/>
 <attribute name="MPN" value="22-23-2021" x="451" y="333.5" size="1.778" layer="27" rot="R90" display="off"/>
 <attribute name="NAME" x="242.72" y="41.4" size="1.016" layer="25" ratio="10" rot="R90"/>
@@ -17258,7 +17258,7 @@ Your PCBWay Team
 <attribute name="POPULARITY" value="40" x="451" y="333.5" size="1.778" layer="27" rot="R90" display="off"/>
 <attribute name="VALUE" x="251.61" y="41.4" size="1.016" layer="27" ratio="10" rot="R90"/>
 </element>
-<element name="X7" library="con-molex" package="22-23-2041" value="22-23-2021" x="123.05" y="91.97" smashed="yes">
+<element name="X7" library="con-molex" package="22-23-2041" value="22-23-2041" x="123.05" y="91.97" smashed="yes">
 <attribute name="MF" value="MOLEX" x="421.5" y="-112.5" size="1.778" layer="27" display="off"/>
 <attribute name="MPN" value="22-23-2021" x="421.5" y="-112.5" size="1.778" layer="27" display="off"/>
 <attribute name="NAME" x="120.51" y="95.78" size="1.016" layer="25" ratio="10"/>
@@ -17365,7 +17365,7 @@ Your PCBWay Team
 <attribute name="POPULARITY" value="40" x="190.9" y="276.6" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="VALUE" x="193.44" y="281.68" size="1.016" layer="27" ratio="10" rot="R180"/>
 </element>
-<element name="X22" library="con-molex" package="22-23-2031" value="22-23-2021" x="180.4" y="276.6" smashed="yes" rot="R180">
+<element name="X22" library="con-molex" package="22-23-2031" value="22-23-2031" x="180.4" y="276.6" smashed="yes" rot="R180">
 <attribute name="MF" value="MOLEX" x="180.4" y="276.6" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="MPN" value="22-23-2021" x="180.4" y="276.6" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="NAME" x="182.94" y="272.79" size="1.016" layer="25" ratio="10" rot="R180"/>
@@ -17379,7 +17379,7 @@ Your PCBWay Team
 <attribute name="POPULARITY" value="98" x="78.5" y="191.5" size="1.778" layer="27" rot="R90" display="off"/>
 <attribute name="VALUE" x="81.675" y="188.96" size="1.27" layer="27" rot="R90"/>
 </element>
-<element name="C285" library="eagle-ltspice" package="C0201" value="47uF" x="38.1" y="177.475" smashed="yes">
+<element name="C285" library="eagle-ltspice" package="C0201" value="4.7uF" x="38.1" y="177.475" smashed="yes">
 <attribute name="NAME" x="37.465" y="178.11" size="1.27" layer="25"/>
 <attribute name="SPICEMODEL" value="NONE" x="38.1" y="192.175" size="1.778" layer="27" display="off"/>
 <attribute name="SPICEPREFIX" value="C" x="38.1" y="192.175" size="1.778" layer="27" display="off"/>

@@ -287,6 +287,31 @@ def main():
                     f"{board}: {len(only_sheet)} designators in {name} are absent "
                     f"from the board (e.g. {', '.join(only_sheet[:8])})")
 
+            # Presence is not enough: a designator can appear in the sheet on the wrong row.
+            # The board's own part number is the authority for what it is, so compare the two.
+            misplaced = []
+            for r in rows:
+                if r["Designator"] in dnp:
+                    continue
+                s = sheet_data.get(r["Designator"])
+                if not s:
+                    continue
+                def norm(v):
+                    """Cosmetic differences are not discrepancies: micro is written both ways,
+                    and the sheet is often more specific than the board."""
+                    v = (v or "").strip().lower().replace("\u00b5", "u").replace("\u03bc", "u")
+                    return v.replace(" ", "")
+
+                board_val, sheet_val = norm(r["Value"]), norm(s.get("value"))
+                if board_val and sheet_val and board_val not in sheet_val \
+                        and sheet_val not in board_val:
+                    misplaced.append((r["Designator"], board_val, sheet_val))
+            if misplaced:
+                detail = "; ".join(f"{d}: board {b} vs sheet {s_}" for d, b, s_ in misplaced[:3])
+                findings.append(
+                    f"{board}: {len(misplaced)} designators sit on a {name} row whose part "
+                    f"number differs from the board (e.g. {detail})")
+
     emit(f"\ntotal placed components across boards: {total_placed}")
     if findings:
         emit("\nFINDINGS")

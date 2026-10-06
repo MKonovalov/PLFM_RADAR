@@ -27707,7 +27707,7 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <part name="R54" library="eagle-ltspice" deviceset="R" device="R0201" value="4.7k"/>
 <part name="C50" library="eagle-ltspice" deviceset="C" device="C0201" value="100nF"/>
 <part name="GND62" library="supply1" deviceset="GND" device=""/>
-<part name="C17" library="eagle-ltspice" deviceset="C" device="C0201" value="47uF"/>
+<part name="C17" library="eagle-ltspice" deviceset="C" device="C0201" value="4.7uF"/>
 <part name="C108" library="eagle-ltspice" deviceset="C" device="C0201" value="4.7uF"/>
 <part name="C109" library="eagle-ltspice" deviceset="C" device="C0201" value="4.7uF"/>
 <part name="C110" library="eagle-ltspice" deviceset="C" device="C0201" value="0.47uF"/>
@@ -28319,7 +28319,7 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <part name="GND645" library="supply1" deviceset="GND" device=""/>
 <part name="C123" library="eagle-ltspice" deviceset="C" device="C0201" value="10nF"/>
 <part name="GND646" library="supply1" deviceset="GND" device=""/>
-<part name="C55" library="eagle-ltspice" deviceset="C" device="C0201" value="47uF"/>
+<part name="C55" library="eagle-ltspice" deviceset="C" device="C0201" value="4.7uF"/>
 <part name="C153" library="eagle-ltspice" deviceset="C" device="C0201" value="4.7uF"/>
 <part name="C154" library="eagle-ltspice" deviceset="C" device="C0201" value="4.7uF"/>
 <part name="C155" library="eagle-ltspice" deviceset="C" device="C0201" value="0.47uF"/>
@@ -28350,7 +28350,7 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <part name="R144" library="eagle-ltspice" deviceset="R" device="R0201" value="1k"/>
 <part name="GND743" library="supply1" deviceset="GND" device=""/>
 <part name="GND744" library="supply1" deviceset="GND" device=""/>
-<part name="C176" library="eagle-ltspice" deviceset="C" device="C0201" value="47uF"/>
+<part name="C176" library="eagle-ltspice" deviceset="C" device="C0201" value="4.7uF"/>
 <part name="C177" library="eagle-ltspice" deviceset="C" device="C0201" value="4.7uF"/>
 <part name="C178" library="eagle-ltspice" deviceset="C" device="C0201" value="4.7uF"/>
 <part name="C179" library="eagle-ltspice" deviceset="C" device="C0201" value="0.47uF"/>
@@ -29628,7 +29628,7 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <part name="GND1074" library="supply1" deviceset="GND" device=""/>
 <part name="GND1079" library="supply1" deviceset="GND" device=""/>
 <part name="JP20" library="pinhead" deviceset="PINHD-1X2" device=""/>
-<part name="C285" library="eagle-ltspice" deviceset="C" device="C0201" value="47uF"/>
+<part name="C285" library="eagle-ltspice" deviceset="C" device="C0201" value="4.7uF"/>
 <part name="C287" library="eagle-ltspice" deviceset="C" device="C0201" value="4.7uF"/>
 <part name="C289" library="eagle-ltspice" deviceset="C" device="C0201" value="4.7uF"/>
 <part name="C291" library="eagle-ltspice" deviceset="C" device="C0201" value="0.47uF"/>

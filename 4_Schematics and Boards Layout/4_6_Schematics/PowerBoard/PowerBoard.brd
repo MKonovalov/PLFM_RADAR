@@ -3450,7 +3450,7 @@ Your PCBWay Team
 <attribute name="POPULARITY" value="40" x="76.65" y="-79.45" size="1.778" layer="27" display="off"/>
 <attribute name="VALUE" x="37.28" y="34.85" size="1.016" layer="27" ratio="10"/>
 </element>
-<element name="X18" library="con-molex" package="22-23-2031" value="22-23-2021" x="195.26" y="154.32" smashed="yes" rot="R180">
+<element name="X18" library="con-molex" package="22-23-2031" value="22-23-2031" x="195.26" y="154.32" smashed="yes" rot="R180">
 <attribute name="MF" value="MOLEX" x="140.65" y="273.7" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="MPN" value="22-23-2021" x="140.65" y="273.7" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="NAME" x="197.8" y="150.51" size="1.016" layer="25" ratio="10" rot="R180"/>
@@ -3459,7 +3459,7 @@ Your PCBWay Team
 <attribute name="POPULARITY" value="40" x="140.65" y="273.7" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="VALUE" x="197.8" y="159.4" size="1.016" layer="27" ratio="10" rot="R180"/>
 </element>
-<element name="X19" library="con-molex" package="22-23-2031" value="22-23-2021" x="74.48" y="205" smashed="yes" rot="R270">
+<element name="X19" library="con-molex" package="22-23-2031" value="22-23-2031" x="74.48" y="205" smashed="yes" rot="R270">
 <attribute name="MF" value="MOLEX" x="-44.9" y="141.5" size="1.778" layer="27" rot="R270" display="off"/>
 <attribute name="MPN" value="22-23-2021" x="-44.9" y="141.5" size="1.778" layer="27" rot="R270" display="off"/>
 <attribute name="NAME" x="78.24" y="205.64" size="1.016" layer="25" ratio="10" rot="R270"/>
@@ -3468,7 +3468,7 @@ Your PCBWay Team
 <attribute name="POPULARITY" value="40" x="-44.9" y="141.5" size="1.778" layer="27" rot="R270" display="off"/>
 <attribute name="VALUE" x="69.4" y="207.54" size="1.016" layer="27" ratio="10" rot="R270"/>
 </element>
-<element name="X20" library="con-molex" package="22-23-2031" value="22-23-2021" x="136.73" y="128.24" smashed="yes" rot="R270">
+<element name="X20" library="con-molex" package="22-23-2031" value="22-23-2031" x="136.73" y="128.24" smashed="yes" rot="R270">
 <attribute name="MF" value="MOLEX" x="17.35" y="55.85" size="1.778" layer="27" rot="R270" display="off"/>
 <attribute name="MPN" value="22-23-2021" x="17.35" y="55.85" size="1.778" layer="27" rot="R270" display="off"/>
 <attribute name="NAME" x="140.64" y="129.03" size="1.016" layer="25" ratio="10" rot="R270"/>
@@ -3477,7 +3477,7 @@ Your PCBWay Team
 <attribute name="POPULARITY" value="40" x="17.35" y="55.85" size="1.778" layer="27" rot="R270" display="off"/>
 <attribute name="VALUE" x="131.65" y="130.78" size="1.016" layer="27" ratio="10" rot="R270"/>
 </element>
-<element name="X21" library="con-molex" package="22-23-2031" value="22-23-2021" x="100.73" y="103.18" smashed="yes" rot="R270">
+<element name="X21" library="con-molex" package="22-23-2031" value="22-23-2031" x="100.73" y="103.18" smashed="yes" rot="R270">
 <attribute name="MF" value="MOLEX" x="-18.65" y="21.9" size="1.778" layer="27" rot="R270" display="off"/>
 <attribute name="MPN" value="22-23-2021" x="-18.65" y="21.9" size="1.778" layer="27" rot="R270" display="off"/>
 <attribute name="NAME" x="104.44" y="104.12" size="1.016" layer="25" ratio="10" rot="R270"/>
@@ -3504,7 +3504,7 @@ Your PCBWay Team
 <attribute name="POPULARITY" value="40" x="187.5" y="-20.5" size="1.778" layer="27" display="off"/>
 <attribute name="VALUE" x="85.9" y="93.8" size="1.016" layer="27" ratio="10"/>
 </element>
-<element name="X24" library="con-molex" package="22-23-2031" value="22-23-2021" x="64.53" y="102.55" smashed="yes" rot="R270">
+<element name="X24" library="con-molex" package="22-23-2031" value="22-23-2031" x="64.53" y="102.55" smashed="yes" rot="R270">
 <attribute name="MF" value="MOLEX" x="-54.85" y="-5.4" size="1.778" layer="27" rot="R270" display="off"/>
 <attribute name="MPN" value="22-23-2021" x="-54.85" y="-5.4" size="1.778" layer="27" rot="R270" display="off"/>
 <attribute name="NAME" x="68.19" y="103.04" size="1.016" layer="25" ratio="10" rot="R270"/>
@@ -4481,7 +4481,7 @@ Your PCBWay Team
 <attribute name="POPULARITY" value="40" x="32.573" y="156.419" size="1.778" layer="27" rot="R90" display="off"/>
 <attribute name="VALUE" x="48.553" y="160.279" size="1.016" layer="27" ratio="10" rot="R90"/>
 </element>
-<element name="X31" library="con-molex" package="22-23-2041" value="22-23-2021" x="85.727" y="161.946" smashed="yes" rot="R90">
+<element name="X31" library="con-molex" package="22-23-2041" value="22-23-2041" x="85.727" y="161.946" smashed="yes" rot="R90">
 <attribute name="MF" value="MOLEX" x="74.827" y="155.546" size="1.778" layer="27" rot="R90" display="off"/>
 <attribute name="MPN" value="22-23-2021" x="74.827" y="155.546" size="1.778" layer="27" rot="R90" display="off"/>
 <attribute name="NAME" x="81.917" y="159.406" size="1.016" layer="25" ratio="10" rot="R90"/>
@@ -4490,7 +4490,7 @@ Your PCBWay Team
 <attribute name="POPULARITY" value="40" x="74.827" y="155.546" size="1.778" layer="27" rot="R90" display="off"/>
 <attribute name="VALUE" x="90.807" y="159.406" size="1.016" layer="27" ratio="10" rot="R90"/>
 </element>
-<element name="X32" library="con-molex" package="22-23-2041" value="22-23-2021" x="122.442" y="161.78" smashed="yes" rot="R90">
+<element name="X32" library="con-molex" package="22-23-2041" value="22-23-2041" x="122.442" y="161.78" smashed="yes" rot="R90">
 <attribute name="MF" value="MOLEX" x="111.542" y="155.38" size="1.778" layer="27" rot="R90" display="off"/>
 <attribute name="MPN" value="22-23-2021" x="111.542" y="155.38" size="1.778" layer="27" rot="R90" display="off"/>
 <attribute name="NAME" x="118.632" y="159.24" size="1.016" layer="25" ratio="10" rot="R90"/>
@@ -4499,7 +4499,7 @@ Your PCBWay Team
 <attribute name="POPULARITY" value="40" x="111.542" y="155.38" size="1.778" layer="27" rot="R90" display="off"/>
 <attribute name="VALUE" x="127.522" y="159.24" size="1.016" layer="27" ratio="10" rot="R90"/>
 </element>
-<element name="X33" library="con-molex" package="22-23-2041" value="22-23-2021" x="158.383" y="161.272" smashed="yes" rot="R90">
+<element name="X33" library="con-molex" package="22-23-2041" value="22-23-2041" x="158.383" y="161.272" smashed="yes" rot="R90">
 <attribute name="MF" value="MOLEX" x="147.483" y="154.872" size="1.778" layer="27" rot="R90" display="off"/>
 <attribute name="MPN" value="22-23-2021" x="147.483" y="154.872" size="1.778" layer="27" rot="R90" display="off"/>
 <attribute name="NAME" x="154.573" y="158.732" size="1.016" layer="25" ratio="10" rot="R90"/>
