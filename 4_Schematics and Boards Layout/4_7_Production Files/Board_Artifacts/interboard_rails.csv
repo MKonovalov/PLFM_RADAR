@@ -37,7 +37,7 @@ Rail,Boards,BoardsCount,TotalPins,NearDuplicates
 +5V0_5,PowerBoard,1,15,
 +5V0_ADAR,PowerBoard,1,7,
 +5V0_ADTR,PowerBoard,1,9,
-+5V0_LO,FreqSynth PowerBoard,2,9,
++5V0_LO,FreqSynth PowerBoard,2,10,
 +5V0_PA_1,MainBoard PowerBoard,2,11,
 +5V0_PA_2,MainBoard PowerBoard,2,11,
 +5V0_PA_3,MainBoard PowerBoard,2,12,

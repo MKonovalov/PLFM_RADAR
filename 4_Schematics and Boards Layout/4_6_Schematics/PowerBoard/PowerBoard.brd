@@ -4509,7 +4509,7 @@ Your PCBWay Team
 <attribute name="POPULARITY" value="40" x="182.35" y="273.65" size="1.778" layer="27" rot="R90" display="off"/>
 <attribute name="VALUE" x="198.33" y="277.51" size="1.016" layer="27" ratio="10" rot="R90"/>
 </element>
-<element name="X36" library="con-molex" package="22-23-2021" value="22-23-2021" x="65.35" y="82.7">
+<element name="X37" library="con-molex" package="22-23-2021" value="22-23-2021" x="65.35" y="82.7">
 <attribute name="MF" value="MOLEX" x="65.35" y="82.7" size="1.778" layer="27" display="off"/>
 <attribute name="OC_NEWARK" value="25C3832" x="65.35" y="82.7" size="1.778" layer="27" display="off"/>
 <attribute name="OC_FARNELL" value="1462926" x="65.35" y="82.7" size="1.778" layer="27" display="off"/>
@@ -6075,7 +6075,7 @@ Your PCBWay Team
 <via x="145.8" y="73.5" extent="1-16" drill="0.6"/>
 <via x="150.2" y="73.4" extent="1-16" drill="0.6"/>
 <via x="154.8" y="73.4" extent="1-16" drill="0.6"/>
-<contactref element="U35" pad="18"/><contactref element="U35" pad="8"/><contactref element="U35" pad="21"/><contactref element="R60" pad="2"/><contactref element="C164" pad="2"/><contactref element="C165" pad="2"/><contactref element="C166" pad="2"/><contactref element="C167" pad="2"/><contactref element="X36" pad="2"/><contactref element="C169" pad="2"/><contactref element="C170" pad="2"/><contactref element="C171" pad="2"/><contactref element="C172" pad="2"/></signal>
+<contactref element="U35" pad="18"/><contactref element="U35" pad="8"/><contactref element="U35" pad="21"/><contactref element="R60" pad="2"/><contactref element="C164" pad="2"/><contactref element="C165" pad="2"/><contactref element="C166" pad="2"/><contactref element="C167" pad="2"/><contactref element="X37" pad="2"/><contactref element="C169" pad="2"/><contactref element="C170" pad="2"/><contactref element="C171" pad="2"/><contactref element="C172" pad="2"/></signal>
 <signal name="N$1">
 <contactref element="U1" pad="2"/>
 <contactref element="U$1" pad="2"/>
@@ -8335,7 +8335,7 @@ Your PCBWay Team
 <contactref element="U30" pad="2"/>
 <contactref element="C140" pad="2"/>
 <contactref element="X6" pad="1"/>
-<contactref element="X36" pad="1"/>
+<contactref element="X37" pad="1"/>
 <polygon width="0.1" layer="1">
 <vertex x="54.6" y="86.2"/>
 <vertex x="55.85" y="86.2"/>
