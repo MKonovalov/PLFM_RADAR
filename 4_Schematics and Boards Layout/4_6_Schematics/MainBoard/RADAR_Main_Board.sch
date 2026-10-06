@@ -15646,7 +15646,7 @@ DIN A3, landscape with extra doc field</description>
 </device>
 </devices>
 </deviceset>
-<deviceset name="INA241A3IDGKR" prefix="U">
+<deviceset name="INA241A4IDGKR" prefix="U">
 <gates>
 <gate name="A" symbol="INA241ADGK" x="0" y="0"/>
 </gates>
@@ -15667,7 +15667,7 @@ DIN A3, landscape with extra doc field</description>
 <attribute name="COPYRIGHT" value="Copyright (C) 2025 Ultra Librarian. All rights reserved." constant="no"/>
 <attribute name="DESCRIPTION" value="-5-V to 110-V bidirectional ultraprecise current sense amplifier with enhanced PWM rejection 8-VSSOP -40 to 125" constant="no"/>
 <attribute name="MANUFACTURER_NAME" value="Texas Instruments" constant="no"/>
-<attribute name="MANUFACTURER_PART_NUMBER" value="INA241A3IDGKR" constant="no"/>
+<attribute name="MANUFACTURER_PART_NUMBER" value="INA241A4IDGKR" constant="no"/>
 <attribute name="REFDES" value="RefDes" constant="no"/>
 <attribute name="TYPE" value="TYPE" constant="no"/>
 </technology>
@@ -15689,7 +15689,7 @@ DIN A3, landscape with extra doc field</description>
 <attribute name="COPYRIGHT" value="Copyright (C) 2025 Ultra Librarian. All rights reserved." constant="no"/>
 <attribute name="DESCRIPTION" value="-5-V to 110-V bidirectional ultraprecise current sense amplifier with enhanced PWM rejection 8-VSSOP -40 to 125" constant="no"/>
 <attribute name="MANUFACTURER_NAME" value="Texas Instruments" constant="no"/>
-<attribute name="MANUFACTURER_PART_NUMBER" value="INA241A3IDGKR" constant="no"/>
+<attribute name="MANUFACTURER_PART_NUMBER" value="INA241A4IDGKR" constant="no"/>
 <attribute name="REFDES" value="RefDes" constant="no"/>
 <attribute name="TYPE" value="TYPE" constant="no"/>
 </technology>
@@ -15711,7 +15711,7 @@ DIN A3, landscape with extra doc field</description>
 <attribute name="COPYRIGHT" value="Copyright (C) 2025 Ultra Librarian. All rights reserved." constant="no"/>
 <attribute name="DESCRIPTION" value="-5-V to 110-V bidirectional ultraprecise current sense amplifier with enhanced PWM rejection 8-VSSOP -40 to 125" constant="no"/>
 <attribute name="MANUFACTURER_NAME" value="Texas Instruments" constant="no"/>
-<attribute name="MANUFACTURER_PART_NUMBER" value="INA241A3IDGKR" constant="no"/>
+<attribute name="MANUFACTURER_PART_NUMBER" value="INA241A4IDGKR" constant="no"/>
 <attribute name="REFDES" value="RefDes" constant="no"/>
 <attribute name="TYPE" value="TYPE" constant="no"/>
 </technology>
@@ -15733,7 +15733,7 @@ DIN A3, landscape with extra doc field</description>
 <attribute name="COPYRIGHT" value="Copyright (C) 2025 Ultra Librarian. All rights reserved." constant="no"/>
 <attribute name="DESCRIPTION" value="-5-V to 110-V bidirectional ultraprecise current sense amplifier with enhanced PWM rejection 8-VSSOP -40 to 125" constant="no"/>
 <attribute name="MANUFACTURER_NAME" value="Texas Instruments" constant="no"/>
-<attribute name="MANUFACTURER_PART_NUMBER" value="INA241A3IDGKR" constant="no"/>
+<attribute name="MANUFACTURER_PART_NUMBER" value="INA241A4IDGKR" constant="no"/>
 <attribute name="REFDES" value="RefDes" constant="no"/>
 <attribute name="TYPE" value="TYPE" constant="no"/>
 </technology>
@@ -29189,7 +29189,7 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <part name="C256" library="eagle-ltspice" deviceset="C" device="C0201" value="100nF"/>
 <part name="GND693" library="supply1" deviceset="GND" device=""/>
 <part name="R123" library="eagle-ltspice" deviceset="R" device="R0201" value="10k"/>
-<part name="U80" library="My_Library_RADAR" deviceset="INA241A3IDGKR" device="DGK0008A-MFG"/>
+<part name="U80" library="My_Library_RADAR" deviceset="INA241A4IDGKR" device="DGK0008A-MFG"/>
 <part name="X45" library="con-molex" deviceset="22-23-2031" device=""/>
 <part name="GND1070" library="supply1" deviceset="GND" device=""/>
 <part name="GND1071" library="supply1" deviceset="GND" device=""/>
@@ -29197,7 +29197,7 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <part name="C280" library="eagle-ltspice" deviceset="C" device="C0201" value="4.7nF"/>
 <part name="R133" library="eagle-ltspice" deviceset="R" device="R0201" value="1k"/>
 <part name="GND1073" library="supply1" deviceset="GND" device=""/>
-<part name="U81" library="My_Library_RADAR" deviceset="INA241A3IDGKR" device="DGK0008A-MFG"/>
+<part name="U81" library="My_Library_RADAR" deviceset="INA241A4IDGKR" device="DGK0008A-MFG"/>
 <part name="X46" library="con-molex" deviceset="22-23-2031" device=""/>
 <part name="GND1075" library="supply1" deviceset="GND" device=""/>
 <part name="GND1076" library="supply1" deviceset="GND" device=""/>
@@ -29205,7 +29205,7 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <part name="C282" library="eagle-ltspice" deviceset="C" device="C0201" value="4.7nF"/>
 <part name="R134" library="eagle-ltspice" deviceset="R" device="R0201" value="1k"/>
 <part name="GND1078" library="supply1" deviceset="GND" device=""/>
-<part name="U82" library="My_Library_RADAR" deviceset="INA241A3IDGKR" device="DGK0008A-MFG"/>
+<part name="U82" library="My_Library_RADAR" deviceset="INA241A4IDGKR" device="DGK0008A-MFG"/>
 <part name="X47" library="con-molex" deviceset="22-23-2031" device=""/>
 <part name="GND1080" library="supply1" deviceset="GND" device=""/>
 <part name="GND1081" library="supply1" deviceset="GND" device=""/>
@@ -29213,7 +29213,7 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <part name="C284" library="eagle-ltspice" deviceset="C" device="C0201" value="4.7nF"/>
 <part name="R135" library="eagle-ltspice" deviceset="R" device="R0201" value="1k"/>
 <part name="GND1083" library="supply1" deviceset="GND" device=""/>
-<part name="U83" library="My_Library_RADAR" deviceset="INA241A3IDGKR" device="DGK0008A-MFG"/>
+<part name="U83" library="My_Library_RADAR" deviceset="INA241A4IDGKR" device="DGK0008A-MFG"/>
 <part name="X48" library="con-molex" deviceset="22-23-2031" device=""/>
 <part name="GND1085" library="supply1" deviceset="GND" device=""/>
 <part name="GND1086" library="supply1" deviceset="GND" device=""/>
@@ -29221,7 +29221,7 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <part name="C286" library="eagle-ltspice" deviceset="C" device="C0201" value="4.7nF"/>
 <part name="R136" library="eagle-ltspice" deviceset="R" device="R0201" value="1k"/>
 <part name="GND1088" library="supply1" deviceset="GND" device=""/>
-<part name="U84" library="My_Library_RADAR" deviceset="INA241A3IDGKR" device="DGK0008A-MFG"/>
+<part name="U84" library="My_Library_RADAR" deviceset="INA241A4IDGKR" device="DGK0008A-MFG"/>
 <part name="X49" library="con-molex" deviceset="22-23-2031" device=""/>
 <part name="GND1090" library="supply1" deviceset="GND" device=""/>
 <part name="GND1091" library="supply1" deviceset="GND" device=""/>
@@ -29229,7 +29229,7 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <part name="C288" library="eagle-ltspice" deviceset="C" device="C0201" value="4.7nF"/>
 <part name="R137" library="eagle-ltspice" deviceset="R" device="R0201" value="1k"/>
 <part name="GND1093" library="supply1" deviceset="GND" device=""/>
-<part name="U85" library="My_Library_RADAR" deviceset="INA241A3IDGKR" device="DGK0008A-MFG"/>
+<part name="U85" library="My_Library_RADAR" deviceset="INA241A4IDGKR" device="DGK0008A-MFG"/>
 <part name="X50" library="con-molex" deviceset="22-23-2031" device=""/>
 <part name="GND1095" library="supply1" deviceset="GND" device=""/>
 <part name="GND1096" library="supply1" deviceset="GND" device=""/>
@@ -29237,7 +29237,7 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <part name="C290" library="eagle-ltspice" deviceset="C" device="C0201" value="4.7nF"/>
 <part name="R147" library="eagle-ltspice" deviceset="R" device="R0201" value="1k"/>
 <part name="GND1098" library="supply1" deviceset="GND" device=""/>
-<part name="U86" library="My_Library_RADAR" deviceset="INA241A3IDGKR" device="DGK0008A-MFG"/>
+<part name="U86" library="My_Library_RADAR" deviceset="INA241A4IDGKR" device="DGK0008A-MFG"/>
 <part name="X51" library="con-molex" deviceset="22-23-2031" device=""/>
 <part name="GND1100" library="supply1" deviceset="GND" device=""/>
 <part name="GND1101" library="supply1" deviceset="GND" device=""/>
@@ -29245,7 +29245,7 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <part name="C292" library="eagle-ltspice" deviceset="C" device="C0201" value="4.7nF"/>
 <part name="R148" library="eagle-ltspice" deviceset="R" device="R0201" value="1k"/>
 <part name="GND1103" library="supply1" deviceset="GND" device=""/>
-<part name="U87" library="My_Library_RADAR" deviceset="INA241A3IDGKR" device="DGK0008A-MFG"/>
+<part name="U87" library="My_Library_RADAR" deviceset="INA241A4IDGKR" device="DGK0008A-MFG"/>
 <part name="X52" library="con-molex" deviceset="22-23-2031" device=""/>
 <part name="GND1105" library="supply1" deviceset="GND" device=""/>
 <part name="GND1106" library="supply1" deviceset="GND" device=""/>
@@ -29493,7 +29493,7 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <part name="C349" library="rcl" deviceset="C-EU" device="C0402" value="100nF"/>
 <part name="C350" library="rcl" deviceset="C-EU" device="C0402" value="100nF"/>
 <part name="C351" library="rcl" deviceset="C-EU" device="C0402" value="100nF"/>
-<part name="U11" library="My_Library_RADAR" deviceset="INA241A3IDGKR" device="DGK0008A-MFG"/>
+<part name="U11" library="My_Library_RADAR" deviceset="INA241A4IDGKR" device="DGK0008A-MFG"/>
 <part name="X3" library="con-molex" deviceset="22-23-2031" device=""/>
 <part name="GND1025" library="supply1" deviceset="GND" device=""/>
 <part name="GND1026" library="supply1" deviceset="GND" device=""/>
@@ -29501,7 +29501,7 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <part name="C261" library="eagle-ltspice" deviceset="C" device="C0201" value="4.7nF"/>
 <part name="R124" library="eagle-ltspice" deviceset="R" device="R0201" value="1k"/>
 <part name="GND1028" library="supply1" deviceset="GND" device=""/>
-<part name="U73" library="My_Library_RADAR" deviceset="INA241A3IDGKR" device="DGK0008A-MFG"/>
+<part name="U73" library="My_Library_RADAR" deviceset="INA241A4IDGKR" device="DGK0008A-MFG"/>
 <part name="X38" library="con-molex" deviceset="22-23-2031" device=""/>
 <part name="GND1030" library="supply1" deviceset="GND" device=""/>
 <part name="GND1031" library="supply1" deviceset="GND" device=""/>
@@ -29509,7 +29509,7 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <part name="C263" library="eagle-ltspice" deviceset="C" device="C0201" value="4.7nF"/>
 <part name="R125" library="eagle-ltspice" deviceset="R" device="R0201" value="1k"/>
 <part name="GND1033" library="supply1" deviceset="GND" device=""/>
-<part name="U74" library="My_Library_RADAR" deviceset="INA241A3IDGKR" device="DGK0008A-MFG"/>
+<part name="U74" library="My_Library_RADAR" deviceset="INA241A4IDGKR" device="DGK0008A-MFG"/>
 <part name="X39" library="con-molex" deviceset="22-23-2031" device=""/>
 <part name="GND1035" library="supply1" deviceset="GND" device=""/>
 <part name="GND1036" library="supply1" deviceset="GND" device=""/>
@@ -29517,7 +29517,7 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <part name="C265" library="eagle-ltspice" deviceset="C" device="C0201" value="4.7nF"/>
 <part name="R126" library="eagle-ltspice" deviceset="R" device="R0201" value="1k"/>
 <part name="GND1038" library="supply1" deviceset="GND" device=""/>
-<part name="U75" library="My_Library_RADAR" deviceset="INA241A3IDGKR" device="DGK0008A-MFG"/>
+<part name="U75" library="My_Library_RADAR" deviceset="INA241A4IDGKR" device="DGK0008A-MFG"/>
 <part name="X40" library="con-molex" deviceset="22-23-2031" device=""/>
 <part name="GND1040" library="supply1" deviceset="GND" device=""/>
 <part name="GND1041" library="supply1" deviceset="GND" device=""/>
@@ -29525,7 +29525,7 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <part name="C267" library="eagle-ltspice" deviceset="C" device="C0201" value="4.7nF"/>
 <part name="R127" library="eagle-ltspice" deviceset="R" device="R0201" value="1k"/>
 <part name="GND1043" library="supply1" deviceset="GND" device=""/>
-<part name="U76" library="My_Library_RADAR" deviceset="INA241A3IDGKR" device="DGK0008A-MFG"/>
+<part name="U76" library="My_Library_RADAR" deviceset="INA241A4IDGKR" device="DGK0008A-MFG"/>
 <part name="X41" library="con-molex" deviceset="22-23-2031" device=""/>
 <part name="GND1045" library="supply1" deviceset="GND" device=""/>
 <part name="GND1046" library="supply1" deviceset="GND" device=""/>
@@ -29533,7 +29533,7 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <part name="C269" library="eagle-ltspice" deviceset="C" device="C0201" value="4.7nF"/>
 <part name="R128" library="eagle-ltspice" deviceset="R" device="R0201" value="1k"/>
 <part name="GND1048" library="supply1" deviceset="GND" device=""/>
-<part name="U77" library="My_Library_RADAR" deviceset="INA241A3IDGKR" device="DGK0008A-MFG"/>
+<part name="U77" library="My_Library_RADAR" deviceset="INA241A4IDGKR" device="DGK0008A-MFG"/>
 <part name="X42" library="con-molex" deviceset="22-23-2031" device=""/>
 <part name="GND1050" library="supply1" deviceset="GND" device=""/>
 <part name="GND1051" library="supply1" deviceset="GND" device=""/>
@@ -29541,7 +29541,7 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <part name="C271" library="eagle-ltspice" deviceset="C" device="C0201" value="4.7nF"/>
 <part name="R129" library="eagle-ltspice" deviceset="R" device="R0201" value="1k"/>
 <part name="GND1053" library="supply1" deviceset="GND" device=""/>
-<part name="U78" library="My_Library_RADAR" deviceset="INA241A3IDGKR" device="DGK0008A-MFG"/>
+<part name="U78" library="My_Library_RADAR" deviceset="INA241A4IDGKR" device="DGK0008A-MFG"/>
 <part name="X43" library="con-molex" deviceset="22-23-2031" device=""/>
 <part name="GND1055" library="supply1" deviceset="GND" device=""/>
 <part name="GND1056" library="supply1" deviceset="GND" device=""/>
@@ -29549,7 +29549,7 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <part name="C273" library="eagle-ltspice" deviceset="C" device="C0201" value="4.7nF"/>
 <part name="R130" library="eagle-ltspice" deviceset="R" device="R0201" value="1k"/>
 <part name="GND1058" library="supply1" deviceset="GND" device=""/>
-<part name="U79" library="My_Library_RADAR" deviceset="INA241A3IDGKR" device="DGK0008A-MFG"/>
+<part name="U79" library="My_Library_RADAR" deviceset="INA241A4IDGKR" device="DGK0008A-MFG"/>
 <part name="X44" library="con-molex" deviceset="22-23-2031" device=""/>
 <part name="GND1060" library="supply1" deviceset="GND" device=""/>
 <part name="GND1061" library="supply1" deviceset="GND" device=""/>

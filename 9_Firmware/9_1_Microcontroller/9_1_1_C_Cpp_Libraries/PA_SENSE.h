@@ -21,7 +21,7 @@
 #define PA_SHUNT_OHMS 0.005f       // R10 on the PA board (5 mOhm)
 #endif
 #ifndef PA_INA_GAIN
-#define PA_INA_GAIN 50.0f          // INA241A3 = 50 V/V (A4 = 100 V/V, Rev B part)
+#define PA_INA_GAIN 100.0f         // INA241A4 = 100 V/V (Rev B; A3 was 50 V/V)
 #endif
 #ifndef ADS7830_VREF_VOLTS
 #define ADS7830_VREF_VOLTS 2.5f    // ADS7830 internal reference (PDIRON_ADON)

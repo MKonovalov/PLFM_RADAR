@@ -19,14 +19,14 @@
 #include <stdint.h>
 #include <math.h>
 
-/* IDQ conversion formula: Idq = (3.3/255) * raw / (G * Rshunt)
- * where G = 50 (INA241A3 gain) and Rshunt = 5 mOhm = 0.005 Ohm.
- * Denominator = 50 * 0.005 = 0.25
- * So: Idq = (3.3/255) * raw / 0.25 = raw * (3.3 / (255 * 0.25))
- *         = raw * 0.051765... */
+/* IDQ conversion formula: Idq = (Vref/255) * raw / (G * Rshunt)
+ * Rev B chain: Vref = 2.5 V (ADS7830 internal reference, not 3.3 V -- using
+ * 3.3 V read currents 32 % low), G = 100 (INA241A4), Rshunt = 5 mOhm.
+ * Denominator = 100 * 0.005 = 0.5
+ * So: Idq = (2.5/255) * raw / 0.5 = raw * 0.019607... */
 static float idq_from_raw(uint8_t raw)
 {
-    return (3.3f / 255.0f) * raw / (50.0f * 0.005f);
+    return (2.5f / 255.0f) * raw / (100.0f * 0.005f);
 }
 
 /* Overcurrent threshold from checkSystemHealth() */
@@ -48,11 +48,11 @@ int main(void)
     }
 
     /* Test 2: Normal operating point
-     * Target Idq=1.680A → raw = Idq * (50*0.005) * 255/3.3 = 1.680 * 0.25 * 77.27 ≈ 32.5
-     * Use raw=33 → Idq = (3.3/255)*33/0.25 ≈ 1.709A */
-    printf("  Test 2: raw=33 → Idq≈1.709A (normal)... ");
+     * Target Idq=1.680A → raw = Idq * (100*0.005) * 255/2.5 = 1.680 * 0.5 * 102 = 85.7
+     * Use raw=86 → Idq = (2.5/255)*86/0.5 ≈ 1.686A */
+    printf("  Test 2: raw=86 → Idq≈1.686A (normal)... ");
     {
-        float idq = idq_from_raw(33);
+        float idq = idq_from_raw(86);
         printf("(%.3fA) ", idq);
         assert(idq > IDQ_BIAS_FAULT_THRESHOLD);
         assert(idq < IDQ_OVERCURRENT_THRESHOLD);
@@ -60,8 +60,8 @@ int main(void)
         printf("PASS\n");
     }
 
-    /* Test 3: Overcurrent detection (raw=255 → max Idq ≈ 13.2A) */
-    printf("  Test 3: raw=255 → Idq≈13.2A (overcurrent)... ");
+    /* Test 3: Overcurrent detection (raw=255 → full scale 5.0 A) */
+    printf("  Test 3: raw=255 → Idq=5.0A (full scale, overcurrent)... ");
     {
         float idq = idq_from_raw(255);
         printf("(%.3fA) ", idq);
@@ -70,20 +70,20 @@ int main(void)
     }
 
     /* Test 4: Edge case — just below overcurrent
-     * 2.5A → raw = 2.5*0.25*255/3.3 ≈ 48.3, so raw=48 → 2.48A (below) */
-    printf("  Test 4: raw=48 → just below 2.5A... ");
+     * 2.5A → raw = 2.5*0.5*255/2.5 = 127.5, so raw=127 → 2.49A (below) */
+    printf("  Test 4: raw=127 → just below 2.5A... ");
     {
-        float idq = idq_from_raw(48);
+        float idq = idq_from_raw(127);
         printf("(%.3fA) ", idq);
         assert(idq < IDQ_OVERCURRENT_THRESHOLD);
         printf("PASS\n");
     }
 
     /* Test 5: Edge case — just above bias fault
-     * 0.1A → raw = 0.1*0.25*255/3.3 ≈ 1.93, so raw=2 → 0.103A (above) */
-    printf("  Test 5: raw=2 → just above 0.1A... ");
+     * 0.1A → raw = 0.1*0.5*255/2.5 ≈ 5.1, so raw=6 → 0.118A (above) */
+    printf("  Test 5: raw=6 → just above 0.1A... ");
     {
-        float idq = idq_from_raw(2);
+        float idq = idq_from_raw(6);
         printf("(%.3fA) ", idq);
         assert(idq > IDQ_BIAS_FAULT_THRESHOLD);
         printf("PASS\n");
@@ -92,11 +92,11 @@ int main(void)
     /* Test 6: All 16 channels use same formula */
     printf("  Test 6: Formula consistency across channels... ");
     {
-        /* Simulate ADC1 ch0-7 + ADC2 ch0-7 all returning raw=33 */
+        /* Simulate ADC1 ch0-7 + ADC2 ch0-7 all returning the target's raw */
         float idq_readings[16];
         for (int ch = 0; ch < 8; ch++) {
-            idq_readings[ch] = idq_from_raw(33);       /* ADC1 */
-            idq_readings[ch + 8] = idq_from_raw(33);   /* ADC2 */
+            idq_readings[ch] = idq_from_raw(86);       /* ADC1 */
+            idq_readings[ch + 8] = idq_from_raw(86);   /* ADC2 */
         }
         for (int i = 0; i < 16; i++) {
             assert(fabsf(idq_readings[i] - idq_readings[0]) < 0.001f);

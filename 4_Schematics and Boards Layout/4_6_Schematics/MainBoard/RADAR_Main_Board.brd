@@ -16094,11 +16094,11 @@ Your PCBWay Team
 <attribute name="MANUFACTURER_PART_NUMBER" value="ADS7830IPWR" x="125.444909375" y="-96.096975" size="1.778" layer="27" display="off"/>
 <attribute name="VALUE" x="98.317709375" y="36.618025" size="1.27" layer="27" ratio="6" rot="SR0"/>
 </element>
-<element name="U11" library="My_Library_RADAR" package="DGK0008A-MFG" value="INA241A3IDGKRDGK0008A-MFG" x="115.002034375" y="45.14243125" smashed="yes">
+<element name="U11" library="My_Library_RADAR" package="DGK0008A-MFG" value="INA241A4IDGKRDGK0008A-MFG" x="115.002034375" y="45.14243125" smashed="yes">
 <attribute name="COPYRIGHT" value="Copyright (C) 2025 Ultra Librarian. All rights reserved." x="154.372034375" y="-216.47756875" size="1.778" layer="27" display="off"/>
 <attribute name="DESCRIPTION" value="-5-V to 110-V bidirectional ultraprecise current sense amplifier with enhanced PWM rejection 8-VSSOP -40 to 125" x="154.372034375" y="-216.47756875" size="1.778" layer="27" display="off"/>
 <attribute name="MANUFACTURER_NAME" value="Texas Instruments" x="154.372034375" y="-216.47756875" size="1.778" layer="27" display="off"/>
-<attribute name="MANUFACTURER_PART_NUMBER" value="INA241A3IDGKR" x="154.372034375" y="-216.47756875" size="1.778" layer="27" display="off"/>
+<attribute name="MANUFACTURER_PART_NUMBER" value="INA241A4IDGKR" x="154.372034375" y="-216.47756875" size="1.778" layer="27" display="off"/>
 <attribute name="NAME" x="111.725434375" y="44.50743125" size="1.27" layer="27" ratio="6" rot="SR0"/>
 <attribute name="REFDES" value="RefDes" x="154.372034375" y="-216.47756875" size="1.778" layer="27" display="off"/>
 <attribute name="TYPE" value="TYPE" x="154.372034375" y="-216.47756875" size="1.778" layer="27" display="off"/>
@@ -16584,71 +16584,71 @@ Your PCBWay Team
 <attribute name="MANUFACTURER_PART_NUMBER" value="OPA4703EA/250" x="143.49" y="291.24" size="1.778" layer="27" rot="R90" display="off"/>
 <attribute name="VALUE" x="33.635" y="20.2728" size="1.27" layer="27" ratio="6" rot="SR90"/>
 </element>
-<element name="U73" library="My_Library_RADAR" package="DGK0008A-MFG" value="INA241A3IDGKRDGK0008A-MFG" x="105.002603125" y="45.244359375" smashed="yes">
+<element name="U73" library="My_Library_RADAR" package="DGK0008A-MFG" value="INA241A4IDGKRDGK0008A-MFG" x="105.002603125" y="45.244359375" smashed="yes">
 <attribute name="COPYRIGHT" value="Copyright (C) 2025 Ultra Librarian. All rights reserved." x="176.122603125" y="-216.375640625" size="1.778" layer="27" display="off"/>
 <attribute name="DESCRIPTION" value="-5-V to 110-V bidirectional ultraprecise current sense amplifier with enhanced PWM rejection 8-VSSOP -40 to 125" x="176.122603125" y="-216.375640625" size="1.778" layer="27" display="off"/>
 <attribute name="MANUFACTURER_NAME" value="Texas Instruments" x="176.122603125" y="-216.375640625" size="1.778" layer="27" display="off"/>
-<attribute name="MANUFACTURER_PART_NUMBER" value="INA241A3IDGKR" x="176.122603125" y="-216.375640625" size="1.778" layer="27" display="off"/>
+<attribute name="MANUFACTURER_PART_NUMBER" value="INA241A4IDGKR" x="176.122603125" y="-216.375640625" size="1.778" layer="27" display="off"/>
 <attribute name="NAME" x="101.726003125" y="44.609359375" size="1.27" layer="27" ratio="6" rot="SR0"/>
 <attribute name="REFDES" value="RefDes" x="176.122603125" y="-216.375640625" size="1.778" layer="27" display="off"/>
 <attribute name="TYPE" value="TYPE" x="176.122603125" y="-216.375640625" size="1.778" layer="27" display="off"/>
 <attribute name="VALUE" x="103.275403125" y="44.609359375" size="1.27" layer="27" ratio="6" rot="SR0"/>
 </element>
-<element name="U74" library="My_Library_RADAR" package="DGK0008A-MFG" value="INA241A3IDGKRDGK0008A-MFG" x="94.974390625" y="45.2225625" smashed="yes">
+<element name="U74" library="My_Library_RADAR" package="DGK0008A-MFG" value="INA241A4IDGKRDGK0008A-MFG" x="94.974390625" y="45.2225625" smashed="yes">
 <attribute name="COPYRIGHT" value="Copyright (C) 2025 Ultra Librarian. All rights reserved." x="197.844390625" y="-216.3974375" size="1.778" layer="27" display="off"/>
 <attribute name="DESCRIPTION" value="-5-V to 110-V bidirectional ultraprecise current sense amplifier with enhanced PWM rejection 8-VSSOP -40 to 125" x="197.844390625" y="-216.3974375" size="1.778" layer="27" display="off"/>
 <attribute name="MANUFACTURER_NAME" value="Texas Instruments" x="197.844390625" y="-216.3974375" size="1.778" layer="27" display="off"/>
-<attribute name="MANUFACTURER_PART_NUMBER" value="INA241A3IDGKR" x="197.844390625" y="-216.3974375" size="1.778" layer="27" display="off"/>
+<attribute name="MANUFACTURER_PART_NUMBER" value="INA241A4IDGKR" x="197.844390625" y="-216.3974375" size="1.778" layer="27" display="off"/>
 <attribute name="NAME" x="91.697790625" y="44.5875625" size="1.27" layer="27" ratio="6" rot="SR0"/>
 <attribute name="REFDES" value="RefDes" x="197.844390625" y="-216.3974375" size="1.778" layer="27" display="off"/>
 <attribute name="TYPE" value="TYPE" x="197.844390625" y="-216.3974375" size="1.778" layer="27" display="off"/>
 <attribute name="VALUE" x="93.247190625" y="44.5875625" size="1.27" layer="27" ratio="6" rot="SR0"/>
 </element>
-<element name="U75" library="My_Library_RADAR" package="DGK0008A-MFG" value="INA241A3IDGKRDGK0008A-MFG" x="85.023575" y="45.183459375" smashed="yes">
+<element name="U75" library="My_Library_RADAR" package="DGK0008A-MFG" value="INA241A4IDGKRDGK0008A-MFG" x="85.023575" y="45.183459375" smashed="yes">
 <attribute name="COPYRIGHT" value="Copyright (C) 2025 Ultra Librarian. All rights reserved." x="219.643575" y="-216.436540625" size="1.778" layer="27" display="off"/>
 <attribute name="DESCRIPTION" value="-5-V to 110-V bidirectional ultraprecise current sense amplifier with enhanced PWM rejection 8-VSSOP -40 to 125" x="219.643575" y="-216.436540625" size="1.778" layer="27" display="off"/>
 <attribute name="MANUFACTURER_NAME" value="Texas Instruments" x="219.643575" y="-216.436540625" size="1.778" layer="27" display="off"/>
-<attribute name="MANUFACTURER_PART_NUMBER" value="INA241A3IDGKR" x="219.643575" y="-216.436540625" size="1.778" layer="27" display="off"/>
+<attribute name="MANUFACTURER_PART_NUMBER" value="INA241A4IDGKR" x="219.643575" y="-216.436540625" size="1.778" layer="27" display="off"/>
 <attribute name="NAME" x="81.746975" y="44.548459375" size="1.27" layer="27" ratio="6" rot="SR0"/>
 <attribute name="REFDES" value="RefDes" x="219.643575" y="-216.436540625" size="1.778" layer="27" display="off"/>
 <attribute name="TYPE" value="TYPE" x="219.643575" y="-216.436540625" size="1.778" layer="27" display="off"/>
 <attribute name="VALUE" x="83.296375" y="44.548459375" size="1.27" layer="27" ratio="6" rot="SR0"/>
 </element>
-<element name="U76" library="My_Library_RADAR" package="DGK0008A-MFG" value="INA241A3IDGKRDGK0008A-MFG" x="86.84096875" y="30.28005" smashed="yes" rot="R180">
+<element name="U76" library="My_Library_RADAR" package="DGK0008A-MFG" value="INA241A4IDGKRDGK0008A-MFG" x="86.84096875" y="30.28005" smashed="yes" rot="R180">
 <attribute name="COPYRIGHT" value="Copyright (C) 2025 Ultra Librarian. All rights reserved." x="-79.52903125" y="291.90005" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="DESCRIPTION" value="-5-V to 110-V bidirectional ultraprecise current sense amplifier with enhanced PWM rejection 8-VSSOP -40 to 125" x="-79.52903125" y="291.90005" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="MANUFACTURER_NAME" value="Texas Instruments" x="-79.52903125" y="291.90005" size="1.778" layer="27" rot="R180" display="off"/>
-<attribute name="MANUFACTURER_PART_NUMBER" value="INA241A3IDGKR" x="-79.52903125" y="291.90005" size="1.778" layer="27" rot="R180" display="off"/>
+<attribute name="MANUFACTURER_PART_NUMBER" value="INA241A4IDGKR" x="-79.52903125" y="291.90005" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="NAME" x="90.11756875" y="30.91505" size="1.27" layer="27" ratio="6" rot="SR180"/>
 <attribute name="REFDES" value="RefDes" x="-79.52903125" y="291.90005" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="TYPE" value="TYPE" x="-79.52903125" y="291.90005" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="VALUE" x="88.56816875" y="30.91505" size="1.27" layer="27" ratio="6" rot="SR180"/>
 </element>
-<element name="U77" library="My_Library_RADAR" package="DGK0008A-MFG" value="INA241A3IDGKRDGK0008A-MFG" x="96.855771875" y="30.034496875" smashed="yes" rot="R180">
+<element name="U77" library="My_Library_RADAR" package="DGK0008A-MFG" value="INA241A4IDGKRDGK0008A-MFG" x="96.855771875" y="30.034496875" smashed="yes" rot="R180">
 <attribute name="COPYRIGHT" value="Copyright (C) 2025 Ultra Librarian. All rights reserved." x="-101.264228125" y="291.654496875" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="DESCRIPTION" value="-5-V to 110-V bidirectional ultraprecise current sense amplifier with enhanced PWM rejection 8-VSSOP -40 to 125" x="-101.264228125" y="291.654496875" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="MANUFACTURER_NAME" value="Texas Instruments" x="-101.264228125" y="291.654496875" size="1.778" layer="27" rot="R180" display="off"/>
-<attribute name="MANUFACTURER_PART_NUMBER" value="INA241A3IDGKR" x="-101.264228125" y="291.654496875" size="1.778" layer="27" rot="R180" display="off"/>
+<attribute name="MANUFACTURER_PART_NUMBER" value="INA241A4IDGKR" x="-101.264228125" y="291.654496875" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="NAME" x="100.132371875" y="30.669496875" size="1.27" layer="27" ratio="6" rot="SR180"/>
 <attribute name="REFDES" value="RefDes" x="-101.264228125" y="291.654496875" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="TYPE" value="TYPE" x="-101.264228125" y="291.654496875" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="VALUE" x="98.582971875" y="30.669496875" size="1.27" layer="27" ratio="6" rot="SR180"/>
 </element>
-<element name="U78" library="My_Library_RADAR" package="DGK0008A-MFG" value="INA241A3IDGKRDGK0008A-MFG" x="107.220321875" y="30.0127" smashed="yes" rot="R180">
+<element name="U78" library="My_Library_RADAR" package="DGK0008A-MFG" value="INA241A4IDGKRDGK0008A-MFG" x="107.220321875" y="30.0127" smashed="yes" rot="R180">
 <attribute name="COPYRIGHT" value="Copyright (C) 2025 Ultra Librarian. All rights reserved." x="-122.649678125" y="291.6327" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="DESCRIPTION" value="-5-V to 110-V bidirectional ultraprecise current sense amplifier with enhanced PWM rejection 8-VSSOP -40 to 125" x="-122.649678125" y="291.6327" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="MANUFACTURER_NAME" value="Texas Instruments" x="-122.649678125" y="291.6327" size="1.778" layer="27" rot="R180" display="off"/>
-<attribute name="MANUFACTURER_PART_NUMBER" value="INA241A3IDGKR" x="-122.649678125" y="291.6327" size="1.778" layer="27" rot="R180" display="off"/>
+<attribute name="MANUFACTURER_PART_NUMBER" value="INA241A4IDGKR" x="-122.649678125" y="291.6327" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="NAME" x="110.496921875" y="30.6477" size="1.27" layer="27" ratio="6" rot="SR180"/>
 <attribute name="REFDES" value="RefDes" x="-122.649678125" y="291.6327" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="TYPE" value="TYPE" x="-122.649678125" y="291.6327" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="VALUE" x="108.947521875" y="30.6477" size="1.27" layer="27" ratio="6" rot="SR180"/>
 </element>
-<element name="U79" library="My_Library_RADAR" package="DGK0008A-MFG" value="INA241A3IDGKRDGK0008A-MFG" x="116.87479375" y="29.9736" smashed="yes" rot="R180">
+<element name="U79" library="My_Library_RADAR" package="DGK0008A-MFG" value="INA241A4IDGKRDGK0008A-MFG" x="116.87479375" y="29.9736" smashed="yes" rot="R180">
 <attribute name="COPYRIGHT" value="Copyright (C) 2025 Ultra Librarian. All rights reserved." x="-144.74520625" y="291.5936" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="DESCRIPTION" value="-5-V to 110-V bidirectional ultraprecise current sense amplifier with enhanced PWM rejection 8-VSSOP -40 to 125" x="-144.74520625" y="291.5936" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="MANUFACTURER_NAME" value="Texas Instruments" x="-144.74520625" y="291.5936" size="1.778" layer="27" rot="R180" display="off"/>
-<attribute name="MANUFACTURER_PART_NUMBER" value="INA241A3IDGKR" x="-144.74520625" y="291.5936" size="1.778" layer="27" rot="R180" display="off"/>
+<attribute name="MANUFACTURER_PART_NUMBER" value="INA241A4IDGKR" x="-144.74520625" y="291.5936" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="NAME" x="120.15139375" y="30.6086" size="1.27" layer="27" ratio="6" rot="SR180"/>
 <attribute name="REFDES" value="RefDes" x="-144.74520625" y="291.5936" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="TYPE" value="TYPE" x="-144.74520625" y="291.5936" size="1.778" layer="27" rot="R180" display="off"/>
@@ -16662,81 +16662,81 @@ Your PCBWay Team
 <attribute name="MANUFACTURER_PART_NUMBER" value="AD8352ACPZ-R7" x="170.48" y="193.62" size="1.778" layer="27" rot="R90" display="off"/>
 <attribute name="VALUE" x="59.355" y="134.7428" size="1.27" layer="27" ratio="6" rot="SR90"/>
 </element>
-<element name="U80" library="My_Library_RADAR" package="DGK0008A-MFG" value="INA241A3IDGKRDGK0008A-MFG" x="164.987803125" y="45.176109375" smashed="yes">
+<element name="U80" library="My_Library_RADAR" package="DGK0008A-MFG" value="INA241A4IDGKRDGK0008A-MFG" x="164.987803125" y="45.176109375" smashed="yes">
 <attribute name="COPYRIGHT" value="Copyright (C) 2025 Ultra Librarian. All rights reserved." x="458.357803125" y="-216.443890625" size="1.778" layer="27" display="off"/>
 <attribute name="DESCRIPTION" value="-5-V to 110-V bidirectional ultraprecise current sense amplifier with enhanced PWM rejection 8-VSSOP -40 to 125" x="458.357803125" y="-216.443890625" size="1.778" layer="27" display="off"/>
 <attribute name="MANUFACTURER_NAME" value="Texas Instruments" x="458.357803125" y="-216.443890625" size="1.778" layer="27" display="off"/>
-<attribute name="MANUFACTURER_PART_NUMBER" value="INA241A3IDGKR" x="458.357803125" y="-216.443890625" size="1.778" layer="27" display="off"/>
+<attribute name="MANUFACTURER_PART_NUMBER" value="INA241A4IDGKR" x="458.357803125" y="-216.443890625" size="1.778" layer="27" display="off"/>
 <attribute name="NAME" x="161.711203125" y="44.541109375" size="1.27" layer="27" ratio="6" rot="SR0"/>
 <attribute name="REFDES" value="RefDes" x="458.357803125" y="-216.443890625" size="1.778" layer="27" display="off"/>
 <attribute name="TYPE" value="TYPE" x="458.357803125" y="-216.443890625" size="1.778" layer="27" display="off"/>
 <attribute name="VALUE" x="163.260603125" y="44.541109375" size="1.27" layer="27" ratio="6" rot="SR0"/>
 </element>
-<element name="U81" library="My_Library_RADAR" package="DGK0008A-MFG" value="INA241A3IDGKRDGK0008A-MFG" x="154.844096875" y="45.2147" smashed="yes">
+<element name="U81" library="My_Library_RADAR" package="DGK0008A-MFG" value="INA241A4IDGKRDGK0008A-MFG" x="154.844096875" y="45.2147" smashed="yes">
 <attribute name="COPYRIGHT" value="Copyright (C) 2025 Ultra Librarian. All rights reserved." x="194.214096875" y="-222.7553" size="1.778" layer="27" display="off"/>
 <attribute name="DESCRIPTION" value="-5-V to 110-V bidirectional ultraprecise current sense amplifier with enhanced PWM rejection 8-VSSOP -40 to 125" x="194.214096875" y="-222.7553" size="1.778" layer="27" display="off"/>
 <attribute name="MANUFACTURER_NAME" value="Texas Instruments" x="194.214096875" y="-222.7553" size="1.778" layer="27" display="off"/>
-<attribute name="MANUFACTURER_PART_NUMBER" value="INA241A3IDGKR" x="194.214096875" y="-222.7553" size="1.778" layer="27" display="off"/>
+<attribute name="MANUFACTURER_PART_NUMBER" value="INA241A4IDGKR" x="194.214096875" y="-222.7553" size="1.778" layer="27" display="off"/>
 <attribute name="NAME" x="151.567496875" y="44.5797" size="1.27" layer="27" ratio="6" rot="SR0"/>
 <attribute name="REFDES" value="RefDes" x="194.214096875" y="-222.7553" size="1.778" layer="27" display="off"/>
 <attribute name="TYPE" value="TYPE" x="194.214096875" y="-222.7553" size="1.778" layer="27" display="off"/>
 <attribute name="VALUE" x="153.116896875" y="44.5797" size="1.27" layer="27" ratio="6" rot="SR0"/>
 </element>
-<element name="U82" library="My_Library_RADAR" package="DGK0008A-MFG" value="INA241A3IDGKRDGK0008A-MFG" x="144.830503125" y="45.102421875" smashed="yes">
+<element name="U82" library="My_Library_RADAR" package="DGK0008A-MFG" value="INA241A4IDGKRDGK0008A-MFG" x="144.830503125" y="45.102421875" smashed="yes">
 <attribute name="COPYRIGHT" value="Copyright (C) 2025 Ultra Librarian. All rights reserved." x="215.950503125" y="-222.867578125" size="1.778" layer="27" display="off"/>
 <attribute name="DESCRIPTION" value="-5-V to 110-V bidirectional ultraprecise current sense amplifier with enhanced PWM rejection 8-VSSOP -40 to 125" x="215.950503125" y="-222.867578125" size="1.778" layer="27" display="off"/>
 <attribute name="MANUFACTURER_NAME" value="Texas Instruments" x="215.950503125" y="-222.867578125" size="1.778" layer="27" display="off"/>
-<attribute name="MANUFACTURER_PART_NUMBER" value="INA241A3IDGKR" x="215.950503125" y="-222.867578125" size="1.778" layer="27" display="off"/>
+<attribute name="MANUFACTURER_PART_NUMBER" value="INA241A4IDGKR" x="215.950503125" y="-222.867578125" size="1.778" layer="27" display="off"/>
 <attribute name="NAME" x="141.553903125" y="44.467421875" size="1.27" layer="27" ratio="6" rot="SR0"/>
 <attribute name="REFDES" value="RefDes" x="215.950503125" y="-222.867578125" size="1.778" layer="27" display="off"/>
 <attribute name="TYPE" value="TYPE" x="215.950503125" y="-222.867578125" size="1.778" layer="27" display="off"/>
 <attribute name="VALUE" x="143.103303125" y="44.467421875" size="1.27" layer="27" ratio="6" rot="SR0"/>
 </element>
-<element name="U83" library="My_Library_RADAR" package="DGK0008A-MFG" value="INA241A3IDGKRDGK0008A-MFG" x="134.87528125" y="45.06383125" smashed="yes">
+<element name="U83" library="My_Library_RADAR" package="DGK0008A-MFG" value="INA241A4IDGKRDGK0008A-MFG" x="134.87528125" y="45.06383125" smashed="yes">
 <attribute name="COPYRIGHT" value="Copyright (C) 2025 Ultra Librarian. All rights reserved." x="237.74528125" y="-222.90616875" size="1.778" layer="27" display="off"/>
 <attribute name="DESCRIPTION" value="-5-V to 110-V bidirectional ultraprecise current sense amplifier with enhanced PWM rejection 8-VSSOP -40 to 125" x="237.74528125" y="-222.90616875" size="1.778" layer="27" display="off"/>
 <attribute name="MANUFACTURER_NAME" value="Texas Instruments" x="237.74528125" y="-222.90616875" size="1.778" layer="27" display="off"/>
-<attribute name="MANUFACTURER_PART_NUMBER" value="INA241A3IDGKR" x="237.74528125" y="-222.90616875" size="1.778" layer="27" display="off"/>
+<attribute name="MANUFACTURER_PART_NUMBER" value="INA241A4IDGKR" x="237.74528125" y="-222.90616875" size="1.778" layer="27" display="off"/>
 <attribute name="NAME" x="131.59868125" y="44.42883125" size="1.27" layer="27" ratio="6" rot="SR0"/>
 <attribute name="REFDES" value="RefDes" x="237.74528125" y="-222.90616875" size="1.778" layer="27" display="off"/>
 <attribute name="TYPE" value="TYPE" x="237.74528125" y="-222.90616875" size="1.778" layer="27" display="off"/>
 <attribute name="VALUE" x="133.14808125" y="44.42883125" size="1.27" layer="27" ratio="6" rot="SR0"/>
 </element>
-<element name="U84" library="My_Library_RADAR" package="DGK0008A-MFG" value="INA241A3IDGKRDGK0008A-MFG" x="137.027865625" y="30.01690625" smashed="yes" rot="R180">
+<element name="U84" library="My_Library_RADAR" package="DGK0008A-MFG" value="INA241A4IDGKRDGK0008A-MFG" x="137.027865625" y="30.01690625" smashed="yes" rot="R180">
 <attribute name="COPYRIGHT" value="Copyright (C) 2025 Ultra Librarian. All rights reserved." x="2.407865625" y="297.98690625" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="DESCRIPTION" value="-5-V to 110-V bidirectional ultraprecise current sense amplifier with enhanced PWM rejection 8-VSSOP -40 to 125" x="2.407865625" y="297.98690625" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="MANUFACTURER_NAME" value="Texas Instruments" x="2.407865625" y="297.98690625" size="1.778" layer="27" rot="R180" display="off"/>
-<attribute name="MANUFACTURER_PART_NUMBER" value="INA241A3IDGKR" x="2.407865625" y="297.98690625" size="1.778" layer="27" rot="R180" display="off"/>
+<attribute name="MANUFACTURER_PART_NUMBER" value="INA241A4IDGKR" x="2.407865625" y="297.98690625" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="NAME" x="140.304465625" y="30.65190625" size="1.27" layer="27" ratio="6" rot="SR180"/>
 <attribute name="REFDES" value="RefDes" x="2.407865625" y="297.98690625" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="TYPE" value="TYPE" x="2.407865625" y="297.98690625" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="VALUE" x="138.755065625" y="30.65190625" size="1.27" layer="27" ratio="6" rot="SR180"/>
 </element>
-<element name="U85" library="My_Library_RADAR" package="DGK0008A-MFG" value="INA241A3IDGKRDGK0008A-MFG" x="147.021353125" y="30.054259375" smashed="yes" rot="R180">
+<element name="U85" library="My_Library_RADAR" package="DGK0008A-MFG" value="INA241A4IDGKRDGK0008A-MFG" x="147.021353125" y="30.054259375" smashed="yes" rot="R180">
 <attribute name="COPYRIGHT" value="Copyright (C) 2025 Ultra Librarian. All rights reserved." x="-19.348646875" y="298.024259375" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="DESCRIPTION" value="-5-V to 110-V bidirectional ultraprecise current sense amplifier with enhanced PWM rejection 8-VSSOP -40 to 125" x="-19.348646875" y="298.024259375" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="MANUFACTURER_NAME" value="Texas Instruments" x="-19.348646875" y="298.024259375" size="1.778" layer="27" rot="R180" display="off"/>
-<attribute name="MANUFACTURER_PART_NUMBER" value="INA241A3IDGKR" x="-19.348646875" y="298.024259375" size="1.778" layer="27" rot="R180" display="off"/>
+<attribute name="MANUFACTURER_PART_NUMBER" value="INA241A4IDGKR" x="-19.348646875" y="298.024259375" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="NAME" x="150.297953125" y="30.689259375" size="1.27" layer="27" ratio="6" rot="SR180"/>
 <attribute name="REFDES" value="RefDes" x="-19.348646875" y="298.024259375" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="TYPE" value="TYPE" x="-19.348646875" y="298.024259375" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="VALUE" x="148.748553125" y="30.689259375" size="1.27" layer="27" ratio="6" rot="SR180"/>
 </element>
-<element name="U86" library="My_Library_RADAR" package="DGK0008A-MFG" value="INA241A3IDGKRDGK0008A-MFG" x="157.0582625" y="30.06778125" smashed="yes" rot="R180">
+<element name="U86" library="My_Library_RADAR" package="DGK0008A-MFG" value="INA241A4IDGKRDGK0008A-MFG" x="157.0582625" y="30.06778125" smashed="yes" rot="R180">
 <attribute name="COPYRIGHT" value="Copyright (C) 2025 Ultra Librarian. All rights reserved." x="-41.0617375" y="298.03778125" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="DESCRIPTION" value="-5-V to 110-V bidirectional ultraprecise current sense amplifier with enhanced PWM rejection 8-VSSOP -40 to 125" x="-41.0617375" y="298.03778125" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="MANUFACTURER_NAME" value="Texas Instruments" x="-41.0617375" y="298.03778125" size="1.778" layer="27" rot="R180" display="off"/>
-<attribute name="MANUFACTURER_PART_NUMBER" value="INA241A3IDGKR" x="-41.0617375" y="298.03778125" size="1.778" layer="27" rot="R180" display="off"/>
+<attribute name="MANUFACTURER_PART_NUMBER" value="INA241A4IDGKR" x="-41.0617375" y="298.03778125" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="NAME" x="160.3348625" y="30.70278125" size="1.27" layer="27" ratio="6" rot="SR180"/>
 <attribute name="REFDES" value="RefDes" x="-41.0617375" y="298.03778125" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="TYPE" value="TYPE" x="-41.0617375" y="298.03778125" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="VALUE" x="158.7854625" y="30.70278125" size="1.27" layer="27" ratio="6" rot="SR180"/>
 </element>
-<element name="U87" library="My_Library_RADAR" package="DGK0008A-MFG" value="INA241A3IDGKRDGK0008A-MFG" x="167.976859375" y="29.929190625" smashed="yes" rot="R180">
+<element name="U87" library="My_Library_RADAR" package="DGK0008A-MFG" value="INA241A4IDGKRDGK0008A-MFG" x="167.976859375" y="29.929190625" smashed="yes" rot="R180">
 <attribute name="COPYRIGHT" value="Copyright (C) 2025 Ultra Librarian. All rights reserved." x="-61.893140625" y="297.899190625" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="DESCRIPTION" value="-5-V to 110-V bidirectional ultraprecise current sense amplifier with enhanced PWM rejection 8-VSSOP -40 to 125" x="-61.893140625" y="297.899190625" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="MANUFACTURER_NAME" value="Texas Instruments" x="-61.893140625" y="297.899190625" size="1.778" layer="27" rot="R180" display="off"/>
-<attribute name="MANUFACTURER_PART_NUMBER" value="INA241A3IDGKR" x="-61.893140625" y="297.899190625" size="1.778" layer="27" rot="R180" display="off"/>
+<attribute name="MANUFACTURER_PART_NUMBER" value="INA241A4IDGKR" x="-61.893140625" y="297.899190625" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="NAME" x="171.253459375" y="30.564190625" size="1.27" layer="27" ratio="6" rot="SR180"/>
 <attribute name="REFDES" value="RefDes" x="-61.893140625" y="297.899190625" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="TYPE" value="TYPE" x="-61.893140625" y="297.899190625" size="1.778" layer="27" rot="R180" display="off"/>
