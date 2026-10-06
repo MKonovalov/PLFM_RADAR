@@ -1,0 +1,4 @@
+FreqSynth: 10 placed parts with no value/MPN (e.g. C4, C5, C7, JP1, JP2)
+MainBoard: 1 designators on the board are absent from BOM_Main_Board.xlsx (e.g. C353)
+MainBoard: 33 placed parts with no value/MPN (e.g. JP1, JP10, JP11, JP12, JP13)
+PowerBoard: 1 placed parts with no value/MPN (e.g. SV1)

@@ -1,0 +1,23 @@
+Board,Designator,Package,Value,Marker
+MainBoard,JP10,1X03,,Do Not Put
+MainBoard,JP11,1X03,,Do Not Put
+MainBoard,JP12,1X03,,Do Not Put
+MainBoard,JP14,1X03,,Do Not Put
+MainBoard,JP15,1X03,,Do Not Put
+MainBoard,JP16,1X03,,Do Not Put
+MainBoard,JP17,1X03,,Do Not Put
+MainBoard,JP18,1X04,,Do Not Put
+MainBoard,JP19,1X03,,Do Not Put
+MainBoard,JP2,1X06,,Do Not Put
+MainBoard,JP20,1X02,,Do Not Put
+MainBoard,JP3,2X04,,Do Not Put
+MainBoard,JP4,1X03,,Do Not Put
+MainBoard,JP5,1X03,,Do Not Put
+MainBoard,JP6,1X03,,Do Not Put
+MainBoard,JP7,1X08,,Do Not Put
+MainBoard,JP8,1X04,,Do Not Put
+MainBoard,JP9,1X04,,Do Not Put
+MainBoard,SJ1,SJ_2,,Do Not Put
+MainBoard,SV1,MA10-2,,[DNP不要贴];
+MainBoard,U$2,BPF2,BPF2,Not a component
+MainBoard,U$3,BPF2,BPF2,Not a component
