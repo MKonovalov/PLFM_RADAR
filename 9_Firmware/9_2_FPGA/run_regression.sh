@@ -451,6 +451,11 @@ if [[ "$QUICK" -eq 0 ]]; then
         tb/tb_rx_compare_reg.vvp \
         tb/tb_radar_receiver_final.v "${RECEIVER_RTL[@]}"
 
+    # ADC analog out-of-range (AD9484 OR) reaching the AGC status path
+    run_test "ADC Out-of-Range -> AGC status" \
+        tb/tb_adc_overrange_reg.vvp \
+        tb/tb_adc_overrange.v "${RECEIVER_RTL[@]}"
+
     # Full system top (monitoring-only, legacy)
     run_test "System Top (radar_system_tb)" \
         tb/tb_system_reg.vvp \

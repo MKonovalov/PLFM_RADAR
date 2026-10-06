@@ -67,6 +67,8 @@ module radar_system_top (
     input wire [7:0] adc_d_n,            // ADC Data N (LVDS)
     input wire adc_dco_p,                 // Data Clock Output P (400MHz LVDS)
     input wire adc_dco_n,                 // Data Clock Output N (400MHz LVDS)
+    input wire adc_or_p,                  // ADC Out-of-Range P (LVDS)
+    input wire adc_or_n,                  // ADC Out-of-Range N (LVDS)
     output wire adc_pwdn,                  // ADC Power Down
     
     // ========== STM32 CONTROL INTERFACES ==========
@@ -195,6 +197,8 @@ wire        rx_dbg_adc_valid;
 
 // AGC status from receiver (for status readback and GPIO)
 wire [7:0]  rx_agc_saturation_count;
+wire [7:0]  rx_adc_overrange_count;   // per-frame ADC out-of-range samples
+wire        rx_adc_overrange_seen;    // any ADC out-of-range this frame
 wire [7:0]  rx_agc_peak_magnitude;
 wire [3:0]  rx_agc_current_gain;
 
@@ -513,6 +517,8 @@ radar_receiver_final rx_inst (
     .adc_d_n(adc_d_n),
     .adc_dco_p(adc_dco_p),
     .adc_dco_n(adc_dco_n),
+    .adc_or_p(adc_or_p),
+    .adc_or_n(adc_or_n),
     .adc_pwdn(adc_pwdn),
     
     // Doppler Outputs
@@ -562,7 +568,10 @@ radar_receiver_final rx_inst (
     // AGC status outputs
     .agc_saturation_count(rx_agc_saturation_count),
     .agc_peak_magnitude(rx_agc_peak_magnitude),
-    .agc_current_gain(rx_agc_current_gain)
+    .agc_current_gain(rx_agc_current_gain),
+    // ADC analog out-of-range (AD9484 OR)
+    .adc_overrange_count(rx_adc_overrange_count),
+    .adc_overrange_seen(rx_adc_overrange_seen)
 );
 
 // ============================================================================
@@ -1041,9 +1050,12 @@ assign system_status = status_reg;
 //        tracks the FPGA register as single source of truth.
 // DIG_7: AGC hard-overload flag — high when this frame clipped on
 //        many samples (>= 8), not just one. STM32 PD15 -> larger attack step.
-assign gpio_dig5 = (rx_agc_saturation_count != 8'd0);
+// DIG_5 also asserts on a real ADC analog overrange: the digital clip count
+// only sees the post-digital-gain value, so it can miss an overload the
+// analog front end is still experiencing.
+assign gpio_dig5 = (rx_agc_saturation_count != 8'd0) || rx_adc_overrange_seen;
 assign gpio_dig6 = host_agc_enable;
-assign gpio_dig7 = (rx_agc_saturation_count >= 8'd8);
+assign gpio_dig7 = (rx_agc_saturation_count >= 8'd8) || rx_adc_overrange_seen;
 
 // ============================================================================
 // DEBUG AND VERIFICATION

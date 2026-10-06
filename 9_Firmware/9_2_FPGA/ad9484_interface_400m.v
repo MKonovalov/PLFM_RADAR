@@ -4,6 +4,8 @@ module ad9484_interface_400m (
     input wire [7:0] adc_d_n,        // ADC Data N
     input wire adc_dco_p,            // Data Clock Output P (400MHz)
     input wire adc_dco_n,            // Data Clock Output N (400MHz)
+    input wire adc_or_p,             // Out-of-Range flag P (LVDS)
+    input wire adc_or_n,             // Out-of-Range flag N (LVDS)
     
     // System Interface
     input wire sys_clk,              // 100MHz system clock (for control only)
@@ -12,7 +14,15 @@ module ad9484_interface_400m (
     // Output at 400MHz domain
     output wire [7:0] adc_data_400m, // ADC data at 400MHz
     output wire adc_data_valid_400m, // Valid at 400MHz
-    output wire adc_dco_bufg         // Buffered 400MHz DCO clock for downstream use
+    output wire adc_dco_bufg,        // Buffered 400MHz DCO clock for downstream use
+    output wire adc_or_bit           // ADC out-of-range, single-ended
+);
+
+// LVDS to single-ended conversion for the out-of-range flag.  DIFF_TERM is
+// left FALSE here on purpose: the XDC sets DIFF_TERM TRUE, which takes
+// precedence (same convention as the data lanes).
+IBUFDS #(.DIFF_TERM("FALSE"), .IOSTANDARD("LVDS_25")) adc_or_ibufds (
+    .I(adc_or_p), .IB(adc_or_n), .O(adc_or_bit)
 );
 
 // LVDS to single-ended conversion

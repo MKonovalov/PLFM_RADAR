@@ -19,6 +19,8 @@ module ad9484_interface_400m (
     input wire [7:0] adc_d_n,
     input wire adc_dco_p,
     input wire adc_dco_n,
+    input wire adc_or_p,
+    input wire adc_or_n,
 
     // System Interface
     input wire sys_clk,
@@ -27,8 +29,14 @@ module ad9484_interface_400m (
     // Output at 400MHz domain
     output wire [7:0] adc_data_400m,
     output wire adc_data_valid_400m,
-    output wire adc_dco_bufg
+    output wire adc_dco_bufg,
+    output wire adc_or_bit
 );
+
+// Out-of-range flag: testbenches drive adc_or_p as a single-ended level.
+// Case equality keeps an undriven (Z) port from propagating X into the
+// digital overload counters.
+assign adc_or_bit = (adc_or_p === 1'b1);
 
 // Pass-through clock (no BUFG needed in simulation)
 assign adc_dco_bufg = adc_dco_p;

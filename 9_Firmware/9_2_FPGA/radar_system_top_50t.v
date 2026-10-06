@@ -60,6 +60,8 @@ module radar_system_top_50t (
     input wire [7:0] adc_d_n,
     input wire adc_dco_p,
     input wire adc_dco_n,
+    input wire adc_or_p,
+    input wire adc_or_n,
     output wire adc_pwdn,
 
     // ===== STM32 Control (Bank 15: 3.3V) =====
@@ -171,6 +173,8 @@ module radar_system_top_50t (
         .adc_d_n                (adc_d_n),
         .adc_dco_p              (adc_dco_p),
         .adc_dco_n              (adc_dco_n),
+        .adc_or_p               (adc_or_p),
+        .adc_or_n               (adc_or_n),
         .adc_pwdn               (adc_pwdn),
 
         // ----- STM32 Control -----

@@ -9,7 +9,12 @@ module radar_receiver_final (
     input wire [7:0] adc_d_n,        // ADC Data N (LVDS)
     input wire adc_dco_p,            // Data Clock Output P (400MHz LVDS)
     input wire adc_dco_n,            // Data Clock Output N (400MHz LVDS)
+    // ADC out-of-range flag (LVDS, per-sample analog overload)
+    input wire adc_or_p,
+    input wire adc_or_n,
 	 output wire adc_pwdn,
+    output wire [7:0] adc_overrange_count, // ADC OR samples seen this frame
+    output wire adc_overrange_seen,        // any ADC OR this frame
     
     // Chirp counter from transmitter (for matched filter indexing)
     input wire [5:0] chirp_counter,
@@ -185,6 +190,8 @@ wire adc_valid;            // Data valid signal
 // ADC power-down control (directly tie low = ADC always on)
 assign adc_pwdn = 1'b0;
 
+wire adc_or_bit;   // single-ended ADC out-of-range, from the interface
+
 ad9484_interface_400m adc (
 	.adc_d_p(adc_d_p),
 	.adc_d_n(adc_d_n),
@@ -194,7 +201,10 @@ ad9484_interface_400m adc (
 	.reset_n(reset_n),
 	.adc_data_400m(adc_data_cmos),
 	.adc_data_valid_400m(adc_valid),
-	.adc_dco_bufg(clk_400m)
+	.adc_dco_bufg(clk_400m),
+	.adc_or_p(adc_or_p),
+	.adc_or_n(adc_or_n),
+	.adc_or_bit(adc_or_bit)
 );
 
 // NOTE: The cdc_adc_to_processing instance that was here used src_clk=dst_clk=clk_400m
@@ -423,6 +433,43 @@ always @(posedge clk or negedge reset_n) begin
 end
 
 assign new_chirp_frame = new_frame_pulse;
+
+// ============================================================================
+// ADC OUT-OF-RANGE MONITOR (AD9484 OR)
+// ============================================================================
+// OR is asserted while the analog input exceeds the ADC's range: a true
+// analog overload indicator.  It is a 400 MHz-domain level sampled here at
+// 100 MHz through a 2-FF synchronizer and accumulated per frame; a real
+// overload lasts many samples, so sampling cannot miss it.
+// The IBUFDS for this LVDS pair lives in ad9484_interface_400m (which owns
+// the Xilinx primitives); this module only sees the single-ended bit.
+
+reg [1:0] adc_or_sync;
+always @(posedge clk or negedge reset_n) begin
+    if (!reset_n) adc_or_sync <= 2'b00;
+    else          adc_or_sync <= {adc_or_sync[0], adc_or_bit};
+end
+wire adc_or_100m = adc_or_sync[1];
+
+reg [7:0] adc_or_count;
+reg       adc_or_seen;
+always @(posedge clk or negedge reset_n) begin
+    if (!reset_n) begin
+        adc_or_count <= 8'd0;
+        adc_or_seen  <= 1'b0;
+    end else if (new_frame_pulse) begin
+        adc_or_count <= 8'd0;
+        adc_or_seen  <= 1'b0;
+    end else if (adc_or_100m) begin
+        adc_or_seen <= 1'b1;
+        if (adc_or_count != 8'hFF) adc_or_count <= adc_or_count + 8'd1;
+    end
+end
+
+assign adc_overrange_count = adc_or_count;
+assign adc_overrange_seen  = adc_or_seen;
+
+
 
 // ========== DATA PACKING FOR DOPPLER ==========
 // Use MTI-filtered data (or pass-through if MTI disabled)

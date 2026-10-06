@@ -12,7 +12,7 @@
 #
 # I/O Bank Voltage Summary:
 #   Bank 0:  VCCO = 3.3V (JTAG, flash CS)
-#   Bank 14: VCCO = 2.5V (ADC LVDS_25 data — placer-enforced; adc_pwdn as LVCMOS25)
+#   Bank 14: VCCO = 2.5V (ADC LVDS_25 data + adc_or overrange; adc_pwdn LVCMOS25)
 #   Bank 15: VCCO = 3.3V (DAC, clocks, STM32 SPI 3.3V side, DIG bus, mixer)
 #   Bank 34: VCCO = 1.8V (ADAR1000 beamformer control, SPI 1.8V side)
 #   Bank 35: VCCO = 3.3V (FT2232H USB 2.0 FIFO — 15 signals)
@@ -222,6 +222,17 @@ set_property PACKAGE_PIN F15 [get_ports {stm32_mixers_enable}]   ;# DIG_3 (PD11)
 set_property IOSTANDARD LVCMOS33 [get_ports {stm32_new_*}]
 set_property IOSTANDARD LVCMOS33 [get_ports {stm32_mixers_enable}]
 # reset_n is DIG_4 (PD12) — constrained above in the RESET section
+
+# ADC out-of-range flag (AD9484 OR) — bank 14, LVDS_25 like the data lanes.
+# Ball numbers come from the board file's FPGA symbol: it maps
+# IO_L19P_T3_A10_D26_14 -> M6 and IO_L19N_T3_A09_D25_VREF_14 -> N6
+# (same method verified against adc_pwdn, pad T5).
+# Not consumed by the RTL until this commit; now it drives DIG_5/DIG_7.
+set_property PACKAGE_PIN M6 [get_ports {adc_or_p}]
+set_property PACKAGE_PIN N6 [get_ports {adc_or_n}]
+set_property IOSTANDARD LVDS_25 [get_ports {adc_or_p}]
+set_property IOSTANDARD LVDS_25 [get_ports {adc_or_n}]
+set_property DIFF_TERM TRUE [get_ports {adc_or_p}]
 
 # DIG_5 = H11, DIG_6 = G12, DIG_7 = H12 — FPGA→STM32 status outputs
 # DIG_5: AGC saturation flag (PD13 on STM32)

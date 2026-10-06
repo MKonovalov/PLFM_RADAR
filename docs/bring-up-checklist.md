@@ -40,7 +40,8 @@ Instruments: bench PSU with current limit, 4-channel scope (≥1 GHz), DMM, VNA 
 | Vivado DRC | **zero waivers** except a documented `PLIO-9` — the `BIVC-1` waiver exists only because `VCCO_14` is 3.3 V instead of 2.5 V. With the 2.5 V rail present, build `scripts/100t/build_100t.tcl` and **remove the waiver** | a build that needs `BIVC-1` waived is telling you the bank rail is wrong |
 | Half-scale DC into the ADC, capture | No bit errors over 10⁶ samples; LVDS eye open | reduce clock rate and re-check termination; do not "fix" it in firmware |
 | FPGA self-test | Passes (the `System Top` and `Self-Test` suites in `run_regression.sh` are the same logic in simulation) | — |
-| `DIG_5` / `DIG_7` | Drive a known strong input: `DIG_5` sets on any clipped sample, `DIG_7` sets only when **≥ 8** samples clip in a frame | if `DIG_7` is stuck low, the RTL assign is not in the bitstream you loaded |
+| `DIG_5` / `DIG_7` | Drive a known strong input: `DIG_5` sets on any clipped sample **or on a real ADC analog overrange** (the AD9484 `OR` pin, balls M6/N6, now constrained); `DIG_7` sets only when **≥ 8** samples clip in a frame or the ADC reports overrange | if `DIG_7` is stuck low, the RTL assign is not in the bitstream you loaded |
+| `DIG_5` with the AGC backed off | Reduce the analog level until the digital clip count is zero, then inject enough RF to trip the ADC's `OR`: `DIG_5` must still assert. This is the case the digital clip count alone cannot see | if it does not, the `OR` pair (M6/N6) is not reaching the receiver — check the IBUFDS in `ad9484_interface_400m.v`, not the AGC |
 | `DIG_7` idle | Low with no signal, and not floating | — |
 
 ## Gate 3 — PA bias and protection (one PA board, current-limited PSU)
