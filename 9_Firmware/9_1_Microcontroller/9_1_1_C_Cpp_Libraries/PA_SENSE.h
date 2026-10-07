@@ -55,15 +55,16 @@
  * usable: it becomes 17 % of the operating point rather than 6 %, which is tighter but still below
  * a healthy bias.
  *
- * NOT APPLIED: the PA part has not been chosen.  These are recorded so that when it is, the change
- * is a two-line edit at the call site with the arithmetic already checked.
+ * APPLIED: the QPA1010 is the chosen device, so the values above are the defaults now.  The
+ * QPA2962's were 1.680f and 2.5f; both can be restored by defining them before this header is read,
+ * which is what test_pa_sense_migration.cpp exercises.
  */
 
 #ifndef PA_IDQ_TARGET_A
-#define PA_IDQ_TARGET_A 1.680f     // QPA2962 datasheet bias point
+#define PA_IDQ_TARGET_A 0.600f     // QPA1010 datasheet bias point (24 V, 600 mA)
 #endif
 #ifndef PA_IDQ_OC_TRIP_A
-#define PA_IDQ_OC_TRIP_A 2.5f      // over-current threshold used by the health check
+#define PA_IDQ_OC_TRIP_A 0.9f      // scaled to keep the QPA2962 build's trip/target ratio
 #endif
 #ifndef PA_IDQ_BIAS_FAULT_A
 #define PA_IDQ_BIAS_FAULT_A 0.1f   // below this the channel is considered un-biased

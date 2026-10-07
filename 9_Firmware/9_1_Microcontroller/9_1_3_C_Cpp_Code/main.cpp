@@ -1141,7 +1141,7 @@ void handleSystemError(SystemError_t error) {
     //   ERROR_RF_PA_OVERCURRENT .. ERROR_POWER_SUPPLY (9..13) -- PA/supply faults
     //   ERROR_TEMPERATURE_HIGH  (14) -- >75 C on the PA thermal sensors;
     //                                  without cutting bias + 5V/5V5/RFPA rails
-    //                                  the GaN QPA2962 stage can thermal-runaway.
+    //                                  the GaN PA stage can thermal-runaway.
     //   ERROR_WATCHDOG_TIMEOUT  (16) -- health-check loop has stalled (>60 s);
     //                                  transmitter state is unknown, safest to
     //                                  latch Emergency_Stop rather than rely on
@@ -2140,13 +2140,17 @@ int main(void)
 	  DIAG("PA", "DAC2 init OK");
 
 	  /* Configure clear code behavior */
-	  DIAG("PA", "Setting clear code to ZERO on both DACs");
-	  /* MID, not ZERO: Emergency_Stop() asserts CLR while the PA drain rail is still
-	   * live, so the clear state has to be the device's shutdown bias (-4.0 V), not
-	   * 0 V.  Zero-scale would turn every PA hard on for the length of the shutdown
-	   * sequence.  See PA_GATE_BIAS.h. */
-	  if (!DAC5578_SetClearCode(&hdac1, DAC5578_CLR_CODE_MID) ||
-	      !DAC5578_SetClearCode(&hdac2, DAC5578_CLR_CODE_MID)) {
+	  DIAG("PA", "Setting clear code to FULL on both DACs");
+	  /* FULL, not ZERO and not MID: Emergency_Stop() asserts CLR while the PA drain rail is
+	   * still live, so the clear state has to be the device's shutdown bias.  For the QPA1010
+	   * that is -5 V, which its Bias Up Procedure names in step 2 ("Apply -5 V to VG").  MID
+	   * would command -4.05 V - the datasheet's own table shows about 0 mA there, so it is not
+	   * unsafe, but it is not the documented off bias either.  FULL commands below the op-amp's
+	   * -5V0_ADAR12/34 rail, so the gate settles ON the rail: exactly the value the procedure
+	   * names, and bounded by the rail so nothing is over-driven.  Zero-scale would turn every
+	   * PA hard on for the length of the shutdown sequence.  See PA_GATE_BIAS.h. */
+	  if (!DAC5578_SetClearCode(&hdac1, DAC5578_CLR_CODE_FULL) ||
+	      !DAC5578_SetClearCode(&hdac2, DAC5578_CLR_CODE_FULL)) {
 	      DIAG_ERR("PA", "Could not set a fail-safe CLR clear code; not arming the PAs");
 	      Error_Handler();
 	      return 0;   /* never reach the arming path with an unsafe CLR state */

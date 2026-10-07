@@ -2,16 +2,17 @@
  * @file    PA_BIAS_SEQUENCE.h
  * @brief   The order in which the PA gate bias and drain may be applied or removed.
  *
- * The array is 16 depletion-mode GaN HEMTs. Two facts from the QPA2962 datasheet drive this
- * file:
+ * The array is 16 depletion-mode GaN HEMTs. Two facts from the device datasheet drive this file
+ * (the QPA1010, per issue #21):
  *
- *   * the gate must be at or below the shutdown bias before drain voltage appears --
- *     "Reduce VG to -4.0 V. Ensure IDQ ~ 0 mA" is the documented off state; and
+ *   * the gate must be at or below the off bias before drain voltage appears -- its Bias Up
+ *     Procedure says "Apply -5 V to VG", then "Apply +24 V to VD; ensure IDQ is approx. 0 mA";
+ *     and
  *   * with the drain already up, the gate is then raised to the operating bias.
  *
  * So the two legal orders are:
  *
- *   ENABLE   gate -> OFF bias (-4.03 V, mid-scale), drain on, then gate -> operating bias
+ *   ENABLE   gate -> OFF bias (-5 V, code 158), drain on, then gate -> operating bias
  *   DISABLE  gate -> OFF bias, drain off
  *
  * Applying drain voltage with the gate above pinch-off, or removing drain voltage while the

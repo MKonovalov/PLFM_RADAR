@@ -1,6 +1,8 @@
 /**
  * @file    PA_GATE_BIAS.h
- * @brief   Gate-bias transfer function for the 16 QPA2962 PAs -- single source of truth.
+ * @brief   Gate-bias transfer function for the 16 PA channels -- single source of truth.
+ *
+ * Chosen device: QPA1010 (issue #21).  VD 24 V, IDQ 600 mA, VG -2.9 to -1.5 V, off bias -5 V.
  *
  * Circuit (per channel, MainBoard):  DAC5578 VOUT -> Rin -> op-amp inverting input,
  * Rf from the op-amp output back to that input, + input on GND, V+ = +5V5_PA,
@@ -13,20 +15,25 @@
  *
  * Three datapoints, each grounded in a primary source:
  *
- *   code 128 (mid-scale) -> VGG = -4.03 V   the POR / CLR state.  This is verbatim
- *                                           Qorvo's shutdown condition for this part:
- *                                           "Reduce VG to -4.0 V. Ensure IDQ ~ 0 mA".
- *                                           A reset therefore parks the PAs OFF.
- *   code  38 (loop floor) -> VGG = -1.20 V  the most positive end of the device's
- *                                           rated gate range (QPA2962: VG typ -1.2 to
- *                                           -2.5 V at VD = 22 V, IDQ = 1680 mA).  The
- *                                           calibration loop walks the gate up to here
- *                                           and no further: it is the rated edge, not a
- *                                           guess.
- *   code 126 (boot bias) -> VGG = -3.98 V   the value the firmware's own bring-up comment
- *                                           states; it agrees with the transfer function
- *                                           above, which is an independent check that the
- *                                           gain and reference are what the design thinks.
+ *   code 158 (off)      -> VGG = -4.99 V   the device's documented off bias.  QPA1010
+ *                                           Bias Up Procedure, step 2: "Apply -5 V to
+ *                                           VG", step 3: "Apply +24 V to VD; ensure
+ *                                           IDQ is approx. 0 mA".  A reset parks the
+ *                                           PAs OFF.
+ *   code  48 (loop floor) -> VGG = -1.52 V  the most positive point still inside the
+ *                                           device's rated gate range (QPA1010: VG
+ *                                           -2.9 to -1.5 V at VD = 24 V, IDQ = 600 mA).
+ *                                           The calibration loop walks the gate up to
+ *                                           here and no further: it is the rated edge, not
+ *                                           a guess.  Note 48 and not 47 - 47 commands
+ *                                           -1.486 V, which is *past* the edge.
+ *   code  92            -> VGG = -2.91 V   the most negative end of the same rated range.
+ *
+ * THE OP-AMP'S NEGATIVE RAIL BOUNDS THE GATE, which is why no code can damage the device: the
+ * inverting amplifier's V- is -5V0_ADAR12/34, so however negative a code commands, the gate
+ * settles at about -5 V.  The QPA1010's absolute maximum for VG is -8 V, so the rail is inside it
+ * with 3 V of margin - and the commanded value for the off state is chosen to land ON the rail
+ * rather than beyond it, so the commanded voltage and the achieved voltage agree.
  *
  * WHY THIS HEADER EXISTS: the one way to destroy this array is a gate that is not
  * negative enough.  0 V is *not* a rated bias for a depletion-mode GaN HEMT -- it is
@@ -54,13 +61,13 @@
 #define PA_GATE_BIAS_CODE_MAX    255
 
 /* --- the three operating points --- */
-#define PA_GATE_BIAS_CODE_OFF    128       /* mid-scale: the POR/CLR state */
-#define PA_GATE_BIAS_VGG_OFF_V   (-4.03f)  /* = the datasheet's shutdown condition */
-#define PA_GATE_BIAS_CODE_MIN    38        /* calibration-loop floor: the rated gate edge */
-#define PA_GATE_BIAS_VGG_MAX_V   (-1.20f)  /* most positive *rated* gate voltage */
-#define PA_GATE_BIAS_VGG_MIN_V   (-2.50f)  /* most negative rated gate voltage */
-#define PA_GATE_BIAS_CODE_BOOT   126       /* bring-up bias */
-#define PA_GATE_BIAS_VGG_BOOT_V  (-3.98f)
+#define PA_GATE_BIAS_CODE_OFF    158       /* the device's documented off bias (-5 V) */
+#define PA_GATE_BIAS_VGG_OFF_V   (-5.00f)  /* = the Bias Up Procedure's "apply -5 V to VG" */
+#define PA_GATE_BIAS_CODE_MIN    48        /* calibration-loop floor: the rated gate edge */
+#define PA_GATE_BIAS_VGG_MAX_V   (-1.50f)  /* the datasheet's most positive rated gate */
+#define PA_GATE_BIAS_VGG_MIN_V   (-2.90f)  /* the datasheet's most negative rated gate */
+#define PA_GATE_BIAS_CODE_BOOT   158       /* bring-up: the same off state the procedure names */
+#define PA_GATE_BIAS_VGG_BOOT_V  (-5.00f)
 
 /** Gate voltage commanded by a DAC code (8-bit), per the transfer function above. */
 PA_GB_INLINE float PA_GATE_BIAS_VggFromCode(int code)
@@ -119,11 +126,24 @@ constexpr bool pa_gate_bias_close(float a, float b, float tol) { return pa_gate_
 static_assert(pa_gate_bias_close(PA_GATE_BIAS_GAIN, 2.443f, 0.005f),
               "gate-bias gain must match Rf/Rin = 2443/1000 from the schematic");
 static_assert(pa_gate_bias_close(PA_GATE_BIAS_VggFromCode(PA_GATE_BIAS_CODE_OFF), PA_GATE_BIAS_VGG_OFF_V, 0.05f),
-              "mid-scale must land on the datasheet shutdown condition (-4.0 V)");
-static_assert(pa_gate_bias_close(PA_GATE_BIAS_VggFromCode(PA_GATE_BIAS_CODE_MIN), PA_GATE_BIAS_VGG_MAX_V, 0.02f),
-              "the calibration floor must be the most positive rated gate (-1.2 V)");
+              "the off code must land on the device's documented off bias (-5 V)");
+static_assert(pa_gate_bias_close(PA_GATE_BIAS_VggFromCode(PA_GATE_BIAS_CODE_MIN), PA_GATE_BIAS_VGG_MAX_V, 0.05f),
+              "the calibration floor must be the most positive rated gate (-1.5 V)");
 static_assert(pa_gate_bias_close(PA_GATE_BIAS_VggFromCode(PA_GATE_BIAS_CODE_BOOT), PA_GATE_BIAS_VGG_BOOT_V, 0.05f),
-              "the bring-up bias must reproduce the value the firmware comment states (-3.98 V)");
+              "the bring-up bias must be the off state");
+/* The floor must be the tightest code INSIDE the rated edge: the floor does not cross it, and the
+ * code one step below the floor does.  Stating it both ways is what makes "tightest" checkable -
+ * a floor set too conservatively (or one rounded the wrong way) fails the second half. */
+static_assert(PA_GATE_BIAS_VggFromCode(PA_GATE_BIAS_CODE_MIN) <= PA_GATE_BIAS_VGG_MAX_V,
+              "the floor code must not command a gate more positive than the rated edge");
+static_assert(PA_GATE_BIAS_VggFromCode(PA_GATE_BIAS_CODE_MIN - 1) > PA_GATE_BIAS_VGG_MAX_V,
+              "the floor must be the tightest such code: one step below must cross the edge");
+/* and the rated range has to sit above the floor, or the calibration has nowhere to go */
+static_assert(PA_GATE_BIAS_VGG_MIN_V < PA_GATE_BIAS_VGG_MAX_V,
+              "the rated gate range must be ordered");
+/* the off state must be below the most negative rated point, or it is not off */
+static_assert(PA_GATE_BIAS_VGG_OFF_V < PA_GATE_BIAS_VGG_MIN_V,
+              "the off bias must be below the whole rated range");
 static_assert(PA_GATE_BIAS_ClampCode(0) == PA_GATE_BIAS_CODE_MIN,
               "a zero code must clamp up to the rated gate edge, never pass through");
 static_assert(!PA_GATE_BIAS_ClearCodeIsFailSafe(0),

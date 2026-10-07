@@ -225,8 +225,29 @@ A 16-device array therefore means buying a 250-piece reel, or using die.
 
 | | QPA2962 | QPA1010 |
 |---|---|---|
-| array dissipation (×16) | 592 W | **283 W** |
-| required θ / airflow, continuous | 0.076 °C/W / 69 CFM | **0.159 °C/W / 34 CFM** |
+| dissipation per device, standing | 36.96 W | **14.4 W** (24 V × 0.6 A quiescent) |
+| dissipation per device, driven | 35.5 W | **24.8 W** (P_DC 39.8 W − 15 W RF, at 37.7 % PAE) |
+| array, standing (×16) | 592 W | **230 W** |
+| required θ, array (40 → 85 °C) | 0.076 °C/W | **0.196 °C/W** |
+| required θ per device | 1.22 °C/W | **3.13 °C/W** |
+| via field provides | 0.77–1.15 °C/W | 0.77–1.15 °C/W → **2.7–4× margin** |
+| channel temperature at 85 °C base | 189 °C | **150 °C** (85 + 2.60 × 24.8) |
+
+**Correction to an earlier figure in this document.** A previous version of this table said the
+QPA1010 array dissipates **283 W**. That was wrong: 16 × 24 V × 0.6 A = **230 W** standing. The
+error came from scaling the old device's array figure by a ratio rather than recomputing it from
+the new device's own bias point — the same shortcut that the row-by-row figures above avoid. The
+direction of the conclusion is unchanged (the migration roughly halves the standing load), but the
+number quoted on issue #21 was not the number the arithmetic gives, and it is corrected here.
+
+**And the safe planning figure changes side.** For the QPA2962 the *quiescent* dissipation (36.96 W)
+exceeded the driven one (35.5 W), so quiescent was conservative. Here **driven (24.8 W) is nearly
+twice quiescent (14.4 W)**, so driven is the figure to plan with. Anyone carrying the old habit
+across would plan against half the real load — which is why `PA_THERMAL.h` now derives
+`PA_PDISS_PLAN_W` as the larger of the two rather than naming one.
+
+The device is also specified **pulsed** (PW = 100 µs, DC = 10 %), which is the radar's own duty, so
+under a 10 % transmit the drain is pulsed and the average load is far below the standing figure.
 | VD / IDQ | 22 V / 1680 mA | 24 V / 600 mA |
 | gate range | −1.2 … −2.5 V | −2.9 … −1.5 V |
 | RoHS | — | **compliant** (the chosen filter is not) |
