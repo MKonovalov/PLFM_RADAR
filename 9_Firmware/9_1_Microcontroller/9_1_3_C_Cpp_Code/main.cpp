@@ -76,6 +76,7 @@ extern "C" {
 #include "FPGA_CONFIG.h"
 #include "AD9484_SPI.h"
 #include "PA_THERMAL.h"
+#include "PA_SOAK.h"
 #include "ADS7830.h"
 #include "gps_handler.h"
 
@@ -479,6 +480,9 @@ ADS7830_HandleTypeDef hadc3;
  * unplugged probe reads the full rail - is flagged rather than reported as a cold board. */
 static bool g_temperature_ok[8] = { false, false, false, false, false, false, false, false };
 
+/* The soak recorder (issue #5).  Started once at boot, so a bench soak is the whole run. */
+static PaSoak_t g_soak;
+
 static void Read_PA_Temperatures(void)
 {
     float *temps[8] = { &Temperature_1, &Temperature_2, &Temperature_3, &Temperature_4,
@@ -491,6 +495,17 @@ static void Read_PA_Temperatures(void)
         if (g_temperature_ok[ch]) {
             *temps[ch] = celsius;
         }
+    }
+    /* The soak recorder (issue #5).  Its acceptance asks for the RISE, not the endpoint: a run that
+     * has settled and a run still climbing look identical from one reading, and only the rate at the
+     * end of the window tells them apart.  It is fed here so it sees every sample the firmware takes,
+     * and never fails on an unreadable channel because it is only fed when a channel is valid. */
+    {
+        float snapshot[PA_SOAK_CHANNELS];
+        for (uint8_t ch = 0; ch < PA_SOAK_CHANNELS; ch++) {
+            snapshot[ch] = g_temperature_ok[ch] ? *(temps[ch]) : g_soak.ch[ch].last_c;
+        }
+        PaSoak_Update(&g_soak, HAL_GetTick(), snapshot, PA_SOAK_CHANNELS);
     }
 }
 float Temperature_1 = 0.0f, Temperature_2 = 0.0f, Temperature_3 = 0.0f, Temperature_4 = 0.0f;
@@ -1261,6 +1276,7 @@ void getSystemStatusForGUI(char* status_buffer, size_t buffer_size) {
 
     // Temperature readings (8 variables)
     Read_PA_Temperatures();
+  PaSoak_Start(&g_soak, HAL_GetTick(), NULL, 0);   /* the soak is the whole run (issue #5) */
 
     // Format all 8 temperature variables
     w = snprintf(status_buffer + off, rem,
@@ -1268,6 +1284,20 @@ void getSystemStatusForGUI(char* status_buffer, size_t buffer_size) {
                  Temperature_1, Temperature_2, Temperature_3, Temperature_4,
                  Temperature_5, Temperature_6, Temperature_7, Temperature_8);
     if (w > 0 && (size_t)w < rem) { off += (size_t)w; rem -= (size_t)w; }
+
+    /* The soak's rise and whether it has settled (issue #5).  The hottest channel is the one that
+     * matters, and "settled" is a rate: still moving faster than the threshold at the end of the
+     * window means the run has not demonstrated that it stopped. */
+    {
+        const int hot = PaSoak_HottestChannel(&g_soak);
+        w = snprintf(status_buffer + off, rem,
+                     "SoakRiseC:%.1f|SoakHotCh:%d|SoakSettled:%d|SoakSamples:%lu|",
+                     hot >= 0 ? (double)PaSoak_RiseC(&g_soak, hot) : 0.0,
+                     hot,
+                     PaSoak_HasSettled(&g_soak) ? 1 : 0,
+                     (unsigned long)g_soak.samples);
+        if (w > 0 && (size_t)w < rem) { off += (size_t)w; rem -= (size_t)w; }
+    }
 
     // RF Power Amplifier status (if enabled)
     if (PowerAmplifier) {

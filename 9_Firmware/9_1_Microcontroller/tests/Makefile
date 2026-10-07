@@ -72,6 +72,7 @@ TESTS_STANDALONE := test_fpga_config \
                     test_adar_power_order \
                     test_rail_fault \
                     test_pa_bias_sequence \
+                    test_pa_soak \
                     test_pa_gate_bias \
                     test_bug12_pa_cal_loop_inverted \
                     test_bug13_dac2_adc_buffer_mismatch \
@@ -209,6 +210,10 @@ test_rail_fault: test_rail_fault.c ../9_1_1_C_Cpp_Libraries/RAIL_FAULT.c
 # PA bias sequence: the order is the safety property (PA_BIAS_SEQUENCE.c + its header)
 test_pa_bias_sequence: test_pa_bias_sequence.c ../9_1_1_C_Cpp_Libraries/PA_BIAS_SEQUENCE.c
 	$(CC) $(CFLAGS) $(INCLUDES) $< ../9_1_1_C_Cpp_Libraries/PA_BIAS_SEQUENCE.c -o $@
+
+# PA soak recorder: the thermal rise log (issue #5).  -lm for the exponential in the test.
+test_pa_soak: test_pa_soak.c ../9_1_1_C_Cpp_Libraries/PA_SOAK.c
+	$(CC) $(CFLAGS) $(INCLUDES) $< ../9_1_1_C_Cpp_Libraries/PA_SOAK.c -o $@ -lm
 
 # PA bias calibration: the loop, plus the headers it reads (issue #21).  C++ because PA_SENSE.h is.
 test_pa_bias_cal: test_pa_bias_cal.cpp ../9_1_1_C_Cpp_Libraries/PA_BIAS_CAL.c
