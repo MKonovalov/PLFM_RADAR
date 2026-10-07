@@ -50,11 +50,34 @@ blocks makes it fail with two failures, which is how it was verified.
 `VDD_PA = 5 V, VDD_SW = 3.3 V, VSS_SW = −3.3 V`. The design's `+3V3_SW` is staged and `-3V3_SW` is
 inverted from it, so this pair already comes up positive-first, which is what the part asks for.
 
-**M3SWA2-34DR+** — specified at `VDD = +3.3 V, VEE = −3.3 V` (max +3.6 / −3.6 V), drawing 2.7 mA
-and 1.6 mA per switch. `+3V4` is the source rail and `U19` inverts it, so the pair is
-positive-first by construction. The absolute-maximum table is the one item here still to be
-pinned down from the datasheet (the extracted text carried the heading but not the limits);
-until then this pair is recorded as "positive-first by construction, abs-max to confirm".
+**M3SWA2-34DR+** — from its own DC electrical specifications ("AT +25 °C, VDD = +3.3 V, VEE = −3.3 V
+unless noted otherwise"), the vendor's published limits are:
+
+| Parameter | Min | Typ | Max | Units |
+|---|---|---|---|---|
+| Positive Supply Voltage, VDD | **+3.3** | | **+3.6** | V |
+| Negative Supply Voltage, VEE | **−3.6** | | **−3.3** | V |
+| Positive Supply Current, IDD | | 2.7 | 2.9 | mA |
+| Negative Supply Current, IEE | | 1.6 | 1.8 | mA |
+| Control Voltage Low | | 0 | +0.8 | V |
+| Control Voltage High | **+1.8** | +2 | +3.6 | V |
+
+Note the direction of the negative rail: for VEE the **Min column holds −3.6 V** and the Max column
+−3.3 V, so the allowed window is −3.3 to −3.6 V and "more negative" is the limit — an easy column to
+misread on a negative supply. The datasheet also notes "VEE is the negative equivalent value to VDD".
+
+**The vendor publishes no power-up order for this part**, and no separate absolute-maximum table
+appears in the datasheet. So the sequencing question the issue raises is answered here as follows:
+the part has a specified operating window but **no stated VDD/VEE order**, and the design brings
+`+3V4` up first with `U19` inverting it to `-3V4`, so the pair is **positive-first by construction**.
+That is inside the part's requirement by omission, and it is recorded that way rather than claimed as
+a vendor-imposed order.
+
+**One requirement the part does state, checked against the design:** "All RF-ports must be DC blocked
+or held at 0 V DC." Each switch's RF ports sit behind a **series** capacitor, verified in the
+netlist — e.g. `RF_SW_1`: `N$130 → C126 → J27`, `N$131 → C129 → ANT2_1 → ADTR1107_1`,
+`N$132 → C128 → J26`; and `U$1`: `N$21 → C83 → RF_TX_FIL`, `N$38 → C84 → RF_RX_FIL`,
+`N$26 → C85 → RF_IO → U16`. **Satisfied.**
 
 **LTC5552** (× 2) and **AD8352** (× 2) — single-supply parts (`+3V3_AN1_F` and `+5V0_0`
 respectively), so they impose no order requirement on their rails.
