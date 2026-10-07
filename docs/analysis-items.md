@@ -94,3 +94,24 @@ easing it. Any decision to migrate should be made with that arithmetic in hand, 
 The bias-table port itself is the small part of the work: `PA_GATE_BIAS.h` expresses VGG as
 `-(Rf/Rin)*(code/255)*VREF` with a −1.20 V floor, and a new device needs a new table and a new
 floor — the mechanism is unchanged.
+
+## Correction: #19's numbers, from the vendor datasheet
+
+The issue was built on "the ECOC-2522 OCXO at ~1.2 A". The datasheet gives the figure directly, and it is
+much lower:
+
+| Parameter | Datasheet | At 3.3 V |
+|---|---|---|
+| Power consumption, at turn on | **3.6 W** | **1.09 A** |
+| Power consumption, steady state | **1.4 W** | **0.42 A** |
+
+So the rail is **21 % loaded steady and 55 % at turn-on** — not 62 % — against a 2 A regulator. The
+acceptance criterion "no rail above ~70 % of its device rating" is met with room to spare, and there is no
+current-limit droop to avoid.
+
+Sequencing the OCXO alone is also not available: the padout is 1 = Voltage Control, 2 = V Ref,
+3 = Supply Voltage, 4 = Output, 5 = Ground — **no enable pin**. It would need an added load switch, which
+the numbers show is unnecessary.
+
+Two earlier claims in this repository are corrected by the same table: that no vendor data was reachable,
+and that the datasheet's tables were image-based. Both were wrong; the PDF extracts cleanly.
