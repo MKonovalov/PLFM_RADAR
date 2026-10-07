@@ -49,3 +49,29 @@ float PA_Thermal_ChannelTemp(float case_c, float pdiss_w);
 bool PA_Thermal_IsSafe(float case_c, float pdiss_w);
 
 #endif /* PA_THERMAL_H */
+
+/**
+ * The NTC in the eight temperature probes (issue #5).
+ *
+ * The main board already carries the interface: eight 3-pin headers (JP5, JP6, JP11, JP12, JP14,
+ * JP15, JP16, JP19) each bringing out +3V3_AN4_F, an ADS7830 channel and GND, plus the third
+ * ADS7830 (U89, address 0x4B) that the firmware reads as hadc3.  What the board lacked was the
+ * pull-up, and what the firmware lacked was the conversion - the bring-up read stored raw 8-bit
+ * codes while the loop read applied a linear scale, and neither is right for a thermistor.
+ *
+ * The probe is a 10k NTC with B(25/85) = 3434 K on a 10k pull-up to +3V3_AN4_F, which is also the
+ * ADC's reference - so the code is the divider ratio and the absolute rail voltage cancels.
+ */
+#define PA_NTC_R25_OHM    10000.0f    /**< probe resistance at 25 degC */
+#define PA_NTC_T25_K      298.15f     /**< 25 degC in kelvin */
+#define PA_NTC_B_K        3434.0f     /**< B(25/85) from the probe datasheet */
+#define PA_NTC_PULLUP_OHM 10000.0f    /**< the on-board pull-up to +3V3_AN4_F */
+/** At or above this ratio the input sits on the rail: an unplugged probe, not a cold one. */
+#define PA_NTC_MAX_RATIO  0.995f
+
+/**
+ * Convert a divider ratio (0..1) to a probe temperature in degC.
+ * Returns false when the reading cannot be a real temperature - most importantly an open probe,
+ * which would otherwise be indistinguishable from a very cold one.
+ */
+bool PA_Thermal_NtcToCelsius(float ratio, float *celsius_out);

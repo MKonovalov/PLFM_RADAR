@@ -16,7 +16,7 @@ Rail,Boards,BoardsCount,TotalPins,NearDuplicates
 +3V3_AN1_F,MainBoard,1,5,
 +3V3_AN2_F,MainBoard,1,5,
 +3V3_AN3_F,MainBoard,1,18,
-+3V3_AN4_F,MainBoard,1,26,
++3V3_AN4_F,MainBoard,1,34,
 +3V3_AN5_F,MainBoard,1,17,
 +3V3_AN6_F,MainBoard,1,17,
 +3V3_CLOCK,FreqSynth PowerBoard,2,25,

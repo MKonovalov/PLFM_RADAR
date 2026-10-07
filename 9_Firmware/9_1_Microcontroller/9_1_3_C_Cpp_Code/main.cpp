@@ -415,6 +415,25 @@ const float Guard = 175.40f; // Guard time in microseconds*/
 
 //Temperature Sensors
 ADS7830_HandleTypeDef hadc3;
+
+/* The eight NTC probes on ADC3 / U89 (issue #5).  A channel that cannot be converted - an
+ * unplugged probe reads the full rail - is flagged rather than reported as a cold board. */
+static bool g_temperature_ok[8] = { false, false, false, false, false, false, false, false };
+
+static void Read_PA_Temperatures(void)
+{
+    float *temps[8] = { &Temperature_1, &Temperature_2, &Temperature_3, &Temperature_4,
+                        &Temperature_5, &Temperature_6, &Temperature_7, &Temperature_8 };
+    for (uint8_t ch = 0; ch < 8; ch++) {
+        /* The pull-ups and the ADC reference are the same rail, so the code is the divider ratio. */
+        const float ratio = (float)ADS7830_Measure_SingleEnded(&hadc3, ch) / 255.0f;
+        float celsius = 0.0f;
+        g_temperature_ok[ch] = PA_Thermal_NtcToCelsius(ratio, &celsius);
+        if (g_temperature_ok[ch]) {
+            *temps[ch] = celsius;
+        }
+    }
+}
 float Temperature_1 = 0.0f, Temperature_2 = 0.0f, Temperature_3 = 0.0f, Temperature_4 = 0.0f;
 float Temperature_5 = 0.0f, Temperature_6 = 0.0f, Temperature_7 = 0.0f, Temperature_8 = 0.0f;
 
@@ -1182,14 +1201,7 @@ void getSystemStatusForGUI(char* status_buffer, size_t buffer_size) {
     if (w > 0 && (size_t)w < rem) { off += (size_t)w; rem -= (size_t)w; }
 
     // Temperature readings (8 variables)
-    Temperature_1 = ADS7830_Measure_SingleEnded(&hadc3, 0);
-    Temperature_2 = ADS7830_Measure_SingleEnded(&hadc3, 1);
-    Temperature_3 = ADS7830_Measure_SingleEnded(&hadc3, 2);
-    Temperature_4 = ADS7830_Measure_SingleEnded(&hadc3, 3);
-    Temperature_5 = ADS7830_Measure_SingleEnded(&hadc3, 4);
-    Temperature_6 = ADS7830_Measure_SingleEnded(&hadc3, 5);
-    Temperature_7 = ADS7830_Measure_SingleEnded(&hadc3, 6);
-    Temperature_8 = ADS7830_Measure_SingleEnded(&hadc3, 7);
+    Read_PA_Temperatures();
 
     // Format all 8 temperature variables
     w = snprintf(status_buffer + off, rem,
@@ -2148,6 +2160,19 @@ int main(void)
 	  }
 	  DIAG("PA", "ADC2 init OK");
 
+	  /* ADC3: Address 0x4B - U89, whose A1 is tied to GND and whose A0 is pulled up by R153.
+	   * Its eight channels are the temperature probes on JP5/JP6/JP11/JP12/JP14/JP15/JP16/JP19.
+	   * This chip was read eight times per cycle but never initialised, so every Temperature_N
+	   * was reading an unconfigured part (issue #5). */
+	  DIAG("PA", "Initializing ADC3 (I2C2, addr=0x4B, single-ended, ref+adc ON)");
+	  if (!ADS7830_Init(&hadc3, &hi2c2, 0x4B,
+						ADS7830_SDMODE_SINGLE, ADS7830_PDIRON_ADON)) {
+		  DIAG_ERR("PA", "ADC3 init FAILED -- the temperature channels are not readable, "
+				   "so the over-temperature protection is blind");
+	  } else {
+		  DIAG("PA", "ADC3 init OK");
+	  }
+
 	  /* Read all 8 channels from ADC1 and calculate Idq */
 	  DIAG("PA", "Reading initial Idq from ADC1 channels 0-7");
 	  for (uint8_t channel = 0; channel < 8; channel++) {
@@ -2385,14 +2410,7 @@ int main(void)
       static uint32_t last_check1 = 0;
 		  if (HAL_GetTick() - last_check1 > 5000) {
 		  //TMP37 3.3V-->165°C & ADS7830 3.3V-->255 => Temperature_n °C = ADC_val_n * 165/255
-		  Temperature_1 = ADS7830_Measure_SingleEnded(&hadc3, 0)*0.64705f;
-		  Temperature_2 = ADS7830_Measure_SingleEnded(&hadc3, 1)*0.64705f;
-		  Temperature_3 = ADS7830_Measure_SingleEnded(&hadc3, 2)*0.64705f;
-		  Temperature_4 = ADS7830_Measure_SingleEnded(&hadc3, 3)*0.64705f;
-		  Temperature_5 = ADS7830_Measure_SingleEnded(&hadc3, 4)*0.64705f;
-		  Temperature_6 = ADS7830_Measure_SingleEnded(&hadc3, 5)*0.64705f;
-		  Temperature_7 = ADS7830_Measure_SingleEnded(&hadc3, 6)*0.64705f;
-		  Temperature_8 = ADS7830_Measure_SingleEnded(&hadc3, 7)*0.64705f;
+		  Read_PA_Temperatures();
 
 		  DIAG("PA", "Temps: T1=%.1f T2=%.1f T3=%.1f T4=%.1f T5=%.1f T6=%.1f T7=%.1f T8=%.1f",
 		       (double)Temperature_1, (double)Temperature_2, (double)Temperature_3, (double)Temperature_4,

@@ -63,3 +63,27 @@ The harness/assembly drawing (`Board_Artifacts/harness_map.csv`) covers the DC i
 this filter is an RF in-line item, one per element, between the PA board's `J2` and the
 radiating element. It should appear in the assembly BOM as a quantity of 16 with the
 measurement above as its acceptance test.
+
+## Resolved with a catalog part: the Marki FLP-1250
+
+The order no longer has to be derived, because the requirement is **absolute** and a stocked
+connectorized part meets it outright:
+
+| Parameter | FLP-1250 | Required |
+|---|---|---|
+| 1 dB passband | DC – 11.11 GHz | must pass 10.485 – 10.515 GHz |
+| Insertion loss | **0.6 dB typ** (DC–11.5 GHz) | TX ≤ 1.5 dB, RX ≤ 1.0 dB |
+| Return loss | 15 dB min / 20 typ | — |
+| Stopband | **40 dB min / 50 dB typ, 19.5 – 32 GHz** | ≥ 35 dB at 21.0 and 31.5 GHz |
+| 30 dB rejection point | 15.41 GHz | above the passband |
+| Connectors | SMA female, both ports | the design's SMA interface |
+| Export | EAR99 | — |
+
+The stopband band covers **both** the 2nd harmonic (21.0 GHz) and the 3rd (31.5 GHz) with 40 dB
+minimum, so it clears the requirement with margin rather than by reading a plot.
+
+**One caveat to carry into procurement:** the part is listed **Non-RoHS**. If the build must be
+RoHS-compliant, that has to be resolved with the vendor or an alternative found; it does not affect
+the RF performance.
+
+Source: `markimicrowave.com/products/connectorized/filters/flp-1250/datasheet/`.
