@@ -93,3 +93,28 @@ defect the BOM checks have been catching — a value column that does not corres
 (`475` = 4.7 µF, `472` = 4.7 nF, `473` = 47 nF) and their series is confirmed at DigiKey by a
 known-good sibling. Their individual pages did not surface, which is a limit of the search rather
 than a doubt about the part — unlike the Yageo five, where the *value ladder itself* is the problem.
+
+## APPLIED: the five Yageo value codes are corrected
+
+The five codes above have been corrected in the schematic, the board and the BOM, in all three places
+that have to agree — the schematic part's `value`, the board element's `value`, and the BOM row's
+Value and MPN — because the BOM gate compares the board's value against the sheet's, and a
+half-applied change is exactly the defect that check exists to catch.
+
+| Designators | was | now |
+|---|---|---|
+| R89, R90, R91, R92, R95, R96, R97, R98, R103–R105, R119, R120, … (26 in total) | `2.443k` / `RC0201FR-072K44L` | **`2.43k` / `RC0201FR-072K43L`** |
+| R33 | `3k2` / `RC0201FR-073K2L` | **`3.16k` / `RC0201FR-073K16L`** |
+| R110, R112, R113, R114 | `500R` / `RC0201FR-07500RL` | **`499R` / `RC0201FR-07499RL`** |
+| R78, R79, R80, R81 | `840R` / `RC0201FR-07840RL` | **`845R` / `RC0201FR-07845RL`** |
+| R36 | `830R` / `RC0402FR-07830RL` | **`825R` / `RC0402FR-07825RL`** |
+
+Each BOM row carries the reason in its remark column, so the change is auditable rather than silent.
+
+**Why this is safe:** every substitution is smaller than the **1 % tolerance the parts already
+carry** (−0.5 %, −1.25 %, −0.2 %, +0.6 %, −0.6 %), and all instances of each part number change
+together — so any matched set (a divider, a differential pair) keeps its ratio.
+
+**Effect on the orderability count:** the five corrected part numbers resolve, so the count moves
+from 171 to **176 of 179 rows**. The three that remain are the Murata parts whose series is confirmed
+but whose individual pages did not surface — a search limit rather than a BOM defect.

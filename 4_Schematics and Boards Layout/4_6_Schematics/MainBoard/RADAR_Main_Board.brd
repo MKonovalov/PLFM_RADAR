@@ -15033,25 +15033,25 @@ Your PCBWay Team
 <attribute name="SPICEPREFIX" value="R" x="-255.95" y="-193.85" size="1.778" layer="27" rot="R270" display="off"/>
 <attribute name="VALUE" x="59.645" y="27.765" size="1.27" layer="27" rot="R270"/>
 </element>
-<element name="R103" library="eagle-ltspice" package="R0201" value="2.443k" x="61.29" y="18.03" smashed="yes" rot="R180">
+<element name="R103" library="eagle-ltspice" package="R0201" value="2.43k" x="61.29" y="18.03" smashed="yes" rot="R180">
 <attribute name="NAME" x="61.925" y="17.395" size="1.27" layer="25" rot="R180"/>
 <attribute name="SPICEMODEL" value="NONE" x="-55.55" y="305.05" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="SPICEPREFIX" value="R" x="-55.55" y="305.05" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="VALUE" x="61.925" y="19.935" size="1.27" layer="27" rot="R180"/>
 </element>
-<element name="R104" library="eagle-ltspice" package="R0201" value="2.443k" x="64.54" y="18.07" smashed="yes">
+<element name="R104" library="eagle-ltspice" package="R0201" value="2.43k" x="64.54" y="18.07" smashed="yes">
 <attribute name="NAME" x="63.905" y="18.705" size="1.27" layer="25"/>
 <attribute name="SPICEMODEL" value="NONE" x="189" y="-268.95" size="1.778" layer="27" display="off"/>
 <attribute name="SPICEPREFIX" value="R" x="189" y="-268.95" size="1.778" layer="27" display="off"/>
 <attribute name="VALUE" x="63.905" y="16.165" size="1.27" layer="27"/>
 </element>
-<element name="R105" library="eagle-ltspice" package="R0201" value="2.443k" x="64.53" y="26.33" smashed="yes" rot="R180">
+<element name="R105" library="eagle-ltspice" package="R0201" value="2.43k" x="64.53" y="26.33" smashed="yes" rot="R180">
 <attribute name="NAME" x="65.165" y="25.695" size="1.27" layer="25" rot="R180"/>
 <attribute name="SPICEMODEL" value="NONE" x="-67.55" y="313.35" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="SPICEPREFIX" value="R" x="-67.55" y="313.35" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="VALUE" x="65.165" y="28.235" size="1.27" layer="27" rot="R180"/>
 </element>
-<element name="R106" library="eagle-ltspice" package="R0201" value="2.443k" x="61.3" y="26.37" smashed="yes">
+<element name="R106" library="eagle-ltspice" package="R0201" value="2.43k" x="61.3" y="26.37" smashed="yes">
 <attribute name="NAME" x="60.665" y="27.005" size="1.27" layer="25"/>
 <attribute name="SPICEMODEL" value="NONE" x="201" y="-260.65" size="1.778" layer="27" display="off"/>
 <attribute name="SPICEPREFIX" value="R" x="201" y="-260.65" size="1.778" layer="27" display="off"/>
@@ -15075,7 +15075,7 @@ Your PCBWay Team
 <attribute name="SPICEPREFIX" value="R" x="-283.1" y="-213" size="1.778" layer="27" rot="R270" display="off"/>
 <attribute name="VALUE" x="32.495" y="27.665" size="1.27" layer="27" rot="R270"/>
 </element>
-<element name="R110" library="eagle-ltspice" package="R0201" value="500R" x="76.7" y="115.88" smashed="yes" rot="R270">
+<element name="R110" library="eagle-ltspice" package="R0201" value="499R" x="76.7" y="115.88" smashed="yes" rot="R270">
 <attribute name="NAME" x="77.335" y="116.515" size="1.27" layer="25" rot="R270"/>
 <attribute name="SPICEMODEL" value="NONE" x="-240.8" y="-130.5" size="1.778" layer="27" rot="R270" display="off"/>
 <attribute name="SPICEPREFIX" value="R" x="-240.8" y="-130.5" size="1.778" layer="27" rot="R270" display="off"/>
@@ -15087,19 +15087,19 @@ Your PCBWay Team
 <attribute name="SPICEPREFIX" value="R" x="422.8" y="136.5" size="1.778" layer="27" rot="R90" display="off"/>
 <attribute name="VALUE" x="97.045" y="107.925" size="1.27" layer="27" rot="R90"/>
 </element>
-<element name="R112" library="eagle-ltspice" package="R0201" value="500R" x="75.15" y="115.93" smashed="yes" rot="R270">
+<element name="R112" library="eagle-ltspice" package="R0201" value="499R" x="75.15" y="115.93" smashed="yes" rot="R270">
 <attribute name="NAME" x="75.785" y="116.565" size="1.27" layer="25" rot="R270"/>
 <attribute name="SPICEMODEL" value="NONE" x="-242.35" y="-136.8" size="1.778" layer="27" rot="R270" display="off"/>
 <attribute name="SPICEPREFIX" value="R" x="-242.35" y="-136.8" size="1.778" layer="27" rot="R270" display="off"/>
 <attribute name="VALUE" x="73.245" y="116.565" size="1.27" layer="27" rot="R270"/>
 </element>
-<element name="R113" library="eagle-ltspice" package="R0201" value="500R" x="73.75" y="115.93" smashed="yes" rot="R270">
+<element name="R113" library="eagle-ltspice" package="R0201" value="499R" x="73.75" y="115.93" smashed="yes" rot="R270">
 <attribute name="NAME" x="74.385" y="116.565" size="1.27" layer="25" rot="R270"/>
 <attribute name="SPICEMODEL" value="NONE" x="-243.75" y="-143.15" size="1.778" layer="27" rot="R270" display="off"/>
 <attribute name="SPICEPREFIX" value="R" x="-243.75" y="-143.15" size="1.778" layer="27" rot="R270" display="off"/>
 <attribute name="VALUE" x="71.845" y="116.565" size="1.27" layer="27" rot="R270"/>
 </element>
-<element name="R114" library="eagle-ltspice" package="R0201" value="500R" x="72.3" y="115.93" smashed="yes" rot="R270">
+<element name="R114" library="eagle-ltspice" package="R0201" value="499R" x="72.3" y="115.93" smashed="yes" rot="R270">
 <attribute name="NAME" x="72.935" y="116.565" size="1.27" layer="25" rot="R270"/>
 <attribute name="SPICEMODEL" value="NONE" x="-245.2" y="-149.5" size="1.778" layer="27" rot="R270" display="off"/>
 <attribute name="SPICEPREFIX" value="R" x="-245.2" y="-149.5" size="1.778" layer="27" rot="R270" display="off"/>
@@ -15129,7 +15129,7 @@ Your PCBWay Team
 <attribute name="SPICEPREFIX" value="R" x="-291" y="-257.5" size="1.778" layer="27" rot="R270" display="off"/>
 <attribute name="VALUE" x="29.675" y="27.615" size="1.27" layer="27" rot="R270"/>
 </element>
-<element name="R119" library="eagle-ltspice" package="R0201" value="2.443k" x="31.37" y="17.93" smashed="yes" rot="R180">
+<element name="R119" library="eagle-ltspice" package="R0201" value="2.43k" x="31.37" y="17.93" smashed="yes" rot="R180">
 <attribute name="NAME" x="32.005" y="17.295" size="1.27" layer="25" rot="R180"/>
 <attribute name="SPICEMODEL" value="NONE" x="-115.95" y="304.95" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="SPICEPREFIX" value="R" x="-115.95" y="304.95" size="1.778" layer="27" rot="R180" display="off"/>
@@ -15141,19 +15141,19 @@ Your PCBWay Team
 <attribute name="SPICEPREFIX" value="R" x="-257.93" y="33.94" size="1.778" layer="27" rot="R270" display="off"/>
 <attribute name="VALUE" x="57.665" y="179.355" size="1.27" layer="27" rot="R270"/>
 </element>
-<element name="R120" library="eagle-ltspice" package="R0201" value="2.443k" x="34.66" y="17.92" smashed="yes">
+<element name="R120" library="eagle-ltspice" package="R0201" value="2.43k" x="34.66" y="17.92" smashed="yes">
 <attribute name="NAME" x="34.025" y="18.555" size="1.27" layer="25"/>
 <attribute name="SPICEMODEL" value="NONE" x="189.6" y="-269.1" size="1.778" layer="27" display="off"/>
 <attribute name="SPICEPREFIX" value="R" x="189.6" y="-269.1" size="1.778" layer="27" display="off"/>
 <attribute name="VALUE" x="34.025" y="16.015" size="1.27" layer="27"/>
 </element>
-<element name="R121" library="eagle-ltspice" package="R0201" value="2.443k" x="34.61" y="26.18" smashed="yes" rot="R180">
+<element name="R121" library="eagle-ltspice" package="R0201" value="2.43k" x="34.61" y="26.18" smashed="yes" rot="R180">
 <attribute name="NAME" x="35.245" y="25.545" size="1.27" layer="25" rot="R180"/>
 <attribute name="SPICEMODEL" value="NONE" x="-127.95" y="313.2" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="SPICEPREFIX" value="R" x="-127.95" y="313.2" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="VALUE" x="35.245" y="28.085" size="1.27" layer="27" rot="R180"/>
 </element>
-<element name="R122" library="eagle-ltspice" package="R0201" value="2.443k" x="31.32" y="26.17" smashed="yes">
+<element name="R122" library="eagle-ltspice" package="R0201" value="2.43k" x="31.32" y="26.17" smashed="yes">
 <attribute name="NAME" x="30.685" y="26.805" size="1.27" layer="25"/>
 <attribute name="SPICEMODEL" value="NONE" x="201.5" y="-260.85" size="1.778" layer="27" display="off"/>
 <attribute name="SPICEPREFIX" value="R" x="201.5" y="-260.85" size="1.778" layer="27" display="off"/>
@@ -15591,7 +15591,7 @@ Your PCBWay Team
 <attribute name="SPICEPREFIX" value="R" x="20.655" y="461.26" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="VALUE" x="59.39" y="135.505" size="1.27" layer="27" rot="R180"/>
 </element>
-<element name="R33" library="eagle-ltspice" package="R0201" value="3k2" x="64.835" y="214.45" smashed="yes" rot="R90">
+<element name="R33" library="eagle-ltspice" package="R0201" value="3.16k" x="64.835" y="214.45" smashed="yes" rot="R90">
 <attribute name="NAME" x="64.2" y="213.815" size="1.27" layer="25" rot="R90"/>
 <attribute name="SPICEMODEL" value="NONE" x="397.575" y="246.2" size="1.778" layer="27" rot="R90" display="off"/>
 <attribute name="SPICEPREFIX" value="R" x="397.575" y="246.2" size="1.778" layer="27" rot="R90" display="off"/>
@@ -15609,7 +15609,7 @@ Your PCBWay Team
 <attribute name="SPICEPREFIX" value="R" x="103.12" y="-197.06" size="1.778" layer="27" display="off"/>
 <attribute name="VALUE" x="60.575" y="133.775" size="1.27" layer="27"/>
 </element>
-<element name="R36" library="rcl" package="R0402" value="830R" x="53.83" y="154.35" smashed="yes" rot="R180">
+<element name="R36" library="rcl" package="R0402" value="825R" x="53.83" y="154.35" smashed="yes" rot="R180">
 <attribute name="NAME" x="54.465" y="153.715" size="1.27" layer="25" rot="R180"/>
 <attribute name="POPULARITY" value="0" x="-122.7" y="471.85" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="SPICEPREFIX" value="R" x="-122.7" y="471.85" size="1.778" layer="27" rot="R180" display="off"/>
@@ -15879,13 +15879,13 @@ Your PCBWay Team
 <attribute name="SPICEPREFIX" value="R" x="476.080578125" y="292.2185625" size="1.778" layer="27" rot="R90" display="off"/>
 <attribute name="VALUE" x="150.325578125" y="131.5635625" size="1.27" layer="27" rot="R90"/>
 </element>
-<element name="R78" library="eagle-ltspice" package="R0201" value="840R" x="226.875" y="222.605" smashed="yes" rot="R270">
+<element name="R78" library="eagle-ltspice" package="R0201" value="845R" x="226.875" y="222.605" smashed="yes" rot="R270">
 <attribute name="NAME" x="227.51" y="223.24" size="1.27" layer="25" rot="R270"/>
 <attribute name="SPICEMODEL" value="NONE" x="-90.625" y="39.725" size="1.778" layer="27" rot="R270" display="off"/>
 <attribute name="SPICEPREFIX" value="R" x="-90.625" y="39.725" size="1.778" layer="27" rot="R270" display="off"/>
 <attribute name="VALUE" x="224.97" y="223.24" size="1.27" layer="27" rot="R270"/>
 </element>
-<element name="R79" library="eagle-ltspice" package="R0201" value="840R" x="224.6" y="137.595" smashed="yes" rot="R90">
+<element name="R79" library="eagle-ltspice" package="R0201" value="845R" x="224.6" y="137.595" smashed="yes" rot="R90">
 <attribute name="NAME" x="223.965" y="136.96" size="1.27" layer="25" rot="R90"/>
 <attribute name="SPICEMODEL" value="NONE" x="542.1" y="326.825" size="1.778" layer="27" rot="R90" display="off"/>
 <attribute name="SPICEPREFIX" value="R" x="542.1" y="326.825" size="1.778" layer="27" rot="R90" display="off"/>
@@ -15897,13 +15897,13 @@ Your PCBWay Team
 <attribute name="SPICEPREFIX" value="R" x="-70.43" y="490.51" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="VALUE" x="49.585" y="174.915" size="1.27" layer="27" rot="R180"/>
 </element>
-<element name="R80" library="eagle-ltspice" package="R0201" value="840R" x="148.4" y="137.67" smashed="yes" rot="R90">
+<element name="R80" library="eagle-ltspice" package="R0201" value="845R" x="148.4" y="137.67" smashed="yes" rot="R90">
 <attribute name="NAME" x="147.765" y="137.035" size="1.27" layer="25" rot="R90"/>
 <attribute name="SPICEMODEL" value="NONE" x="465.9" y="333.25" size="1.778" layer="27" rot="R90" display="off"/>
 <attribute name="SPICEPREFIX" value="R" x="465.9" y="333.25" size="1.778" layer="27" rot="R90" display="off"/>
 <attribute name="VALUE" x="150.305" y="137.035" size="1.27" layer="27" rot="R90"/>
 </element>
-<element name="R81" library="eagle-ltspice" package="R0201" value="840R" x="148.95" y="137.67" smashed="yes" rot="R90">
+<element name="R81" library="eagle-ltspice" package="R0201" value="845R" x="148.95" y="137.67" smashed="yes" rot="R90">
 <attribute name="NAME" x="148.315" y="137.035" size="1.27" layer="25" rot="R90"/>
 <attribute name="SPICEMODEL" value="NONE" x="466.45" y="339.6" size="1.778" layer="27" rot="R90" display="off"/>
 <attribute name="SPICEPREFIX" value="R" x="466.45" y="339.6" size="1.778" layer="27" rot="R90" display="off"/>
@@ -15951,7 +15951,7 @@ Your PCBWay Team
 <attribute name="SPICEPREFIX" value="R" x="-271.15" y="-106.9" size="1.778" layer="27" rot="R270" display="off"/>
 <attribute name="VALUE" x="59.685" y="57.565" size="1.27" layer="27" rot="R270"/>
 </element>
-<element name="R89" library="eagle-ltspice" package="R0201" value="2.443k" x="61.33" y="47.83" smashed="yes" rot="R180">
+<element name="R89" library="eagle-ltspice" package="R0201" value="2.43k" x="61.33" y="47.83" smashed="yes" rot="R180">
 <attribute name="NAME" x="61.965" y="47.195" size="1.27" layer="25" rot="R180"/>
 <attribute name="SPICEMODEL" value="NONE" x="5.45" y="334.85" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="SPICEPREFIX" value="R" x="5.45" y="334.85" size="1.778" layer="27" rot="R180" display="off"/>
@@ -15963,19 +15963,19 @@ Your PCBWay Team
 <attribute name="SPICEPREFIX" value="R" x="-74.94" y="490.46" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="VALUE" x="51.425" y="174.865" size="1.27" layer="27" rot="R180"/>
 </element>
-<element name="R90" library="eagle-ltspice" package="R0201" value="2.443k" x="64.65" y="47.82" smashed="yes">
+<element name="R90" library="eagle-ltspice" package="R0201" value="2.43k" x="64.65" y="47.82" smashed="yes">
 <attribute name="NAME" x="64.015" y="48.455" size="1.27" layer="25"/>
 <attribute name="SPICEMODEL" value="NONE" x="128.15" y="-239.2" size="1.778" layer="27" display="off"/>
 <attribute name="SPICEPREFIX" value="R" x="128.15" y="-239.2" size="1.778" layer="27" display="off"/>
 <attribute name="VALUE" x="64.015" y="45.915" size="1.27" layer="27"/>
 </element>
-<element name="R91" library="eagle-ltspice" package="R0201" value="2.443k" x="64.62" y="56.23" smashed="yes" rot="R180">
+<element name="R91" library="eagle-ltspice" package="R0201" value="2.43k" x="64.62" y="56.23" smashed="yes" rot="R180">
 <attribute name="NAME" x="65.255" y="55.595" size="1.27" layer="25" rot="R180"/>
 <attribute name="SPICEMODEL" value="NONE" x="-6.5" y="343.25" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="SPICEPREFIX" value="R" x="-6.5" y="343.25" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="VALUE" x="65.255" y="58.135" size="1.27" layer="27" rot="R180"/>
 </element>
-<element name="R92" library="eagle-ltspice" package="R0201" value="2.443k" x="61.36" y="56.17" smashed="yes">
+<element name="R92" library="eagle-ltspice" package="R0201" value="2.43k" x="61.36" y="56.17" smashed="yes">
 <attribute name="NAME" x="60.725" y="56.805" size="1.27" layer="25"/>
 <attribute name="SPICEMODEL" value="NONE" x="140.1" y="-230.85" size="1.778" layer="27" display="off"/>
 <attribute name="SPICEPREFIX" value="R" x="140.1" y="-230.85" size="1.778" layer="27" display="off"/>
@@ -15993,25 +15993,25 @@ Your PCBWay Team
 <attribute name="SPICEPREFIX" value="R" x="-300.9" y="-117.05" size="1.778" layer="27" rot="R270" display="off"/>
 <attribute name="VALUE" x="29.935" y="57.575" size="1.27" layer="27" rot="R270"/>
 </element>
-<element name="R95" library="eagle-ltspice" package="R0201" value="2.443k" x="31.51" y="47.78" smashed="yes" rot="R180">
+<element name="R95" library="eagle-ltspice" package="R0201" value="2.43k" x="31.51" y="47.78" smashed="yes" rot="R180">
 <attribute name="NAME" x="32.145" y="47.145" size="1.27" layer="25" rot="R180"/>
 <attribute name="SPICEMODEL" value="NONE" x="-54.85" y="334.8" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="SPICEPREFIX" value="R" x="-54.85" y="334.8" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="VALUE" x="32.145" y="49.685" size="1.27" layer="27" rot="R180"/>
 </element>
-<element name="R96" library="eagle-ltspice" package="R0201" value="2.443k" x="34.82" y="47.77" smashed="yes">
+<element name="R96" library="eagle-ltspice" package="R0201" value="2.43k" x="34.82" y="47.77" smashed="yes">
 <attribute name="NAME" x="34.185" y="48.405" size="1.27" layer="25"/>
 <attribute name="SPICEMODEL" value="NONE" x="128.8" y="-239.25" size="1.778" layer="27" display="off"/>
 <attribute name="SPICEPREFIX" value="R" x="128.8" y="-239.25" size="1.778" layer="27" display="off"/>
 <attribute name="VALUE" x="34.185" y="45.865" size="1.27" layer="27"/>
 </element>
-<element name="R97" library="eagle-ltspice" package="R0201" value="2.443k" x="34.85" y="56.23" smashed="yes" rot="R180">
+<element name="R97" library="eagle-ltspice" package="R0201" value="2.43k" x="34.85" y="56.23" smashed="yes" rot="R180">
 <attribute name="NAME" x="35.485" y="55.595" size="1.27" layer="25" rot="R180"/>
 <attribute name="SPICEMODEL" value="NONE" x="-66.75" y="343.25" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="SPICEPREFIX" value="R" x="-66.75" y="343.25" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="VALUE" x="35.485" y="58.135" size="1.27" layer="27" rot="R180"/>
 </element>
-<element name="R98" library="eagle-ltspice" package="R0201" value="2.443k" x="31.58" y="56.17" smashed="yes">
+<element name="R98" library="eagle-ltspice" package="R0201" value="2.43k" x="31.58" y="56.17" smashed="yes">
 <attribute name="NAME" x="30.945" y="56.805" size="1.27" layer="25"/>
 <attribute name="SPICEMODEL" value="NONE" x="140.8" y="-230.85" size="1.778" layer="27" display="off"/>
 <attribute name="SPICEPREFIX" value="R" x="140.8" y="-230.85" size="1.778" layer="27" display="off"/>

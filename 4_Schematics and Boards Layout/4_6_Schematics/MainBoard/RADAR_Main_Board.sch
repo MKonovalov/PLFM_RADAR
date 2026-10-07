@@ -28043,10 +28043,10 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <part name="R76" library="eagle-ltspice" deviceset="R" device="R0201" value="4.7k"/>
 <part name="R77" library="eagle-ltspice" deviceset="R" device="R0201" value="4.7k"/>
 <part name="GND408" library="supply1" deviceset="GND" device=""/>
-<part name="R78" library="eagle-ltspice" deviceset="R" device="R0201" value="840R"/>
-<part name="R79" library="eagle-ltspice" deviceset="R" device="R0201" value="840R"/>
-<part name="R80" library="eagle-ltspice" deviceset="R" device="R0201" value="840R"/>
-<part name="R81" library="eagle-ltspice" deviceset="R" device="R0201" value="840R"/>
+<part name="R78" library="eagle-ltspice" deviceset="R" device="R0201" value="845R"/>
+<part name="R79" library="eagle-ltspice" deviceset="R" device="R0201" value="845R"/>
+<part name="R80" library="eagle-ltspice" deviceset="R" device="R0201" value="845R"/>
+<part name="R81" library="eagle-ltspice" deviceset="R" device="R0201" value="845R"/>
 <part name="ADTR1107_1" library="My_Library_RADAR" deviceset="ADTR1107ACCZ" device=""/>
 <part name="GND291" library="supply1" deviceset="GND" device=""/>
 <part name="GND351" library="supply1" deviceset="GND" device=""/>
@@ -28421,7 +28421,7 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <part name="R28" library="eagle-ltspice" deviceset="R" device="R0201" value="22R"/>
 <part name="R29" library="eagle-ltspice" deviceset="R" device="R0201" value="22R"/>
 <part name="R30" library="eagle-ltspice" deviceset="R" device="R0201" value="22R"/>
-<part name="R33" library="eagle-ltspice" deviceset="R" device="R0201" value="3k2"/>
+<part name="R33" library="eagle-ltspice" deviceset="R" device="R0201" value="3.16k"/>
 <part name="C37" library="eagle-ltspice" deviceset="C" device="C0201" value="0.1uF"/>
 <part name="GND50" library="supply1" deviceset="GND" device=""/>
 <part name="GND52" library="supply1" deviceset="GND" device=""/>
@@ -28577,7 +28577,7 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <part name="GND89" library="supply1" deviceset="GND" device=""/>
 <part name="GND90" library="supply1" deviceset="GND" device=""/>
 <part name="GND91" library="supply1" deviceset="GND" device=""/>
-<part name="R36" library="rcl" deviceset="R-EU_" device="R0402" value="830R"/>
+<part name="R36" library="rcl" deviceset="R-EU_" device="R0402" value="825R"/>
 <part name="R37" library="rcl" deviceset="R-EU_" device="R0402" value="1k"/>
 <part name="GND92" library="supply1" deviceset="GND" device=""/>
 <part name="R38" library="rcl" deviceset="R-EU_" device="R0402" value="20k"/>
@@ -29130,10 +29130,10 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <part name="GND696" library="supply1" deviceset="GND" device=""/>
 <part name="GND697" library="supply1" deviceset="GND" device=""/>
 <part name="GND698" library="supply1" deviceset="GND" device=""/>
-<part name="R89" library="eagle-ltspice" deviceset="R" device="R0201" value="2.443k"/>
-<part name="R90" library="eagle-ltspice" deviceset="R" device="R0201" value="2.443k"/>
-<part name="R91" library="eagle-ltspice" deviceset="R" device="R0201" value="2.443k"/>
-<part name="R92" library="eagle-ltspice" deviceset="R" device="R0201" value="2.443k"/>
+<part name="R89" library="eagle-ltspice" deviceset="R" device="R0201" value="2.43k"/>
+<part name="R90" library="eagle-ltspice" deviceset="R" device="R0201" value="2.43k"/>
+<part name="R91" library="eagle-ltspice" deviceset="R" device="R0201" value="2.43k"/>
+<part name="R92" library="eagle-ltspice" deviceset="R" device="R0201" value="2.43k"/>
 <part name="X_8" library="con-molex" deviceset="22-23-2021" device=""/>
 <part name="GND1" library="supply1" deviceset="GND" device=""/>
 <part name="X_16" library="con-molex" deviceset="22-23-2021" device=""/>
@@ -29151,10 +29151,10 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <part name="GND1000" library="supply1" deviceset="GND" device=""/>
 <part name="GND1001" library="supply1" deviceset="GND" device=""/>
 <part name="GND1002" library="supply1" deviceset="GND" device=""/>
-<part name="R95" library="eagle-ltspice" deviceset="R" device="R0201" value="2.443k"/>
-<part name="R96" library="eagle-ltspice" deviceset="R" device="R0201" value="2.443k"/>
-<part name="R97" library="eagle-ltspice" deviceset="R" device="R0201" value="2.443k"/>
-<part name="R98" library="eagle-ltspice" deviceset="R" device="R0201" value="2.443k"/>
+<part name="R95" library="eagle-ltspice" deviceset="R" device="R0201" value="2.43k"/>
+<part name="R96" library="eagle-ltspice" deviceset="R" device="R0201" value="2.43k"/>
+<part name="R97" library="eagle-ltspice" deviceset="R" device="R0201" value="2.43k"/>
+<part name="R98" library="eagle-ltspice" deviceset="R" device="R0201" value="2.43k"/>
 <part name="X_3" library="con-molex" deviceset="22-23-2021" device=""/>
 <part name="GND1003" library="supply1" deviceset="GND" device=""/>
 <part name="X_11" library="con-molex" deviceset="22-23-2021" device=""/>
@@ -29172,10 +29172,10 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <part name="GND1008" library="supply1" deviceset="GND" device=""/>
 <part name="GND1009" library="supply1" deviceset="GND" device=""/>
 <part name="GND1010" library="supply1" deviceset="GND" device=""/>
-<part name="R103" library="eagle-ltspice" deviceset="R" device="R0201" value="2.443k"/>
-<part name="R104" library="eagle-ltspice" deviceset="R" device="R0201" value="2.443k"/>
-<part name="R105" library="eagle-ltspice" deviceset="R" device="R0201" value="2.443k"/>
-<part name="R106" library="eagle-ltspice" deviceset="R" device="R0201" value="2.443k"/>
+<part name="R103" library="eagle-ltspice" deviceset="R" device="R0201" value="2.43k"/>
+<part name="R104" library="eagle-ltspice" deviceset="R" device="R0201" value="2.43k"/>
+<part name="R105" library="eagle-ltspice" deviceset="R" device="R0201" value="2.43k"/>
+<part name="R106" library="eagle-ltspice" deviceset="R" device="R0201" value="2.43k"/>
 <part name="X_6" library="con-molex" deviceset="22-23-2021" device=""/>
 <part name="GND1011" library="supply1" deviceset="GND" device=""/>
 <part name="X_14" library="con-molex" deviceset="22-23-2021" device=""/>
@@ -29193,10 +29193,10 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <part name="GND1016" library="supply1" deviceset="GND" device=""/>
 <part name="GND1017" library="supply1" deviceset="GND" device=""/>
 <part name="GND1018" library="supply1" deviceset="GND" device=""/>
-<part name="R119" library="eagle-ltspice" deviceset="R" device="R0201" value="2.443k"/>
-<part name="R120" library="eagle-ltspice" deviceset="R" device="R0201" value="2.443k"/>
-<part name="R121" library="eagle-ltspice" deviceset="R" device="R0201" value="2.443k"/>
-<part name="R122" library="eagle-ltspice" deviceset="R" device="R0201" value="2.443k"/>
+<part name="R119" library="eagle-ltspice" deviceset="R" device="R0201" value="2.43k"/>
+<part name="R120" library="eagle-ltspice" deviceset="R" device="R0201" value="2.43k"/>
+<part name="R121" library="eagle-ltspice" deviceset="R" device="R0201" value="2.43k"/>
+<part name="R122" library="eagle-ltspice" deviceset="R" device="R0201" value="2.43k"/>
 <part name="X_1" library="con-molex" deviceset="22-23-2021" device=""/>
 <part name="GND1019" library="supply1" deviceset="GND" device=""/>
 <part name="X_9" library="con-molex" deviceset="22-23-2021" device=""/>
@@ -29360,11 +29360,11 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <part name="R172" library="eagle-ltspice" deviceset="R" device="R0201" value="1k"/>
 <part name="X53" library="con-cypressindustries" deviceset="MINI-USB-" device="32005-201"/>
 <part name="GND1136" library="supply1" deviceset="GND" device=""/>
-<part name="R110" library="eagle-ltspice" deviceset="R" device="R0201" value="500R"/>
+<part name="R110" library="eagle-ltspice" deviceset="R" device="R0201" value="499R"/>
 <part name="D3" library="SparkFun-LED" deviceset="LED-BLUE" device="0603" value="Blue"/>
-<part name="R112" library="eagle-ltspice" deviceset="R" device="R0201" value="500R"/>
-<part name="R113" library="eagle-ltspice" deviceset="R" device="R0201" value="500R"/>
-<part name="R114" library="eagle-ltspice" deviceset="R" device="R0201" value="500R"/>
+<part name="R112" library="eagle-ltspice" deviceset="R" device="R0201" value="499R"/>
+<part name="R113" library="eagle-ltspice" deviceset="R" device="R0201" value="499R"/>
+<part name="R114" library="eagle-ltspice" deviceset="R" device="R0201" value="499R"/>
 <part name="D2" library="SparkFun-LED" deviceset="LED-BLUE" device="0603" value="Blue"/>
 <part name="D4" library="SparkFun-LED" deviceset="LED-BLUE" device="0603" value="Blue"/>
 <part name="D5" library="SparkFun-LED" deviceset="LED-BLUE" device="0603" value="Blue"/>
