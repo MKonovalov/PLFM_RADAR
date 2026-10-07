@@ -41,6 +41,10 @@
 #define AD9484_REG_OVR_CONFIG   0x2Au
 #define AD9484_REG_CHIP_GRADE   0x02u   /* read-only: speed grade and chip ID */
 #define AD9484_REG_OFFSET       0x10u   /* 8-bit device offset trim, in output codes */
+#define AD9484_REG_FLEX_VREF    0x18u   /* bits[7:6] VREF select, bits[4:0] input range */
+#define AD9484_REG_OUTPUT_ADJUST 0x15u  /* LVDS drive strength, if the eye needs adjusting */
+#define AD9484_REG_INPUT_COUPLING 0x2Cu /* default is ac coupling */
+#define AD9484_VREF_SELECT_INTERNAL 0x00u  /* bits[7:6]: internal reference, 20 k pull-down */
 #define AD9484_REG_DEVICE_UPDATE 0xFFu  /* writing bit 0 transfers the shift register */
 
 /** OUTPUT_MODE data-format field: the FPGA treats the capture as unsigned, i.e. offset binary. */
@@ -81,6 +85,23 @@ bool AD9484_SPI_Commit(const AD9484_SPI_IO_t *io);
 
 /** Device offset trim, in output codes (-128..+127).  Zero is the default. */
 bool AD9484_SPI_SetOffsetTrim(const AD9484_SPI_IO_t *io, int codes);
+
+/*
+ * Set the input voltage range - which is this part's gain trim.
+ *
+ * The AD9484 has no register named "gain".  Its full scale is set by the input voltage range in
+ * FLEX_VREF (0x18 bits[4:0]), and its zero by the offset trim above; those two are the pair the
+ * datasheet means when it lists "gain adjust" among the serial-port functions.  Gain error is
+ * +/-1.0% FS at 25 C, which is what trimming this removes.
+ *
+ * The range code is not a linear field: the map is a table in the datasheet, running from 1.20 V p-p
+ * at code 0b01011 up to 1.60 V at 0b11100, with 1.50 V - the design's value and the reset default -
+ * at 0b00000.  Pass the code, and use AD9484_SPI_InputRangeMillivolts() to read what it means.
+ */
+bool AD9484_SPI_SetInputRange(const AD9484_SPI_IO_t *io, uint8_t code);
+
+/* The documented range for a code, in millivolts peak-to-peak, or 0 if the code is undocumented. */
+int AD9484_SPI_InputRangeMillivolts(uint8_t code);
 
 /** Read the read-only CHIP_GRADE register: a real readback from a part that answers. */
 bool AD9484_SPI_ReadChipGrade(const AD9484_SPI_IO_t *io, uint8_t *grade);

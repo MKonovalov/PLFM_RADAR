@@ -148,6 +148,43 @@ bool AD9484_SPI_ReadRegister(const AD9484_SPI_IO_t *io, uint8_t addr, uint8_t *v
     return true;
 }
 
+/*
+ * The datasheet's input voltage range table (FLEX_VREF, 0x18 bits[4:0]).  It is a table and not a
+ * formula, and it is not monotonic in the code: 0b11100 is the widest range and 0b00000 the default.
+ *
+ * The datasheet prints the code 0b01011 twice - once as 1.20 V and once as 1.18 V.  That is an
+ * erratum.  The code is listed once here, at the higher value, and the lower entry is not guessed at.
+ */
+static const struct { uint8_t code; int mv; } AD9484_INPUT_RANGE[] = {
+    { 0x1Cu, 1600 }, { 0x1Du, 1580 }, { 0x1Eu, 1550 }, { 0x1Fu, 1520 },
+    { 0x00u, 1500 }, { 0x01u, 1470 }, { 0x02u, 1440 }, { 0x03u, 1420 },
+    { 0x04u, 1390 }, { 0x05u, 1360 }, { 0x06u, 1340 }, { 0x07u, 1310 },
+    { 0x08u, 1280 }, { 0x09u, 1260 }, { 0x0Au, 1230 }, { 0x0Bu, 1200 },
+};
+
+int AD9484_SPI_InputRangeMillivolts(uint8_t code)
+{
+    for (unsigned i = 0; i < sizeof(AD9484_INPUT_RANGE) / sizeof(AD9484_INPUT_RANGE[0]); i++) {
+        if (AD9484_INPUT_RANGE[i].code == (code & 0x1Fu)) {
+            return AD9484_INPUT_RANGE[i].mv;
+        }
+    }
+    return 0;   /* undocumented - do not write it */
+}
+
+bool AD9484_SPI_SetInputRange(const AD9484_SPI_IO_t *io, uint8_t code)
+{
+    if (!ready(io) || code > 0x1Fu) {
+        return false;
+    }
+    if (AD9484_SPI_InputRangeMillivolts(code) == 0) {
+        return false;   /* the datasheet documents no range for this code */
+    }
+    /* bits[7:6] stay at the internal reference; bits[4:0] are the range. */
+    return AD9484_SPI_WriteRegister(io, AD9484_REG_FLEX_VREF,
+                                    (uint8_t)(AD9484_VREF_SELECT_INTERNAL | code));
+}
+
 bool AD9484_SPI_SetTestPattern(const AD9484_SPI_IO_t *io, bool on, uint16_t pattern)
 {
     if (!ready(io)) {

@@ -76,3 +76,31 @@ than a single nominal.
   repo without redrawing it; any change to the array is a new design, not an edit.
 * `9_Firmware/9_2_FPGA` targets **XC7A100T** while the BOM lists the XC7A50T — the fab/assembly
   must be told which part is stuffed (the 50T cannot hold the integrated firmware).
+
+## 5. Thermal path for the PA board (issue #5)
+
+The requirement, from the array's own numbers: 16 devices dissipating 592 W into a 40 °C ambient with
+an 85 °C case ceiling is **1.22 °C/W per device** case-to-ambient, or **0.076 °C/W for the array**.
+
+**What the board provides:** 128 vias at 0.15 mm drill, of which ~104 sit in the densest cluster. A
+0.15 mm plated via through 1.6 mm FR-4 is commonly taken at 80–120 °C/W, so the field is worth
+**0.77–1.15 °C/W per device** — which **meets the requirement with no margin**.
+
+So the board path is adequate and nothing about it needs changing. What it does *not* do is leave room
+for the thermal interface and the heatsink, and that is what the issue's mechanical items are for.
+They belong in the PO, not in the layout:
+
+- **A pedestal to the chassis** under each PA board, so the heat leaves through metal rather than
+  through the board alone. This is the cheapest way to buy back the margin.
+- **A copper coin under the device paddle** if the pedestal route is not taken, or if the acceptance
+  soak shows the margin has gone. It is a fab option on the PA stackup (Rogers RO4350B, per #24) and
+  must be in the PO — it cannot be added after the boards are made.
+
+**How this is verified:** the acceptance soak at 10 % duty with a baseplate thermistor. The eight
+thermistor channels and the firmware's 75 °C limit are already in place — see
+`docs/temperature-channels.md` and `docs/bring-up-acceptance.md`.
+
+**On the estimate above:** the per-via figure is a common rule of thumb for a 0.15 mm plated via, not
+a measurement, and the count is from the board file rather than a thermal simulation. It is stated
+with its basis for that reason — **the acceptance soak is what settles it**, and the note exists so
+the soak has something to be compared against.

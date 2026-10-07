@@ -356,6 +356,17 @@ static void AD9484_BringUp(void)
         } else {
             DIAG_ERR("ADC", "could not set the sample format - the FPGA assumes offset binary");
         }
+        /* The input voltage range is this part's gain trim: full scale is set by FLEX_VREF bits[4:0],
+         * not by any register named "gain".  The analog chain delivers 1.5 V p-p differential, which
+         * is the reset default - but set it rather than trust it, for the same reason the data format
+         * is set rather than left to the SJ1 strap.  The offset trim (0x10) is the other half of the
+         * pair and is a calibration, so it is left for the bench to write. */
+        if (AD9484_SPI_SetInputRange(&g_adc_spi_io, 0x00)) {
+            DIAG("ADC", "input range = %d mV p-p (the design's full scale, set explicitly)",
+                 AD9484_SPI_InputRangeMillivolts(0x00));
+        } else {
+            DIAG_ERR("ADC", "could not set the input voltage range");
+        }
     }
 }
 

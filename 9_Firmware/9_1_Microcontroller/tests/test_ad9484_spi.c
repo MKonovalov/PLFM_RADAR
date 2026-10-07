@@ -145,6 +145,45 @@ int main(void)
     check(!AD9484_SPI_SelfTest(&io, NULL, NULL), "self-test refuses NULL outputs");
     AD9484_SPI_IO_t incomplete = { spy_csb, NULL, spy_sdio_out, NULL, NULL, NULL };
     check(!AD9484_SPI_Init(&incomplete), "missing SCLK refused");
+    printf("=== the input voltage range: this part's gain trim ===\n");
+    {
+        /* the datasheet's table, code -> mV peak-to-peak */
+        static const struct { uint8_t code; int mv; } tab[] = {
+            {0x1C,1600},{0x1D,1580},{0x1E,1550},{0x1F,1520},
+            {0x00,1500},{0x01,1470},{0x02,1440},{0x03,1420},
+            {0x04,1390},{0x05,1360},{0x06,1340},{0x07,1310},
+            {0x08,1280},{0x09,1260},{0x0A,1230},{0x0B,1200},
+        };
+        int good = 0;
+        for (unsigned i = 0; i < sizeof tab / sizeof tab[0]; i++) {
+            good += AD9484_SPI_InputRangeMillivolts(tab[i].code) == tab[i].mv;
+        }
+        check(good == (int)(sizeof tab / sizeof tab[0]),
+              "every documented code maps to its datasheet value");
+
+        check(AD9484_SPI_InputRangeMillivolts(0x10) == 0, "an undocumented code maps to 0");
+        check(AD9484_SPI_InputRangeMillivolts((uint8_t)(0x1C | 0x20)) == 1600,
+              "the range field is masked to its 5 bits");
+
+        reset_spy();
+        check(AD9484_SPI_SetInputRange(&io, 0x0B), "set the 1.20 V range");
+        bits[nbits] = '\0';
+        check(strncmp(bits + 3, "0000000011000", 13) == 0, "address 0x18 in A12..A0");
+        check(strncmp(bits + 16, "00001011", 8) == 0, "the range code in D7..D0");
+        check(AD9484_SPI_InputRangeMillivolts(0x0B) == 1200, "...which reads back as 1200 mV");
+
+        check(!AD9484_SPI_SetInputRange(&io, 0x20), "a code above 0x1F is refused");
+        check(!AD9484_SPI_SetInputRange(&io, 0x10), "an undocumented code is refused");
+
+        /* set the design's range explicitly rather than trusting the reset default */
+        reset_spy();
+        check(AD9484_SPI_SetInputRange(&io, 0x00), "set the design's 1.50 V range explicitly");
+        bits[nbits] = '\0';
+        check(strncmp(bits + 16, "00000000", 8) == 0,
+              "0x18 reads 0x00 - internal reference, 1.50 V");
+    }
+
+
 
     printf("\n%d checks, %d failures\n", checks, failures);
     return failures ? 1 : 0;
