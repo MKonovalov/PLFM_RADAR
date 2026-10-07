@@ -37,12 +37,12 @@ SIGNALS = [
      "0 / 3.3 V", "common control for 16 RF switch VCTRL pins"),
     ("VG_1 ... VG_16", "Main board", "OPA4703 outputs, through the harness",
      "-4.99 V at reset (DAC code 158)",
-     "from PA_GATE_BIAS.h: the QPA1010's documented off bias. The op-amp's -5 V rail is the"
-     " floor, so this is as negative as the gates can go"),
+     ("from PA_GATE_BIAS.h: the QPA1010's documented off bias. The op-amp's -5 V rail is the"
+      " floor, so this is as negative as the gates can go")),
     ("VG", "Power amplifier", "X2 pin S (harness from the gate-bias op-amp)",
      "-4.99 V at reset (DAC code 158)",
-     "same value at the far end of the harness; a difference here is harness drop."
-     " The op-amp's negative rail is -5 V"),
+     ("same value at the far end of the harness; a difference here is harness drop."
+      " The op-amp's negative rail is -5 V")),
     ("VD", "Power amplifier", "X3 pin S / the 24 V terminal",
      "+24 V", "drain rail, per PA board (QPA1010)"),
     ("N$2 / N$8", "Power amplifier", "U$1.RFIN (J1) / U$1.RFOUT (J2)",
