@@ -147,6 +147,9 @@ class StatusResponse:
     agc_peak_magnitude: int = 0  # 8-bit peak magnitude [7:0]
     agc_saturation_count: int = 0  # 8-bit saturation count [7:0]
     agc_enable: int = 0          # 1-bit AGC enable readback
+    # Dropped-strobe monitor (word 5, issue #13)
+    strobe_reject_count: int = 0  # 8-bit rejections in the last complete frame [23:16]
+    strobe_reject_seen: int = 0   # 1-bit sticky "a strobe was ever dropped" [5]
 
 
 # ============================================================================
@@ -254,10 +257,14 @@ class RadarProtocol:
         sr.agc_saturation_count = (words[4] >> 12) & 0xFF
         sr.agc_peak_magnitude = (words[4] >> 20) & 0xFF
         sr.agc_current_gain = (words[4] >> 28) & 0x0F
-        # Word 5: {7'd0, self_test_busy, 8'd0, self_test_detail[7:0],
-        #           3'd0, self_test_flags[4:0]}
+        # Word 5: {7'd0, self_test_busy, strobe_reject_count[7:0],
+        #           self_test_detail[7:0], 2'd0, strobe_reject_seen, self_test_flags[4:0]}
+        # The reject count and the sticky bit occupy bits that were reserved-zero; the fields were
+        # added to the RTL, but the parser still read them as padding - so the host never saw them.
         sr.self_test_flags = words[5] & 0x1F
+        sr.strobe_reject_seen = (words[5] >> 5) & 0x01
         sr.self_test_detail = (words[5] >> 8) & 0xFF
+        sr.strobe_reject_count = (words[5] >> 16) & 0xFF
         sr.self_test_busy = (words[5] >> 24) & 0x01
         return sr
 

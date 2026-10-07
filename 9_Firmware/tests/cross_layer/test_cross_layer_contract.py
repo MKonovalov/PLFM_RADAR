@@ -1068,6 +1068,11 @@ class TestTier2VerilogCosim:
         sr = RadarProtocol.parse_status_packet(raw)
         assert sr is not None, "parse_status_packet returned None"
 
+        # The dropped-strobe fields (issue #13).  These were written by the RTL but never decoded
+        # here, so "the host can see the rejection" was not actually true.
+        assert sr.strobe_reject_count == 0x07, f"reject count: got {sr.strobe_reject_count:#x}"
+        assert sr.strobe_reject_seen == 1, f"reject seen: got {sr.strobe_reject_seen}"
+
         # Injected values (from TB):
         #   status_cfar_threshold = 0xABCD
         #   status_stream_ctrl = 3'b101 = 5

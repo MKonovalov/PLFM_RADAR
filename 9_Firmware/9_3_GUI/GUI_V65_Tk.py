@@ -131,7 +131,7 @@ class DemoSimulator:
     """
 
     def __init__(self, frame_queue: queue.Queue, ui_queue: queue.Queue,
-                 root: tk.Tk, interval_ms: int = 500):
+                 root: "tk.Tk", interval_ms: int = 500):
         self._frame_queue = frame_queue
         self._ui_queue = ui_queue
         self._root = root
@@ -389,7 +389,7 @@ class RadarDashboard:
     SAMPLE_RATE = 100e6      # Hz — DDC output I/Q rate (matched filter input)
     C = 3e8                  # m/s — speed of light
 
-    def __init__(self, root: tk.Tk, mock: bool,
+    def __init__(self, root: "tk.Tk", mock: bool,
                  recorder: DataRecorder, device_index: int = 0):
         self.root = root
         self._mock = mock
@@ -836,7 +836,7 @@ class RadarDashboard:
                    command=lambda: self._send_validated(
                        opcode, var, bits=bits)).pack(side="right")
 
-    def _send_validated(self, opcode: int, var: tk.StringVar, bits: int):
+    def _send_validated(self, opcode: int, var: "tk.StringVar", bits: int):
         """Parse, clamp to bit-width, send command, and update the entry."""
         try:
             raw = int(var.get())

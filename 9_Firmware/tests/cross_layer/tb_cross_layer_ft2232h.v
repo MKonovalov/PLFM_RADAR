@@ -86,6 +86,8 @@ module tb_cross_layer_ft2232h;
     reg  [4:0]  status_self_test_flags;
     reg  [7:0]  status_self_test_detail;
     reg         status_self_test_busy;
+    reg  [7:0]  status_strobe_reject_count;
+    reg         status_strobe_reject_seen;
     reg  [3:0]  status_agc_current_gain;
     reg  [7:0]  status_agc_peak_magnitude;
     reg  [7:0]  status_agc_saturation_count;
@@ -135,6 +137,8 @@ module tb_cross_layer_ft2232h;
         .status_self_test_flags (status_self_test_flags),
         .status_self_test_detail(status_self_test_detail),
         .status_self_test_busy  (status_self_test_busy),
+        .status_strobe_reject_count(status_strobe_reject_count),
+        .status_strobe_reject_seen (status_strobe_reject_seen),
         .status_agc_current_gain    (status_agc_current_gain),
         .status_agc_peak_magnitude  (status_agc_peak_magnitude),
         .status_agc_saturation_count(status_agc_saturation_count),
@@ -650,6 +654,8 @@ module tb_cross_layer_ft2232h;
         status_self_test_flags  = 5'b10101;
         status_self_test_detail = 8'hA5;
         status_self_test_busy   = 1'b1;
+        status_strobe_reject_count = 8'h07;
+        status_strobe_reject_seen  = 1'b1;
         status_agc_current_gain     = 4'd7;
         status_agc_peak_magnitude   = 8'd200;
         status_agc_saturation_count = 8'd15;
