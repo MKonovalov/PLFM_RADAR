@@ -30828,7 +30828,7 @@ FERRITE BEAD 600 OHM 2220 (5650) 1LN</text>
 <wire x1="276.98" y1="264.58" x2="259.2" y2="264.58" width="0.1524" layer="91"/>
 </segment>
 </net>
-<net name="N$62" class="0">
+<net name="AD9523_OUT6_DRV" class="0">
 <segment>
 <pinref part="IC1" gate="G$1" pin="OUT6"/>
 <pinref part="R39" gate="G$1" pin="1"/>
@@ -30836,7 +30836,7 @@ FERRITE BEAD 600 OHM 2220 (5650) 1LN</text>
 <wire x1="327.78" y1="195.7" x2="329.78" y2="195.7" width="0.1524" layer="91"/>
 </segment>
 </net>
-<net name="N$63" class="0">
+<net name="AD9523_OUT6_SER" class="0">
 <segment>
 <pinref part="R39" gate="G$1" pin="2"/>
 <pinref part="C15" gate="G$1" pin="1"/>
@@ -30852,7 +30852,7 @@ FERRITE BEAD 600 OHM 2220 (5650) 1LN</text>
 <wire x1="421.76" y1="210.82" x2="419.1" y2="210.82" width="0.1524" layer="91"/>
 </segment>
 </net>
-<net name="N$65" class="0">
+<net name="AD9523_OUT10_SER" class="0">
 <segment>
 <pinref part="C17" gate="G$1" pin="1"/>
 <pinref part="R40" gate="G$1" pin="2"/>
@@ -30868,7 +30868,7 @@ FERRITE BEAD 600 OHM 2220 (5650) 1LN</text>
 <wire x1="419.1" y1="193.46" x2="419.1" y2="193.04" width="0.1524" layer="91"/>
 </segment>
 </net>
-<net name="N$68" class="0">
+<net name="AD9523_OUT11_SER" class="0">
 <segment>
 <pinref part="C19" gate="G$1" pin="1"/>
 <pinref part="R41" gate="G$1" pin="2"/>

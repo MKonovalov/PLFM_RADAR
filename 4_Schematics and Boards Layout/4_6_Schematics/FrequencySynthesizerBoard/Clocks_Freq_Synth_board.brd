@@ -7207,13 +7207,13 @@ Your PCBWay Team
 <wire x1="16.68" y1="67.92" x2="11.68" y2="67.92" width="0.22" layer="1"/>
 <wire x1="11.68" y1="67.92" x2="11.67" y2="67.91" width="0.22" layer="1" curve="90"/>
 </signal>
-<signal name="N$62">
+<signal name="AD9523_OUT6_DRV">
 <contactref element="IC1" pad="47"/>
 <contactref element="R39" pad="1"/>
 <wire x1="60.6022" y1="41.432" x2="62.913" y2="41.432" width="0.22" layer="1"/>
 <wire x1="62.913" y1="41.432" x2="62.965" y2="41.38" width="0.22" layer="1" curve="-90"/>
 </signal>
-<signal name="N$63">
+<signal name="AD9523_OUT6_SER">
 <contactref element="R39" pad="2"/>
 <contactref element="C15" pad="1"/>
 <wire x1="63.475" y1="41.38" x2="65.37" y2="41.38" width="0.204" layer="1"/>
@@ -7228,7 +7228,7 @@ Your PCBWay Team
 <wire x1="64.58" y1="23.62" x2="64.58" y2="18.2" width="0.204" layer="1"/>
 <wire x1="64.58" y1="18.2" x2="64.56" y2="17.8381" width="0.204" layer="1" curve="-90"/>
 </signal>
-<signal name="N$65">
+<signal name="AD9523_OUT10_SER">
 <contactref element="C17" pad="1"/>
 <contactref element="R40" pad="2"/>
 <wire x1="59.45" y1="33.215" x2="59.45" y2="31.01" width="0.204" layer="1"/>
@@ -7243,7 +7243,7 @@ Your PCBWay Team
 <wire x1="52.86" y1="23.62" x2="52.79" y2="23.72" width="0.204" layer="1"/>
 <wire x1="52.79" y1="23.72" x2="52.79" y2="18.27" width="0.204" layer="1"/>
 </signal>
-<signal name="N$68">
+<signal name="AD9523_OUT11_SER">
 <contactref element="C19" pad="1"/>
 <contactref element="R41" pad="2"/>
 <wire x1="57.97" y1="33.215" x2="57.97" y2="31.04" width="0.204" layer="1"/>
