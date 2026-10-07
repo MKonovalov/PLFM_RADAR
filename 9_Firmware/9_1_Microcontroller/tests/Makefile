@@ -86,7 +86,7 @@ TESTS_STANDALONE := test_fpga_config \
 TESTS_WITH_PLATFORM := test_bug11_platform_spi_transmit_only
 
 # C++ tests (AGC outer loop + PA current-sense chain)
-TESTS_WITH_CXX := test_agc_outer_loop test_pa_sense test_agc_pulse_counter
+TESTS_WITH_CXX := test_agc_outer_loop test_pa_sense test_pa_sense_migration test_agc_pulse_counter
 
 # GPS driver tests (need mocks + GPS source + -lm)
 TESTS_GPS := test_um982_gps

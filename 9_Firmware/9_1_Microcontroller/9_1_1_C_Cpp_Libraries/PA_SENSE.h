@@ -29,9 +29,45 @@
 #define ADS7830_CODE_MAX 255.0f
 
 // ---- Targets --------------------------------------------------------------
+/*
+ * ---- The PA choice (issue #21): the constants the migration needs -------------------------------
+ *
+ * This chain is deliberately written as constants so the device change is an edit here and nowhere
+ * else.  For the QPA1010 (24 V, IDQ = 600 mA, per its datasheet):
+ *
+ *     PA_IDQ_TARGET_A  0.6f      was 1.680f for the QPA2962
+ *     PA_IDQ_OC_TRIP_A 0.9f      was 2.5f
+ *
+ * The trip is the one that matters.  It is NOT enough to move the target: at the new 600 mA bias
+ * point a 2.5 A trip sits at 4.2x the operating current, so the part could run at four times its
+ * rated bias before anything fired - the protection would be effectively absent.  Scaling the trip
+ * to keep the present ratio (2.5 / 1.680 = 1.49x) gives 0.9 A.
+ *
+ * Both values keep every static_assert below true, so the migration is a constants edit and not a
+ * redesign of the sense chain:
+ *
+ *     full scale 5.0 A  >  0.9 x 1.5 = 1.35 A          (with margin)
+ *     target      0.6 A <  full scale 5.0 A
+ *     trip        0.9 A <  0.6 x 1.7 = 1.02 A
+ *
+ * Resolution at the new point: 19.6 mA per LSB, so 600 mA reads about code 31 and 0.9 A about code
+ * 46 - coarse but ample for a trip.  The un-biased threshold (PA_IDQ_BIAS_FAULT_A, 0.1 A) stays
+ * usable: it becomes 17 % of the operating point rather than 6 %, which is tighter but still below
+ * a healthy bias.
+ *
+ * NOT APPLIED: the PA part has not been chosen.  These are recorded so that when it is, the change
+ * is a two-line edit at the call site with the arithmetic already checked.
+ */
+
+#ifndef PA_IDQ_TARGET_A
 #define PA_IDQ_TARGET_A 1.680f     // QPA2962 datasheet bias point
+#endif
+#ifndef PA_IDQ_OC_TRIP_A
 #define PA_IDQ_OC_TRIP_A 2.5f      // over-current threshold used by the health check
+#endif
+#ifndef PA_IDQ_BIAS_FAULT_A
 #define PA_IDQ_BIAS_FAULT_A 0.1f   // below this the channel is considered un-biased
+#endif
 
 // ---- Derived quantities ---------------------------------------------------
 constexpr float PA_SENSE_VOLTS_PER_AMP = PA_SHUNT_OHMS * PA_INA_GAIN;
