@@ -30,6 +30,7 @@ test_strobe_ack
 test_adar_power_order
 test_rail_fault
 test_pa_bias_sequence
+test_pa_bias_cal
 test_pa_gate_bias
 test_bug12_pa_cal_loop_inverted
 test_bug13_dac2_adc_buffer_mismatch

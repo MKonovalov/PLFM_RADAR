@@ -24,6 +24,7 @@
 #include "ADAR1000_Manager.h"
 #include "ADAR1000_AGC.h"
 #include "PA_SENSE.h"
+#include "PA_BIAS_CAL.h"
 #include "AgcPulseCounter.h"
 extern "C" {
 #include "ad9523.h"
@@ -313,6 +314,33 @@ static bool adc_spi_sdio_in(void) { return HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_13) 
  * not tie the port to a timer. */
 static void adc_spi_delay(void) { for (volatile int i = 0; i < 30; i++) { } }
 
+/* ---- IDQ calibration (PA_BIAS_CAL.h) ---------------------------------------
+ * The loop used to be written out twice here, with the QPA2962's numbers inline: a start code of
+ * 126, a step of 4, and a stopping window of an absolute 0.2 A.  Against the QPA1010's 0.600 A
+ * target that window is +/-33 %, and one 4-code step is about 190 mA of drain current - comparable
+ * to the whole window - so the old loop could step over its target and settle on the floor.  It now
+ * lives in PA_BIAS_CAL.{h,c}, driven by the device's own constants and a bisection, and is tested
+ * against a model device. */
+typedef struct {
+    DAC5578_HandleTypeDef *dac;
+    ADC_HandleTypeDef     *adc;
+    uint8_t                channel;
+} PaBiasCalCtx_t;
+
+static PaBiasCalCtx_t g_cal_ctx1, g_cal_ctx2;
+
+static bool PaBiasCal_WriteCode(void *ctx, uint8_t code)
+{
+    PaBiasCalCtx_t *c = (PaBiasCalCtx_t *)ctx;
+    return DAC5578_WriteAndUpdateChannelValue(c->dac, c->channel, code) != 0;
+}
+
+static float PaBiasCal_ReadIdq(void *ctx)
+{
+    PaBiasCalCtx_t *c = (PaBiasCalCtx_t *)ctx;
+    return paSenseCodeToAmps(ADS7830_Measure_SingleEnded(c->adc, c->channel));
+}
+
 static const AD9484_SPI_IO_t g_adc_spi_io = {
     adc_spi_csb, adc_spi_sclk, adc_spi_sdio_out, adc_spi_sdio_dir, adc_spi_sdio_in, adc_spi_delay
 };
@@ -388,7 +416,10 @@ float phase_dac1[8] = {0};
 float phase_dac2[8] = {0};
 const uint32_t sampleRate = 370;    // Sample rate in Hz
 const uint32_t period = 2700;       // Period in microseconds
-uint8_t DAC_val = 126;
+/* The gate-bias code.  Starts at the DEVICE'S off state rather than a bare mid-value: for the
+ * QPA1010 that is -5 V (PA_GATE_BIAS.h), which is what its Bias Up Procedure names before the
+ * drain appears.  The calibration then moves it to the operating point. */
+uint8_t DAC_val = PA_GATE_BIAS_CODE_BOOT;
 
 // ADC handles (RF Power Amplifier ADC measuring Idq)
 ADS7830_HandleTypeDef hadc1, hadc2;
@@ -2249,48 +2280,46 @@ int main(void)
 		  DIAG("PA", "  ADC2 ch%d: raw=%d Idq=%.3fA", channel, adc2_readings[channel], Idq_reading[channel+8]);
 	  }
 
-	  DIAG("PA", "Starting Idq calibration loop for DAC1 channels 0-7 (target=1.680A)");
+	  DIAG("PA", "Starting Idq calibration for DAC1 channels 0-7 (target=%.3fA)", (double)PA_IDQ_TARGET_A);
 	  for (uint8_t channel = 0; channel < 8; channel++){
-	      uint8_t safety_counter = 0;
-	      DAC_val = 126; // Reset for each channel
+	      PaBiasCalCtx_t c = { &hdac1, &hadc1, channel };
+	      const PaBiasCal_IO_t io = { PaBiasCal_WriteCode, PaBiasCal_ReadIdq, &c };
+	      const PaBiasCal_Result_t res = PaBiasCal_Run(&io, PA_IDQ_TARGET_A);
 
-	      do {
-	          if (safety_counter++ > 50) { // Prevent infinite loop
-	              DIAG_WARN("PA", "  DAC1 ch%d: safety limit reached (50 iterations), DAC_val=%d Idq=%.3fA",
-	                        channel, DAC_val, Idq_reading[channel]);
-	              break;
-	          }
-	          DAC_val = DAC_val - 4;
-	          DAC5578_WriteAndUpdateChannelValue(&hdac1, channel,
-	               PA_GATE_BIAS_ClampCode(DAC_val));   /* floor = rated gate edge */
-	          adc1_readings[channel] = ADS7830_Measure_SingleEnded(&hadc1, channel);
-	          Idq_reading[channel] = paSenseCodeToAmps(adc1_readings[channel]);
-	      } while (DAC_val > PA_GATE_BIAS_CODE_MIN &&
-	               abs(Idq_reading[channel] - (double)PA_IDQ_TARGET_A) > 0.2); // B12 fix: loop while FAR from target
-	      DIAG("PA", "  DAC1 ch%d calibrated: DAC_val=%d Idq=%.3fA iters=%d",
-	           channel, DAC_val, Idq_reading[channel], safety_counter);
+	      DAC_val = res.code;
+	      adc1_readings[channel] = ADS7830_Measure_SingleEnded(&hadc1, channel);
+	      Idq_reading[channel] = res.idq;
+
+	      DIAG("PA", "  DAC1 ch%d: %s code=%d Idq=%.3fA iters=%d",
+	           channel, PaBiasCal_StatusName(&res), res.code, (double)res.idq, res.iterations);
+	      if (res.at_floor) {
+	          DIAG_WARN("PA", "  DAC1 ch%d cannot reach %.3fA within the rated gate window "
+	                          "(the floor gives %.3fA) -- check the sense chain and the device",
+	                    channel, (double)PA_IDQ_TARGET_A, (double)res.idq);
+	      } else if (!res.io_ok) {
+	          DIAG_ERR("PA", "  DAC1 ch%d calibration could not talk to the DAC or ADC", channel);
+	      }
 	  }
 
-	  DIAG("PA", "Starting Idq calibration loop for DAC2 channels 0-7 (target=1.680A)");
+	  DIAG("PA", "Starting Idq calibration for DAC2 channels 0-7 (target=%.3fA)", (double)PA_IDQ_TARGET_A);
 	  for (uint8_t channel = 0; channel < 8; channel++){
-	      uint8_t safety_counter = 0;
-	      DAC_val = 126; // Reset for each channel
+	      PaBiasCalCtx_t c = { &hdac2, &hadc2, channel };
+	      const PaBiasCal_IO_t io = { PaBiasCal_WriteCode, PaBiasCal_ReadIdq, &c };
+	      const PaBiasCal_Result_t res = PaBiasCal_Run(&io, PA_IDQ_TARGET_A);
 
-	      do {
-	          if (safety_counter++ > 50) { // Prevent infinite loop
-	              DIAG_WARN("PA", "  DAC2 ch%d: safety limit reached (50 iterations), DAC_val=%d Idq=%.3fA",
-	                        channel, DAC_val, Idq_reading[channel+8]);
-	              break;
-	          }
-	          DAC_val = DAC_val - 4;
-	          DAC5578_WriteAndUpdateChannelValue(&hdac2, channel,
-	               PA_GATE_BIAS_ClampCode(DAC_val));   /* floor = rated gate edge */
-	          adc2_readings[channel] = ADS7830_Measure_SingleEnded(&hadc2, channel); // B13 fix: was adc1_readings
-	          Idq_reading[channel+8] = paSenseCodeToAmps(adc2_readings[channel]);
-	      } while (DAC_val > PA_GATE_BIAS_CODE_MIN &&
-	               abs(Idq_reading[channel+8] - (double)PA_IDQ_TARGET_A) > 0.2); // B12 fix: loop while FAR from target
-	      DIAG("PA", "  DAC2 ch%d calibrated: DAC_val=%d Idq=%.3fA iters=%d",
-	           channel, DAC_val, Idq_reading[channel+8], safety_counter);
+	      DAC_val = res.code;
+	      adc2_readings[channel] = ADS7830_Measure_SingleEnded(&hadc2, channel);
+	      Idq_reading[channel+8] = res.idq;
+
+	      DIAG("PA", "  DAC2 ch%d: %s code=%d Idq=%.3fA iters=%d",
+	           channel, PaBiasCal_StatusName(&res), res.code, (double)res.idq, res.iterations);
+	      if (res.at_floor) {
+	          DIAG_WARN("PA", "  DAC2 ch%d cannot reach %.3fA within the rated gate window "
+	                          "(the floor gives %.3fA) -- check the sense chain and the device",
+	                    channel, (double)PA_IDQ_TARGET_A, (double)res.idq);
+	      } else if (!res.io_ok) {
+	          DIAG_ERR("PA", "  DAC2 ch%d calibration could not talk to the DAC or ADC", channel);
+	      }
 	  }
 	  DIAG("PA", "PA IDQ calibration sequence COMPLETE");
   }

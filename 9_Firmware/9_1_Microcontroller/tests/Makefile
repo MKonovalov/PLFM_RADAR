@@ -86,7 +86,7 @@ TESTS_STANDALONE := test_fpga_config \
 TESTS_WITH_PLATFORM := test_bug11_platform_spi_transmit_only
 
 # C++ tests (AGC outer loop + PA current-sense chain)
-TESTS_WITH_CXX := test_agc_outer_loop test_pa_sense test_pa_sense_migration test_agc_pulse_counter
+TESTS_WITH_CXX := test_agc_outer_loop test_pa_sense test_pa_sense_migration test_pa_bias_cal test_agc_pulse_counter
 
 # GPS driver tests (need mocks + GPS source + -lm)
 TESTS_GPS := test_um982_gps
@@ -209,6 +209,10 @@ test_rail_fault: test_rail_fault.c ../9_1_1_C_Cpp_Libraries/RAIL_FAULT.c
 # PA bias sequence: the order is the safety property (PA_BIAS_SEQUENCE.c + its header)
 test_pa_bias_sequence: test_pa_bias_sequence.c ../9_1_1_C_Cpp_Libraries/PA_BIAS_SEQUENCE.c
 	$(CC) $(CFLAGS) $(INCLUDES) $< ../9_1_1_C_Cpp_Libraries/PA_BIAS_SEQUENCE.c -o $@
+
+# PA bias calibration: the loop, plus the headers it reads (issue #21).  C++ because PA_SENSE.h is.
+test_pa_bias_cal: test_pa_bias_cal.cpp ../9_1_1_C_Cpp_Libraries/PA_BIAS_CAL.c
+	$(CXX) $(CXXFLAGS) $(INCLUDES) $< ../9_1_1_C_Cpp_Libraries/PA_BIAS_CAL.c -o $@
 
 # gate-bias contract: needs the library headers (PA_GATE_BIAS.h)
 test_pa_gate_bias: test_pa_gate_bias.cpp
