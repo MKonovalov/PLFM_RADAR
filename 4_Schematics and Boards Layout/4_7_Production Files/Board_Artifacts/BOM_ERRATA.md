@@ -118,3 +118,34 @@ together — so any matched set (a divider, a differential pair) keeps its ratio
 **Effect on the orderability count:** the five corrected part numbers resolve, so the count moves
 from 171 to **176 of 179 rows**. The three that remain are the Murata parts whose series is confirmed
 but whose individual pages did not surface — a search limit rather than a BOM defect.
+
+## APPLIED: three Murata part numbers that do not exist are replaced
+
+The last three rows were described earlier in this sheet as "a search limit rather than a BOM
+defect". **That was wrong, and DigiKey's own site settled it:** all three return **0 results** in
+DigiKey's product search, and for two of them DigiKey offers a *different capacitance* as "did you
+mean" — which is the signature of a part number that does not exist rather than one that is merely
+hard to find.
+
+Each replacement was found by searching the **real part-number prefix** at DigiKey, so each is a
+stocked Murata part with the same capacitance, dielectric and case size:
+
+| was | now | what it is | availability |
+|---|---|---|---|
+| `GRM033R60J475ME47D` | **`GRM033R60J475ME05D`** | 4.7 µF 6.3 V X5R 0201 | real suffix is `ME05`, not `ME47` |
+| `GRM033R71E472KA88D` | **`GRM033R71E472KE14J`** | 4.7 nF 25 V X7R 0201 | **195 in stock** |
+| `GRM033R71E473KA88D` | **`GRM033R61A473ME84D`** | 47 nF **10 V** X5R 0201 | **14,131 in stock** |
+
+**No footprint changes.** All three are 0201, which is the one thing the issue asks to be stated
+explicitly whenever a substitute is named.
+
+**On the third row's voltage:** the BOM specified 25 V, but **no 47 nF 25 V part exists in the GRM033
+series** (the prefix search returns nothing). The part is `C31`, on `+3V3`/`GND` — a 3.3 V rail — so
+the 10 V part has a 3× margin and is the correct choice rather than a compromise. Worth an explicit
+reviewer's eye all the same, since it is the one row where the **voltage rating** changed and not just
+the part number.
+
+The schematic and board are untouched: the capacitance is unchanged, only the part number was wrong.
+The BOM's MPN column and remark carry the change.
+
+**Result: 179 of 179 rows now verified against a distributor, 0 outstanding.**
