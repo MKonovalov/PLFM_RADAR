@@ -46,6 +46,7 @@ test_bug11_platform_spi_transmit_only
 # TESTS_WITH_CXX
 test_agc_outer_loop
 test_pa_sense
+test_pa_sense_migration
 test_agc_pulse_counter
 
 # Manual / one-off test builds

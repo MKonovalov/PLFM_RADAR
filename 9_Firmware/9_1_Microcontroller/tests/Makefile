@@ -253,6 +253,9 @@ test_agc_outer_loop: test_agc_outer_loop.cpp $(CXX_OBJS) $(MOCK_OBJS)
 test_pa_sense: test_pa_sense.cpp
 	$(CXX) $(CXXFLAGS) $(INCLUDES) $< -o $@
 
+test_pa_sense_migration: test_pa_sense_migration.cpp
+	$(CXX) $(CXXFLAGS) $(INCLUDES) $< -o $@
+
 # AGC magnitude pulse counter: header-only logic, no mocks needed
 test_agc_pulse_counter: test_agc_pulse_counter.cpp
 	$(CXX) $(CXXFLAGS) $(INCLUDES) $< -o $@
