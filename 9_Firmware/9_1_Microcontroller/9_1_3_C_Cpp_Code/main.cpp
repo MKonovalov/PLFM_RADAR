@@ -27,6 +27,7 @@
 #include "AgcPulseCounter.h"
 extern "C" {
 #include "ad9523.h"
+#include "AD9523_VERIFY.h"
 }
 #include "no_os_delay.h"
 #include "no_os_alloc.h"
@@ -1470,6 +1471,30 @@ static int configure_ad9523(void)
     DIAG("CLK", "Triggering manual ad9523_sync()");
     ad9523_sync(dev);
     DIAG("CLK", "AD9523 configuration complete -- all outputs should be active");
+
+    /* Read the outputs back (issue #17).  The platform data leaves every channel tristated and
+     * disabled except the ten in use, so channels 2, 3, 12 and 13 - which include the four nets
+     * carrying nothing but the driver - must read back powered down.  This turns "the unused
+     * outputs are off" from an intention into the part's own answer, which is what the issue's
+     * acceptance criteria ask for. */
+    {
+        uint32_t powered_down = 0, readable = 0;
+        if (AD9523_VerifyOutputs(dev, &powered_down, &readable) == 0) {
+            DIAG("CLK", "output readback: 0x%03lX readable, 0x%03lX powered down",
+                 (unsigned long)readable, (unsigned long)powered_down);
+            for (uint32_t ch = 0; ch < AD9523_VERIFY_CHANNELS; ch++) {
+                if (!(readable & (1u << ch))) {
+                    continue;
+                }
+                if ((ch == 2u || ch == 3u) && !(powered_down & (1u << ch))) {
+                    DIAG_ERR("CLK", "OUT%lu reads back ACTIVE and has nothing on it", (unsigned long)ch);
+                }
+            }
+            DIAG("CLK", "OUT2/OUT3 readback check done");
+        } else {
+            DIAG_WARN("CLK", "could not read the outputs back -- the unused-output claim is unverified");
+        }
+    }
 
     // keep device pointer globally if needed (dev)
     return 0;
