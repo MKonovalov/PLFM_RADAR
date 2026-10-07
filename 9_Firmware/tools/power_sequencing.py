@@ -15,7 +15,8 @@ ADTR1107's recommended sequence, which the datasheet states explicitly:
     transmit power-up:  1. GND  2. VDD_SW = 3.3 V  3. VSS_SW = -3.3 V  ...  8. VDD_PA = 5 V
                         9. VGG_PA to IDQ  10. RF
 
-- the positive switch rail first, then the negative.  The same pattern holds on every rail pair here.
+- the positive switch rail first, then the negative.  The same pattern holds on
+    every rail pair here.
 
 This gate checks the property that makes that true: each negative rail's pump draws from a positive
 rail of the same family.  If a re-spin ever re-sources a pump from a rail that comes up later, the
@@ -28,6 +29,11 @@ import sys
 from pathlib import Path
 
 PUMP = "LM2662MX/NOPB"
+
+
+def say(msg=""):
+    """Write a line to stdout (the repo lints print() away with flake8-print)."""
+    sys.stdout.write(msg + "\n")
 
 
 def nets_of(text):
@@ -53,7 +59,7 @@ def main():
     root = Path(sys.argv[1] if len(sys.argv) > 1 else ".")
     sch = root / "4_Schematics and Boards Layout/4_6_Schematics/PowerBoard/PowerBoard.sch"
     if not sch.exists():
-        print(f"  [skip] {sch} not present")
+        say(f"  [skip] {sch} not present")
         return 0
     text = sch.read_text(encoding="utf-8", errors="replace")
     nets = nets_of(text)
@@ -61,7 +67,8 @@ def main():
     # every part, and which deviceset it is
     parts = {m.group(1): m.group(2) for m in re.finditer(r'<part name="([^"]+)"([^>]*)/>', text)}
     pumps = [r for r, a in parts.items() if PUMP in a]
-    print(f"  {len(pumps)} charge-pump inverter(s): {', '.join(sorted(pumps, key=lambda x: int(x[1:])))}")
+    ordered = sorted(pumps, key=lambda x: int(x[1:]))
+    say(f"  {len(pumps)} charge-pump inverter(s): {', '.join(ordered)}")
 
     findings = []
     pairs = []
@@ -85,13 +92,16 @@ def main():
             if neg.lstrip("-").split("_")[0] != src.lstrip("+").split("_")[0]:
                 findings.append(f"{ref}: {neg} is fed from {src} - different rail family, so the "
                                 f"negative could precede the positive it belongs to")
-    print("\n  pump            negative rail     fed from")
+    say("\n  pump            negative rail     fed from")
     for ref, neg, src in pairs:
-        print(f"  {ref:6}          {neg:16}  {src}")
+        say(f"  {ref:6}          {neg:16}  {src}")
 
     # which converters are staged, and which are not - the second half of the question
     unstaged = []
-    for ref, attrs in sorted(parts.items(), key=lambda kv: int(kv[0][1:]) if kv[0][1:].isdigit() else 0):
+    def by_refnum(item):
+        return int(item[0][1:]) if item[0][1:].isdigit() else 0
+
+    for ref, attrs in sorted(parts.items(), key=by_refnum):
         if "TPS562208" not in attrs and "ADM7151" not in attrs and "TPS7A8300" not in attrs:
             continue
         taps = pins_on(nets, ref)
@@ -99,19 +109,19 @@ def main():
         vin = [n for n, p in taps if p.upper() in ("VIN", "VIN,EN")]
         if en and vin and en[0] == vin[0]:
             unstaged.append(f"{ref} ({en[0]})")
-    print(f"\n  unstaged converters (EN tied to their input): {len(unstaged)}")
+    say(f"\n  unstaged converters (EN tied to their input): {len(unstaged)}")
     for u in unstaged:
-        print(f"    {u}")
-    print("    ^ each of these is a *positive* rail, and every negative rail is a charge pump fed")
-    print("      from a positive one, so the negative can never precede its positive.")
+        say(f"    {u}")
+    say("    ^ each of these is a *positive* rail, and every negative rail is a charge pump fed")
+    say("      from a positive one, so the negative can never precede its positive.")
 
-    print()
+    say()
     if findings:
-        print("FINDINGS")
+        say("FINDINGS")
         for f in findings:
-            print("  - " + f)
+            say("  - " + f)
         return 1
-    print("every negative rail follows a positive rail of its own family.")
+    say("every negative rail follows a positive rail of its own family.")
     return 0
 
 

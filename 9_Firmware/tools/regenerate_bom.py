@@ -324,7 +324,8 @@ def main():
                     f"{board}: {len(misplaced)} designators sit on a {name} row whose part "
                     f"number differs from the board (e.g. {detail})")
             if pkg_misplaced:
-                detail = "; ".join(f"{d}: board {b} vs sheet {s_}" for d, b, s_ in pkg_misplaced[:3])
+                detail = "; ".join(f"{d}: board {b} vs sheet {s_}"
+                                   for d, b, s_ in pkg_misplaced[:3])
                 findings.append(
                     f"{board}: {len(pkg_misplaced)} designators sit on a {name} row whose package "
                     f"differs from the board (e.g. {detail})")
