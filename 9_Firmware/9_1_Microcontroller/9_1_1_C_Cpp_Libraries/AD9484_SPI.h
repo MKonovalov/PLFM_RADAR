@@ -39,6 +39,9 @@
 #define AD9484_REG_USER_PATT1_LSB 0x19u
 #define AD9484_REG_USER_PATT1_MSB 0x1Au
 #define AD9484_REG_OVR_CONFIG   0x2Au
+#define AD9484_REG_CHIP_GRADE   0x02u   /* read-only: speed grade and chip ID */
+#define AD9484_REG_OFFSET       0x10u   /* 8-bit device offset trim, in output codes */
+#define AD9484_REG_DEVICE_UPDATE 0xFFu  /* writing bit 0 transfers the shift register */
 
 /** OUTPUT_MODE data-format field: the FPGA treats the capture as unsigned, i.e. offset binary. */
 #define AD9484_FORMAT_OFFSET_BINARY 0x00u
@@ -66,6 +69,21 @@ bool AD9484_SPI_WriteRegister(const AD9484_SPI_IO_t *io, uint8_t addr, uint8_t v
 
 /** Read one 8-bit register (SDIO turns around after the instruction). */
 bool AD9484_SPI_ReadRegister(const AD9484_SPI_IO_t *io, uint8_t addr, uint8_t *value);
+
+/**
+ * Transfer the master shift register to the slave.
+ *
+ * This is not optional: DEVICE_UPDATE (0xFF) is what makes a write take effect.  Without it the
+ * data sits in the shift register and the part never changes - which is how the test-pattern and
+ * data-format helpers could report success and do nothing.
+ */
+bool AD9484_SPI_Commit(const AD9484_SPI_IO_t *io);
+
+/** Device offset trim, in output codes (-128..+127).  Zero is the default. */
+bool AD9484_SPI_SetOffsetTrim(const AD9484_SPI_IO_t *io, int codes);
+
+/** Read the read-only CHIP_GRADE register: a real readback from a part that answers. */
+bool AD9484_SPI_ReadChipGrade(const AD9484_SPI_IO_t *io, uint8_t *grade);
 
 /**
  * Put a user-defined pattern on the output pins, or take it off again.

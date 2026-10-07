@@ -339,6 +339,15 @@ static void AD9484_BringUp(void)
          (unsigned)cfg, (unsigned)g_adc_ovr_config, g_adc_spi_ok ? "PASS" : "FAIL");
     if (!g_adc_spi_ok) {
         DIAG_ERR("ADC", "the AD9484 does not answer on its serial port");
+    } else {
+        /* Force the sample format rather than trusting the strap: SJ1 ties SCLK/DFS to a rail, and
+         * if that rail is high the part outputs twos complement while the FPGA expects offset
+         * binary - a latent half-scale error.  OUTPUT_MODE bits[1:0] settle it in firmware. */
+        if (AD9484_SPI_SetDataFormat(&g_adc_spi_io, AD9484_FORMAT_OFFSET_BINARY)) {
+            DIAG("ADC", "sample format set to offset binary (matches the FPGA's assumption)");
+        } else {
+            DIAG_ERR("ADC", "could not set the sample format - the FPGA assumes offset binary");
+        }
     }
 }
 

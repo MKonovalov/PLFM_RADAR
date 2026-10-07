@@ -12,6 +12,9 @@
 #define MAX_BITS 64
 static char bits[MAX_BITS];      /* the frame, as sampled */
 static int nbits;
+static char last_frame[MAX_BITS];  /* the most recent frame - the commit, after a write */
+static int nlast;
+static int cur_frame;              /* 1 = the data frame, 2+ = the commit that follows */
 static char driven_bits[MAX_BITS];
 static int ndriven;
 static int csb_level = 1, sclk_level = 0, sdio_level = 0;
@@ -19,17 +22,21 @@ static int csb_frames;           /* how many times CSB fell */
 static const char *readback;     /* scripted SDIO bits for a read, MSB first */
 static int readback_pos;
 
-static void spy_csb(bool l) { csb_level = l; if (!l) { csb_frames++; } }
+static void spy_csb(bool l) { if (!l) { csb_frames++; cur_frame++; if (cur_frame > 1) nlast = 0; } csb_level = l; }
 static void spy_sclk(bool l)
 {
-    if (l && !sclk_level && csb_level == 0 && nbits < MAX_BITS) bits[nbits++] = (char)('0' + (sdio_level ? 1 : 0));
+    if (l && !sclk_level && csb_level == 0) {
+        char b = (char)('0' + (sdio_level ? 1 : 0));
+        if (cur_frame <= 1) { if (nbits < MAX_BITS) bits[nbits++] = b; }
+        else if (nlast < MAX_BITS) last_frame[nlast++] = b;
+    }
     sclk_level = l;
 }
 static void spy_sdio_out(bool l) { sdio_level = l; if (ndriven < MAX_BITS) driven_bits[ndriven++] = (char)('0' + (l ? 1 : 0)); }
 static void spy_sdio_dir(bool out) { (void)out; }
 static bool spy_sdio_in(void) { return readback && readback_pos < (int)strlen(readback) ? readback[readback_pos++] == '1' : false; }
 static void spy_delay(void) { }
-static void reset_spy(void) { nbits = ndriven = 0; csb_frames = 0; readback_pos = 0; sclk_level = 0; sdio_level = 0; csb_level = 1; memset(bits, 0, sizeof bits); memset(driven_bits, 0, sizeof driven_bits); }
+static void reset_spy(void) { nbits = ndriven = nlast = 0; cur_frame = 0; csb_frames = 0; readback_pos = 0; sclk_level = 0; sdio_level = 0; csb_level = 1; memset(bits, 0, sizeof bits); memset(driven_bits, 0, sizeof driven_bits); }
 
 static AD9484_SPI_IO_t io = { spy_csb, spy_sclk, spy_sdio_out, spy_sdio_dir, spy_sdio_in, spy_delay };
 
@@ -52,7 +59,7 @@ int main(void)
     check(AD9484_SPI_WriteRegister(&io, AD9484_REG_OVR_CONFIG, 0x01), "write reports success");
     bits[nbits] = '\0';
     printf("      frame (%d bits): %s\n", nbits, bits);
-    check(csb_frames == 1, "exactly one CSB frame");
+    check(csb_frames == 2, "two frames: the data, then the commit");
     check(nbits == 24, "16-bit instruction + 8 data bits");
     /* R/W W1 W0 A12..A0 then D7..D0 */
     check(bits[0] == '0', "R/W = 0 for a write");
@@ -71,13 +78,13 @@ int main(void)
     printf("=== the test pattern: pattern loaded before TEST_IO enables it ===\n");
     reset_spy();
     check(AD9484_SPI_SetTestPattern(&io, true, 0x1234), "setting a pattern reports success");
-    check(csb_frames == 3, "three registers are written");
+    check(csb_frames == 6, "three registers written, each committed");
     /* the first two frames carry 0x19 then 0x1A, so their address fields differ */
     check(strncmp(bits + 3, "0000000011001", 13) == 0, "USER_PATT1_LSB (0x19) written first");
     check(ndriven > 0, "data went out on SDIO");
     reset_spy();
     check(AD9484_SPI_SetTestPattern(&io, false, 0), "clearing the pattern reports success");
-    check(csb_frames == 1, "clearing is a single write");
+    check(csb_frames == 2, "clearing is a write plus its commit");
 
     printf("=== the data format can be set explicitly ===\n");
     reset_spy();
@@ -98,6 +105,38 @@ int main(void)
     reset_spy();
     readback = "11111111" "11111111";     /* and a stuck-high bus */
     check(!AD9484_SPI_SelfTest(&io, &cfg, &ovr), "an all-one bus fails the self-test");
+
+    printf("=== every write commits (DEVICE_UPDATE) ===\n");
+    reset_spy();
+    check(AD9484_SPI_WriteRegister(&io, AD9484_REG_OVR_CONFIG, 0x01), "a write reports success");
+    check(csb_frames == 2, "a write is two frames: the data, then the commit");
+    /* the commit frame: address 0xFF in the low 8 of the 16-bit instruction, data 0x01 */
+    {
+        char a[9], v[9];
+        for (int i = 0; i < 8; i++) a[i] = (nlast >= 24) ? last_frame[8 + i] : '0';
+        for (int i = 0; i < 8; i++) v[i] = (nlast >= 24) ? last_frame[16 + i] : '0';
+        a[8] = v[8] = 0;
+        check(strcmp(a, "11111111") == 0, "the commit addresses 0xFF");
+        check(strcmp(v, "00000001") == 0, "and sets bit 0, the software transfer");
+    }
+
+    printf("=== the offset trim ===\n");
+    reset_spy();
+    check(AD9484_SPI_SetOffsetTrim(&io, -128), "-128 is accepted");
+    check(csb_frames == 2, "and commits");
+    reset_spy();
+    check(AD9484_SPI_SetOffsetTrim(&io, 127), "+127 is accepted");
+    reset_spy();
+    check(!AD9484_SPI_SetOffsetTrim(&io, 128), "+128 is out of range");
+    check(!AD9484_SPI_SetOffsetTrim(&io, -129), "-129 is out of range");
+
+    printf("=== the chip-grade readback ===\n");
+    reset_spy();
+    readback = "00000101";
+    uint8_t grade = 0;
+    check(AD9484_SPI_ReadChipGrade(&io, &grade), "the read-only register can be read");
+    check(grade == 0x05, "and the value comes back");
+    check(!AD9484_SPI_ReadChipGrade(&io, NULL), "a NULL output is refused");
 
     printf("=== argument checking ===\n");
     check(!AD9484_SPI_Init(NULL), "NULL hooks refused");

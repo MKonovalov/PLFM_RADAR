@@ -70,7 +70,8 @@ static void send_instruction(const AD9484_SPI_IO_t *io, bool read, uint8_t addr)
     }
 }
 
-bool AD9484_SPI_WriteRegister(const AD9484_SPI_IO_t *io, uint8_t addr, uint8_t value)
+/* One frame on the wire.  This is the shift-register write; it does not commit. */
+static bool write_frame(const AD9484_SPI_IO_t *io, uint8_t addr, uint8_t value)
 {
     if (!ready(io)) {
         return false;
@@ -87,6 +88,37 @@ bool AD9484_SPI_WriteRegister(const AD9484_SPI_IO_t *io, uint8_t addr, uint8_t v
     half_bit(io);
     io->csb(true);          /* the frame ends here */
     return true;
+}
+
+bool AD9484_SPI_Commit(const AD9484_SPI_IO_t *io)
+{
+    /* DEVICE_UPDATE, bit 0: synchronously transfer the shift register to the slave. */
+    return write_frame(io, AD9484_REG_DEVICE_UPDATE, 0x01u);
+}
+
+bool AD9484_SPI_WriteRegister(const AD9484_SPI_IO_t *io, uint8_t addr, uint8_t value)
+{
+    if (!write_frame(io, addr, value)) {
+        return false;
+    }
+    return AD9484_SPI_Commit(io);
+}
+
+bool AD9484_SPI_SetOffsetTrim(const AD9484_SPI_IO_t *io, int codes)
+{
+    if (!ready(io) || codes < -128 || codes > 127) {
+        return false;
+    }
+    /* Two's complement in the register: -128 is 0x80, +127 is 0x7F. */
+    return AD9484_SPI_WriteRegister(io, AD9484_REG_OFFSET, (uint8_t)(codes & 0xFF));
+}
+
+bool AD9484_SPI_ReadChipGrade(const AD9484_SPI_IO_t *io, uint8_t *grade)
+{
+    if (grade == NULL) {
+        return false;
+    }
+    return AD9484_SPI_ReadRegister(io, AD9484_REG_CHIP_GRADE, grade);
 }
 
 bool AD9484_SPI_ReadRegister(const AD9484_SPI_IO_t *io, uint8_t addr, uint8_t *value)
