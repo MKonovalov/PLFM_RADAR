@@ -86,10 +86,24 @@ int main(void)
     check(strcmp(bits + 16, "00000000") == 0, "format field 00 = offset binary");
     check(!AD9484_SPI_SetDataFormat(&io, 0x09), "an out-of-range format is refused");
 
+    printf("=== the bring-up self-test: two registers with documented defaults ===\n");
+    reset_spy();
+    readback = "00011000" "00000001";     /* 0x00 = 0x18, then 0x2A = 0x01 */
+    uint8_t cfg = 0, ovr = 0;
+    check(AD9484_SPI_SelfTest(&io, &cfg, &ovr), "both defaults match, so the interface answers");
+    check(cfg == 0x18 && ovr == 0x01, "and the values are reported for telemetry");
+    reset_spy();
+    readback = "00000000" "00000000";     /* a dead bus reads all-zero */
+    check(!AD9484_SPI_SelfTest(&io, &cfg, &ovr), "an all-zero bus fails the self-test");
+    reset_spy();
+    readback = "11111111" "11111111";     /* and a stuck-high bus */
+    check(!AD9484_SPI_SelfTest(&io, &cfg, &ovr), "an all-one bus fails the self-test");
+
     printf("=== argument checking ===\n");
     check(!AD9484_SPI_Init(NULL), "NULL hooks refused");
     check(!AD9484_SPI_WriteRegister(NULL, 0, 0), "NULL io refused");
     check(!AD9484_SPI_ReadRegister(&io, 0, NULL), "NULL out-pointer refused");
+    check(!AD9484_SPI_SelfTest(&io, NULL, NULL), "self-test refuses NULL outputs");
     AD9484_SPI_IO_t incomplete = { spy_csb, NULL, spy_sdio_out, NULL, NULL, NULL };
     check(!AD9484_SPI_Init(&incomplete), "missing SCLK refused");
 

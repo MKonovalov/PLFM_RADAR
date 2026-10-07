@@ -44,3 +44,33 @@ bool StrobeAck_HasMissed(const StrobeAck_State_t *st)
 {
     return st != NULL && st->missed != 0;
 }
+
+void StrobeAck_SelfTest_Begin(StrobeAck_SelfTest_t *t, uint32_t timeout_ms)
+{
+    if (t == NULL) {
+        return;
+    }
+    t->timeout_ms = timeout_ms;
+    t->waited_ms = 0;
+    t->running = true;
+    t->passed = false;
+}
+
+StrobeAck_SelfTestResult_t StrobeAck_SelfTest_Poll(StrobeAck_SelfTest_t *t, uint32_t elapsed_ms,
+                                                   bool ack)
+{
+    if (t == NULL || !t->running) {
+        return STROBE_SELFTEST_TIMEOUT;
+    }
+    if (ack) {
+        t->running = false;
+        t->passed = true;
+        return STROBE_SELFTEST_PASSED;
+    }
+    t->waited_ms += elapsed_ms;
+    if (t->waited_ms >= t->timeout_ms) {
+        t->running = false;
+        return STROBE_SELFTEST_TIMEOUT;
+    }
+    return STROBE_SELFTEST_WAITING;
+}

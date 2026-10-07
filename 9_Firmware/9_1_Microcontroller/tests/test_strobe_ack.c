@@ -58,10 +58,32 @@ int main(void)
     StrobeAck_BeforeSend(&st);
     check(st.missed == 0, "nothing to score before the first send");
 
+    printf("=== the path self-test: is the wire alive? ===\n");
+    StrobeAck_SelfTest_t stt;
+    StrobeAck_SelfTest_Begin(&stt, 50);
+    check(StrobeAck_SelfTest_Poll(&stt, 10, false) == STROBE_SELFTEST_WAITING,
+          "waiting while the acknowledgement is low");
+    check(StrobeAck_SelfTest_Poll(&stt, 10, true) == STROBE_SELFTEST_PASSED,
+          "passes as soon as the acknowledgement rises");
+    check(stt.passed && !stt.running, "and stops running once it has passed");
+
+    StrobeAck_SelfTest_Begin(&stt, 30);
+    check(StrobeAck_SelfTest_Poll(&stt, 10, false) == STROBE_SELFTEST_WAITING, "still waiting");
+    check(StrobeAck_SelfTest_Poll(&stt, 10, false) == STROBE_SELFTEST_WAITING, "still waiting");
+    check(StrobeAck_SelfTest_Poll(&stt, 10, false) == STROBE_SELFTEST_TIMEOUT,
+          "times out when the acknowledgement never comes");
+    check(!stt.passed, "and does not report a pass");
+
+    StrobeAck_SelfTest_Begin(&stt, 20);
+    check(StrobeAck_SelfTest_Poll(&stt, 20, true) == STROBE_SELFTEST_PASSED,
+          "a pass on the very last poll still counts");
+
     printf("=== null-safety ===\n");
     StrobeAck_Init(NULL);
     StrobeAck_BeforeSend(NULL);
     StrobeAck_Sample(NULL, true);
+    StrobeAck_SelfTest_Begin(NULL, 10);
+    check(StrobeAck_SelfTest_Poll(NULL, 10, true) == STROBE_SELFTEST_TIMEOUT, "NULL poll is a timeout");
     check(!StrobeAck_HasMissed(NULL), "NULL is not a miss");
     check(1, "no crash");
 

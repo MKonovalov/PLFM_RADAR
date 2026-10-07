@@ -72,6 +72,7 @@ extern "C" {
 #include "RAIL_FAULT.h"
 #include "STROBE_ACK.h"
 #include "AD9484_SPI.h"
+#include "PA_THERMAL.h"
 #include "ADS7830.h"
 #include "gps_handler.h"
 
@@ -266,6 +267,15 @@ static RailFault_Monitor_t g_rails;
  */
 static StrobeAck_State_t g_strobe_ack;
 
+/* One-shot bring-up test of the acknowledgement path itself: raise a strobe, watch for the
+ * answer.  A chirp already in flight will drop the strobe, so a few attempts are allowed before
+ * concluding the path is dead.  Harmless at bring-up because the PAs are still off. */
+static StrobeAck_SelfTest_t g_ack_test;
+static uint8_t  g_ack_test_attempts;
+static bool     g_ack_test_done;
+static bool     g_ack_test_passed;
+static bool     g_ack_path_ok;
+
 /* ---- AD9484 serial port (AD9484_SPI.h) -------------------------------------
  * The ADC's CSB used to be tied to a rail - which the datasheet names as the way to disable the
  * SPI - SCLK/DFS sat on solder jumper SJ1, and SDIO was unconnected.  The pins are
@@ -320,12 +330,15 @@ static void AD9484_BringUp(void)
         return;
     }
     DIAG("ADC", "AD9484 serial port up, data format = offset binary");
-    if (AD9484_SPI_ReadRegister(&g_adc_spi_io, AD9484_REG_OVR_CONFIG, &g_adc_ovr_config)) {
-        g_adc_spi_ok = true;
-        DIAG("ADC", "OVR_CONFIG readback = 0x%02X (0x01 expected on a healthy part)",
-             (unsigned)g_adc_ovr_config);
-    } else {
-        DIAG_ERR("ADC", "register readback failed -- the serial port is not working");
+    /* Two registers whose defaults the datasheet states, read (not written) so the test is
+     * safe at any time: 0x00 CHIP_PORT_CONFIG = 0x18 and 0x2A OVR_CONFIG = 0x01.  A dead bus
+     * reads all-zero or all-one, and either way the mismatch is visible as a number. */
+    uint8_t cfg = 0;
+    g_adc_spi_ok = AD9484_SPI_SelfTest(&g_adc_spi_io, &cfg, &g_adc_ovr_config);
+    DIAG("ADC", "self-test: CHIP_PORT_CONFIG = 0x%02X (0x18 expected), OVR_CONFIG = 0x%02X (0x01 expected) -> %s",
+         (unsigned)cfg, (unsigned)g_adc_ovr_config, g_adc_spi_ok ? "PASS" : "FAIL");
+    if (!g_adc_spi_ok) {
+        DIAG_ERR("ADC", "the AD9484 does not answer on its serial port");
     }
 }
 
@@ -1130,6 +1143,9 @@ bool checkSystemHealthStatus(void) {
 
 // Get system status for GUI
 // Get system status for GUI with 8 temperature variables
+/* The PA sensor limit, in one place so the check and the telemetry cannot disagree. */
+static const int Max_Temp_Report = 75;
+
 void getSystemStatusForGUI(char* status_buffer, size_t buffer_size) {
     // Build status string directly in the output buffer using offset-tracked
     // snprintf.  Each call returns the number of chars written (excluding NUL),
@@ -1190,7 +1206,12 @@ void getSystemStatusForGUI(char* status_buffer, size_t buffer_size) {
         }
         avg_current /= 16.0f;
 
-        w = snprintf(status_buffer + off, rem, "ADC_SPI:%s|ADC_OVR:0x%02X|",
+        w = snprintf(status_buffer + off, rem, "StrobeAckPath:%s|PASensorMax:%dC|PALimit:%.0fC|",
+                 g_ack_path_ok ? "ok" : (g_ack_test_done ? "FAILED" : "testing"),
+                 Max_Temp_Report, (int)PA_TCASE_MAX_C);
+    if (w > 0 && (size_t)w < rem) { off += (size_t)w; rem -= (size_t)w; }
+
+    w = snprintf(status_buffer + off, rem, "ADC_SPI:%s|ADC_OVR:0x%02X|",
                  g_adc_spi_ok ? "up" : "FAILED", (unsigned)g_adc_ovr_config);
     if (w > 0 && (size_t)w < rem) { off += (size_t)w; rem -= (size_t)w; }
 
@@ -2259,6 +2280,31 @@ int main(void)
                 bool faulting = RailFault_Sample(&g_rails);
                 StrobeAck_Sample(&g_strobe_ack,
                                  HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_3) == GPIO_PIN_SET);
+
+                /* ask the acknowledgement path once, then leave it alone */
+                bool ack_high = HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_3) == GPIO_PIN_SET;
+                if (!g_ack_test_done) {
+                    if (!g_ack_test.running && g_ack_test_attempts < 3) {
+                        g_ack_test_attempts++;
+                        StrobeAck_SelfTest_Begin(&g_ack_test, 100u);
+                        HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_8);   /* request a chirp */
+                    } else if (g_ack_test.running) {
+                        StrobeAck_SelfTestResult_t res =
+                            StrobeAck_SelfTest_Poll(&g_ack_test, 100u, ack_high);
+                        if (res == STROBE_SELFTEST_PASSED) {
+                            g_ack_test_done = true;
+                            g_ack_test_passed = true;
+                            g_ack_path_ok = true;
+                            DIAG("FPGA", "strobe acknowledgement path OK (attempt %u)",
+                                 (unsigned)g_ack_test_attempts);
+                        } else if (res == STROBE_SELFTEST_TIMEOUT && g_ack_test_attempts >= 3) {
+                            g_ack_test_done = true;
+                            DIAG_ERR("FPGA", "strobe acknowledgement never came after %u attempts "
+                                     "-- the wire or the FPGA is not answering",
+                                     (unsigned)g_ack_test_attempts);
+                        }
+                    }
+                }
                 if (faulting && g_rails.current != rail_reported) {
                     DIAG_ERR("PWR", "rail fault: bitmap=0x%lX (bit0=+3V3_ADTR, bit1=+3V3_XO, bit2=+2V5_FPGA)",
                              (unsigned long)g_rails.current);
@@ -2366,7 +2412,11 @@ int main(void)
 		  }
 
 		  //(20 mV/°C on TMP37) QPA2962 RF amplifier Operating Temp. Range, TBASE min−40 normal+25 max+85 °C
-		  int Max_Temp = 25;
+		  /* The PA sensor limit.  This read 25 degC while the comment beside it said 75; with the
+		   * brief's theta_JC = 2.83 degC/W (PA_THERMAL.h) the case may reach about 95 degC before
+		   * the channel nears 200 degC, so 75 is the conservative choice the comment intended.
+		   * Note the sensors themselves are not populated on any board - see issue #5. */
+		  int Max_Temp = 75;
 		  if((Temperature_1>Max_Temp)||(Temperature_2>Max_Temp)||(Temperature_3>Max_Temp)||(Temperature_4>Max_Temp)
 				  ||(Temperature_5>Max_Temp)||(Temperature_6>Max_Temp)||(Temperature_7>Max_Temp)||(Temperature_8>Max_Temp))
 			{

@@ -22,6 +22,7 @@ test_bug14_diag_section_args
 test_gap3_emergency_stop_rails
 
 # TESTS_STANDALONE
+test_pa_thermal
 test_ad9484_spi
 test_strobe_ack
 test_adar_power_order

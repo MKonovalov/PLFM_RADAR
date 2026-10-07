@@ -77,4 +77,13 @@ bool AD9484_SPI_SetTestPattern(const AD9484_SPI_IO_t *io, bool on, uint16_t patt
 /** Select the output data format explicitly rather than relying on the SCLK/DFS strap. */
 bool AD9484_SPI_SetDataFormat(const AD9484_SPI_IO_t *io, uint8_t format);
 
+/**
+ * Read back two registers whose defaults the datasheet states, and report whether both match.
+ * This is the bring-up answer to "does the ADC respond": 0x00 CHIP_PORT_CONFIG defaults to 0x18
+ * and 0x2A OVR_CONFIG to 0x01, so a mismatch - or a bus that reads all-zero or all-one - is
+ * visible as a number rather than as a missing feature.  Nothing is written, so the test is
+ * safe to run at any time, including on a part already configured.
+ */
+bool AD9484_SPI_SelfTest(const AD9484_SPI_IO_t *io, uint8_t *config_read, uint8_t *ovr_read);
+
 #endif /* AD9484_SPI_H */

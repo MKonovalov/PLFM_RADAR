@@ -142,3 +142,22 @@ bool AD9484_SPI_SetDataFormat(const AD9484_SPI_IO_t *io, uint8_t format)
     /* OUTPUT_MODE bits[1:0] select the format; everything else keeps its default. */
     return AD9484_SPI_WriteRegister(io, AD9484_REG_OUTPUT_MODE, (uint8_t)(format & 0x03u));
 }
+
+/* Documented defaults, from the AD9484 memory map table. */
+#define AD9484_DEFAULT_CHIP_PORT_CONFIG 0x18u
+#define AD9484_DEFAULT_OVR_CONFIG 0x01u
+
+bool AD9484_SPI_SelfTest(const AD9484_SPI_IO_t *io, uint8_t *config_read, uint8_t *ovr_read)
+{
+    if (!ready(io) || config_read == NULL || ovr_read == NULL) {
+        return false;
+    }
+    if (!AD9484_SPI_ReadRegister(io, AD9484_REG_SPI_CONFIG, config_read)) {
+        return false;
+    }
+    if (!AD9484_SPI_ReadRegister(io, AD9484_REG_OVR_CONFIG, ovr_read)) {
+        return false;
+    }
+    return *config_read == AD9484_DEFAULT_CHIP_PORT_CONFIG
+        && *ovr_read == AD9484_DEFAULT_OVR_CONFIG;
+}

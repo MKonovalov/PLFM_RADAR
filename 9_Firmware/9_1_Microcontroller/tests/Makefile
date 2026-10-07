@@ -64,7 +64,8 @@ TESTS_MOCK_ONLY := test_pa_gate_bias_contract \
                    test_gap3_emergency_stop_rails
 
 # Tests that are standalone (no mocks needed, pure logic)
-TESTS_STANDALONE := test_ad9484_spi \
+TESTS_STANDALONE := test_pa_thermal \
+                    test_ad9484_spi \
                     test_strobe_ack \
                     test_adar_power_order \
                     test_rail_fault \
@@ -175,6 +176,10 @@ test_gap3_emergency_stop_rails: test_gap3_emergency_stop_rails.c $(MOCK_OBJS)
 	$(CC) $(CFLAGS) $(INCLUDES) $< $(MOCK_OBJS) -o $@
 
 # Gap-3 safety tests -- standalone (pure logic)
+# PA thermal budget: the model must reproduce the datasheet's own row (issue #5)
+test_pa_thermal: test_pa_thermal.c ../9_1_1_C_Cpp_Libraries/PA_THERMAL.c
+	$(CC) $(CFLAGS) $(INCLUDES) $< ../9_1_1_C_Cpp_Libraries/PA_THERMAL.c -o $@
+
 # AD9484 serial port: the frame is rebuilt from the line transitions (issue #14)
 test_ad9484_spi: test_ad9484_spi.c ../9_1_1_C_Cpp_Libraries/AD9484_SPI.c
 	$(CC) $(CFLAGS) $(INCLUDES) $< ../9_1_1_C_Cpp_Libraries/AD9484_SPI.c -o $@
