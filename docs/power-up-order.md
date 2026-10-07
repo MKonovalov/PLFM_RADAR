@@ -74,3 +74,64 @@ respectively), so they impose no order requirement on their rails.
 
 The issue's second acceptance criterion — a scope capture of the rails at power-up — needs
 hardware. This document is the first half: the intended order and the citations that justify it.
+
+## The switch and negative rails: why the "unstaged" converters are not a violation (issue #20)
+
+Three converters have their enable tied to their input supply, so they start the moment VIN is
+present rather than under sequence control:
+
+```
+U3   VIN,EN on the same net  ->  +3V3
+U11  VIN,EN on the same net  ->  +3V4
+U12  VIN,EN on the same net  ->  +5V0_0
+```
+
+A gate finds **thirteen** such converters, and every one of them is a **positive** rail. That is
+the whole point, and it is why they are not a sequencing defect.
+
+### The negative rails are charge pumps, and a charge pump has no enable
+
+Every negative rail on this board comes from an LM2662 switched-capacitor inverter, which runs
+whenever its V+ is present:
+
+| Pump | Produces | Fed from | That source is |
+|---|---|---|---|
+| `U18` | −3V3_SW | **+3V3_SW** | staged (`U10`, MCU `PE14`) |
+| `U19` | −3V4 | **+3V4** | unstaged (`U11`) |
+| `U20`/`U21`/`U36`/`U37` | −5V0_ADAR12/34 | **+5V0_ADAR** | staged (`U13`, MCU `PE10`) |
+| `U22` | −5V5_PA | **+5V5_PA** | staged (`U17`) |
+
+A negative rail therefore **cannot precede the positive rail feeding it** — the pump has nothing to
+invert until that rail exists. The order is self-enforcing rather than dependent on sequencing
+logic, and it holds even for the unstaged positives.
+
+### That is exactly what the GaAs parts require
+
+The ADTR1107 datasheet states its bias sequence explicitly, and the positive switch rail comes
+**first**:
+
+> **Transmit power-up:** 1. connect all GND pins. 2. Set the VDD_SW pin to 3.3 V. 3. Set the
+> VSS_SW pin to −3.3 V. … 8. Set the VDD_PA pin to 5 V. 9. Increase VGG_PA to achieve the desired
+> IDQ_PA. 10. Apply the RF signal.
+
+> **Transmit power-down:** 1. Turn off the RF. 2. Decrease VGG_PA to −1.75 V. 3. Set VDD_PA to 0 V.
+> 4. Set VSS_SW to 0 V. 5. Set VDD_SW to 0 V.
+
+The design meets this: `+3V3_SW` (VDD_SW) is staged on `PE14`, and `−3V3_SW` (VSS_SW) is inverted
+from it, so the positive necessarily arrives first. The same pattern holds for the ADAR rails,
+where `+3V3_ADAR12/34` and `+5V0_ADAR` are staged and the −5 V rails are inverted from `+5V0_ADAR`.
+
+The power-down order is the firmware's business, and it is the reverse of the power-up order —
+which is what `PA_BIAS_SEQUENCE` implements for the PA drains and gates.
+
+### Locked by a gate
+
+`9_Firmware/tools/power_sequencing.py` checks that every charge pump draws from a positive rail of
+its own family, and reports the unstaged converters so the list stays visible. Verified by fault
+injection: re-sourcing `U18` from a negative rail produces
+`U18: -3V3_SW is fed from -3V4, which is not a positive rail` and a non-zero exit.
+
+### What remains
+
+The scope capture in the acceptance criteria is a bench step: probe the rails at power-up and
+confirm the order in practice. The design side is settled and now enforced by the gate.

@@ -61,6 +61,7 @@ jobs:
           uv run python 9_Firmware/tools/harness_map.py . --check
           uv run python 9_Firmware/tools/probe_map.py . --check
           uv run python 9_Firmware/tools/bom_orderability.py . --check
+          uv run python 9_Firmware/tools/power_sequencing.py . --check
 
   # ===========================================================================
   # MCU Firmware Unit Tests (20 tests)

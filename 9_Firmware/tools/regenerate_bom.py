@@ -60,6 +60,7 @@ MECHANICAL = ("con-ptr", "mech", "hole", "wirepad", "test")
 
 REF_HEADERS = ("designator", "reference", "refdes", "ref", "parts", "part")
 VAL_HEADERS = ("value", "values", "val")
+PKG_HEADERS = ("package", "packages", "footprint", "case")
 MPN_HEADERS = ("manufacturer_part_number", "mpn", "partnumber", "part_number",
                "manufacturer pn", "manufacturer_part_no")
 
@@ -160,7 +161,7 @@ def bom_summary(groups):
 
 
 def read_sheet(path):
-    """Read a committed BOM spreadsheet -> {designator: {"value":…, "mpn":…}}.
+    """Read a committed BOM spreadsheet -> {designator: {"value":…, "mpn":…, "package":…}}.
 
     The spreadsheet is the authority for orderable data (value + MPN); the board
     file is only authoritative for what is placed.  Checking placement against
@@ -174,7 +175,7 @@ def read_sheet(path):
     if not os.path.exists(path):
         return None
     ws = openpyxl.load_workbook(path, data_only=True).active
-    idx_ref = idx_val = idx_mpn = None
+    idx_ref = idx_val = idx_mpn = idx_pkg = None
     result = {}
     for row in ws.iter_rows(values_only=True):
         cells = ["" if c is None else str(c).strip() for c in row]
@@ -187,6 +188,8 @@ def read_sheet(path):
                     idx_val = i
                 if lc in MPN_HEADERS:
                     idx_mpn = i
+                if lc in PKG_HEADERS:
+                    idx_pkg = i
             continue
         ref_col = idx_ref
         if ref_col is not None and ref_col < len(cells) and cells[ref_col]:
@@ -195,7 +198,8 @@ def read_sheet(path):
                 if ref:
                     val = cells[idx_val] if idx_val is not None and idx_val < len(cells) else ""
                     mpn = cells[idx_mpn] if idx_mpn is not None and idx_mpn < len(cells) else ""
-                    result[ref] = {"value": val, "mpn": mpn}
+                    pkg = cells[idx_pkg] if idx_pkg is not None and idx_pkg < len(cells) else ""
+                    result[ref] = {"value": val, "mpn": mpn, "package": pkg}
     return result
 
 
@@ -290,6 +294,7 @@ def main():
             # Presence is not enough: a designator can appear in the sheet on the wrong row.
             # The board's own part number is the authority for what it is, so compare the two.
             misplaced = []
+            pkg_misplaced = []
             for r in rows:
                 if r["Designator"] in dnp:
                     continue
@@ -306,11 +311,23 @@ def main():
                 if board_val and sheet_val and board_val not in sheet_val \
                         and sheet_val not in board_val:
                     misplaced.append((r["Designator"], board_val, sheet_val))
+
+                # Packages too: a shared value can hide the wrong package, and the package is
+                # what decides whether the part fits the land pattern.
+                board_pkg, sheet_pkg = norm(r.get("Package")), norm(s.get("package"))
+                if board_pkg and sheet_pkg and board_pkg not in sheet_pkg \
+                        and sheet_pkg not in board_pkg:
+                    pkg_misplaced.append((r["Designator"], board_pkg, sheet_pkg))
             if misplaced:
                 detail = "; ".join(f"{d}: board {b} vs sheet {s_}" for d, b, s_ in misplaced[:3])
                 findings.append(
                     f"{board}: {len(misplaced)} designators sit on a {name} row whose part "
                     f"number differs from the board (e.g. {detail})")
+            if pkg_misplaced:
+                detail = "; ".join(f"{d}: board {b} vs sheet {s_}" for d, b, s_ in pkg_misplaced[:3])
+                findings.append(
+                    f"{board}: {len(pkg_misplaced)} designators sit on a {name} row whose package "
+                    f"differs from the board (e.g. {detail})")
 
     emit(f"\ntotal placed components across boards: {total_placed}")
     if findings:
