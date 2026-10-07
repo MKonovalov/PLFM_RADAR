@@ -71,6 +71,7 @@ extern "C" {
 #include "PA_BIAS_SEQUENCE.h"
 #include "RAIL_FAULT.h"
 #include "STROBE_ACK.h"
+#include "AD9484_SPI.h"
 #include "ADS7830.h"
 #include "gps_handler.h"
 
@@ -264,6 +265,69 @@ static RailFault_Monitor_t g_rails;
  * the new request - checking afterwards would always read low.
  */
 static StrobeAck_State_t g_strobe_ack;
+
+/* ---- AD9484 serial port (AD9484_SPI.h) -------------------------------------
+ * The ADC's CSB used to be tied to a rail - which the datasheet names as the way to disable the
+ * SPI - SCLK/DFS sat on solder jumper SJ1, and SDIO was unconnected.  The pins are
+ * DRVDD-referenced 1.8 V logic (absolute maximum 2.0 V), so they reach the MCU through U92, a
+ * TXS0104E translator; PC10 = CSB, PC11 = SCLK, PC13 = SDIO.
+ */
+static uint8_t g_adc_ovr_config;   /* read back at bring-up: 0x01 on a healthy part */
+static bool    g_adc_spi_ok;
+
+static void adc_spi_csb(bool level)  { HAL_GPIO_WritePin(GPIOC, GPIO_PIN_10, level ? GPIO_PIN_SET : GPIO_PIN_RESET); }
+static void adc_spi_sclk(bool level) { HAL_GPIO_WritePin(GPIOC, GPIO_PIN_11, level ? GPIO_PIN_SET : GPIO_PIN_RESET); }
+static void adc_spi_sdio_out(bool level) { HAL_GPIO_WritePin(GPIOC, GPIO_PIN_13, level ? GPIO_PIN_SET : GPIO_PIN_RESET); }
+
+static void adc_spi_sdio_dir(bool output)
+{
+    GPIO_InitTypeDef gi = {0};
+    gi.Pin   = GPIO_PIN_13;
+    gi.Mode  = output ? GPIO_MODE_OUTPUT_PP : GPIO_MODE_INPUT;
+    gi.Pull  = output ? GPIO_NOPULL : GPIO_PULLUP;
+    gi.Speed = GPIO_SPEED_FREQ_LOW;
+    HAL_GPIO_Init(GPIOC, &gi);
+}
+
+static bool adc_spi_sdio_in(void) { return HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_13) == GPIO_PIN_SET; }
+
+/* tCLK >= 40 ns, so a half bit needs 20 ns; a short busy loop is far more than that and does
+ * not tie the port to a timer. */
+static void adc_spi_delay(void) { for (volatile int i = 0; i < 30; i++) { } }
+
+static const AD9484_SPI_IO_t g_adc_spi_io = {
+    adc_spi_csb, adc_spi_sclk, adc_spi_sdio_out, adc_spi_sdio_dir, adc_spi_sdio_in, adc_spi_delay
+};
+
+static void AD9484_BringUp(void)
+{
+    GPIO_InitTypeDef gi = {0};
+    __HAL_RCC_GPIOC_CLK_ENABLE();
+    gi.Pin   = GPIO_PIN_10 | GPIO_PIN_11;
+    gi.Mode  = GPIO_MODE_OUTPUT_PP;
+    gi.Pull  = GPIO_NOPULL;
+    gi.Speed = GPIO_SPEED_FREQ_LOW;
+    HAL_GPIO_Init(GPIOC, &gi);
+
+    if (!AD9484_SPI_Init(&g_adc_spi_io)) {
+        DIAG_ERR("ADC", "serial port could not bind its hooks");
+        return;
+    }
+    /* Offset binary is what the FPGA's capture assumes and the part's default; set it rather
+     * than relying on the SCLK/DFS strap, which is what the old jumper did. */
+    if (!AD9484_SPI_SetDataFormat(&g_adc_spi_io, AD9484_FORMAT_OFFSET_BINARY)) {
+        DIAG_ERR("ADC", "could not select the output data format");
+        return;
+    }
+    DIAG("ADC", "AD9484 serial port up, data format = offset binary");
+    if (AD9484_SPI_ReadRegister(&g_adc_spi_io, AD9484_REG_OVR_CONFIG, &g_adc_ovr_config)) {
+        g_adc_spi_ok = true;
+        DIAG("ADC", "OVR_CONFIG readback = 0x%02X (0x01 expected on a healthy part)",
+             (unsigned)g_adc_ovr_config);
+    } else {
+        DIAG_ERR("ADC", "register readback failed -- the serial port is not working");
+    }
+}
 
 static void RailFault_GPIOInit(void)
 {
@@ -1126,7 +1190,11 @@ void getSystemStatusForGUI(char* status_buffer, size_t buffer_size) {
         }
         avg_current /= 16.0f;
 
-        w = snprintf(status_buffer + off, rem, "StrobeSent:%lu|StrobeAck:%lu|StrobeMissed:%lu|",
+        w = snprintf(status_buffer + off, rem, "ADC_SPI:%s|ADC_OVR:0x%02X|",
+                 g_adc_spi_ok ? "up" : "FAILED", (unsigned)g_adc_ovr_config);
+    if (w > 0 && (size_t)w < rem) { off += (size_t)w; rem -= (size_t)w; }
+
+    w = snprintf(status_buffer + off, rem, "StrobeSent:%lu|StrobeAck:%lu|StrobeMissed:%lu|",
                  (unsigned long)g_strobe_ack.sent, (unsigned long)g_strobe_ack.acknowledged,
                  (unsigned long)g_strobe_ack.missed);
     if (w > 0 && (size_t)w < rem) { off += (size_t)w; rem -= (size_t)w; }
@@ -1510,6 +1578,7 @@ int main(void)
   MX_GPIO_Init();
   RailFault_GPIOInit();
   StrobeAck_Init(&g_strobe_ack);
+  AD9484_BringUp();
   MX_TIM1_Init();
   MX_TIM3_Init();  // B15 fix: init DELADJ PWM timer before LO manager uses it
   MX_I2C1_Init();

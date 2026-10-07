@@ -27662,7 +27662,7 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <class number="2" name="Single_Ended Clocks &amp; RF" width="0.204" drill="0.15">
 </class>
 </classes>
-<parts>
+<parts><part name="R195" library="rcl" deviceset="R-EU_" device="R0201" value="4.7k"/><part name="R194" library="rcl" deviceset="R-EU_" device="R0201" value="10k"/><part name="U92" library="My_Library_RADAR" deviceset="TXS0104EPWR" device=""/>
 <part name="U2" library="My_Library" deviceset="STM32F746ZGT7" device=""/>
 <part name="XTAL1" library="My_Library" deviceset="NX3225GD-8MHZ-STD-CRA-3" device=""/>
 <part name="JP2" library="pinhead" deviceset="PINHD-1X6" device=""/>
@@ -30360,13 +30360,13 @@ You are welcome to use this library for commercial purposes. For attribution, we
 </instances>
 <busses>
 </busses>
-<nets><net name="FPGA_STROBE_ACK" class="0"><segment><pinref part="U42" gate="G$3" pin="IO_L10N_T1_AD11N_15"/><pinref part="U2" gate="A" pin="PC3"/></segment></net><net name="PG_2V5_FPGA" class="0"><segment><pinref part="X27" gate="-1" pin="S"/><pinref part="U2" gate="A" pin="PC2"/></segment></net><net name="PG_3V3_XO" class="0"><segment><pinref part="X26" gate="-1" pin="S"/><pinref part="U2" gate="A" pin="PC1"/></segment></net><net name="PG_3V3_ADTR" class="0"><segment><pinref part="X25" gate="-1" pin="S"/><pinref part="U2" gate="A" pin="PC0"/></segment></net><net name="N$U91_OE" class="0"><segment><pinref part="U91" gate="G$1" pin="OE"/><pinref part="R177" gate="G$1" pin="1"/></segment></net><net name="N$U90_OE" class="0"><segment><pinref part="U90" gate="G$1" pin="OE"/><pinref part="R176" gate="G$1" pin="1"/></segment></net><net name="+2V5_FPGA" class="0"><segment><pinref part="U90" gate="G$1" pin="VCCA"/><pinref part="U91" gate="G$1" pin="VCCA"/><pinref part="R176" gate="G$1" pin="2"/><pinref part="R177" gate="G$1" pin="2"/><pinref part="C354" gate="G$1" pin="1"/><pinref part="C355" gate="G$1" pin="1"/><pinref part="C358" gate="G$1" pin="1"/><pinref part="C359" gate="G$1" pin="1"/><pinref part="X57" gate="-1" pin="S"/><pinref part="U42" gate="G$2" pin="VCCO_14"/></segment></net><net name="FLASH_NRST_F" class="0"><segment><pinref part="U9" gate="A" pin="RESET"/><pinref part="U91" gate="G$1" pin="B2"/></segment></net><net name="FLASH_NCS_F" class="0"><segment><pinref part="U9" gate="A" pin="S"/><pinref part="U91" gate="G$1" pin="B1"/></segment></net><net name="FLASH_DQ3_F" class="0"><segment><pinref part="U9" gate="A" pin="DQ3/HOLD"/><pinref part="U90" gate="G$1" pin="B4"/></segment></net><net name="FLASH_DQ2_F" class="0"><segment><pinref part="U9" gate="A" pin="W/DQ2"/><pinref part="U90" gate="G$1" pin="B3"/></segment></net><net name="FLASH_DQ1_F" class="0"><segment><pinref part="U9" gate="A" pin="DQ1"/><pinref part="U90" gate="G$1" pin="B2"/></segment></net><net name="FLASH_DQ0_F" class="0"><segment><pinref part="U9" gate="A" pin="DQ0"/><pinref part="U90" gate="G$1" pin="B1"/></segment></net>
+<nets><net name="MCU_ADC_SDIO" class="0"><segment><pinref part="U2" gate="A" pin="PC13"/><pinref part="U92" gate="G$1" pin="B3"/></segment></net><net name="MCU_ADC_SCLK" class="0"><segment><pinref part="U2" gate="A" pin="PC11"/><pinref part="U92" gate="G$1" pin="B2"/></segment></net><net name="MCU_ADC_CSB" class="0"><segment><pinref part="U2" gate="A" pin="PC10"/><pinref part="U92" gate="G$1" pin="B1"/></segment></net><net name="ADC_SPI_SDIO" class="0"><segment><pinref part="U1" gate="A" pin="SDIO"/><pinref part="U92" gate="G$1" pin="A3"/></segment></net><net name="ADC_SPI_SCLK" class="0"><segment><pinref part="U1" gate="A" pin="SCLK/DFS"/><pinref part="U92" gate="G$1" pin="A2"/><pinref part="R195" gate="G$1" pin="1"/><pinref part="SJ1" gate="G$1" pin="2"/></segment></net><net name="ADC_SPI_CSB" class="0"><segment><pinref part="U1" gate="A" pin="CSB"/><pinref part="U92" gate="G$1" pin="A1"/></segment></net><net name="N$U92_OE" class="0"><segment><pinref part="U92" gate="G$1" pin="OE"/><pinref part="R194" gate="G$1" pin="1"/></segment></net><net name="FPGA_STROBE_ACK" class="0"><segment><pinref part="U42" gate="G$3" pin="IO_L10N_T1_AD11N_15"/><pinref part="U2" gate="A" pin="PC3"/></segment></net><net name="PG_2V5_FPGA" class="0"><segment><pinref part="X27" gate="-1" pin="S"/><pinref part="U2" gate="A" pin="PC2"/></segment></net><net name="PG_3V3_XO" class="0"><segment><pinref part="X26" gate="-1" pin="S"/><pinref part="U2" gate="A" pin="PC1"/></segment></net><net name="PG_3V3_ADTR" class="0"><segment><pinref part="X25" gate="-1" pin="S"/><pinref part="U2" gate="A" pin="PC0"/></segment></net><net name="N$U91_OE" class="0"><segment><pinref part="U91" gate="G$1" pin="OE"/><pinref part="R177" gate="G$1" pin="1"/></segment></net><net name="N$U90_OE" class="0"><segment><pinref part="U90" gate="G$1" pin="OE"/><pinref part="R176" gate="G$1" pin="1"/></segment></net><net name="+2V5_FPGA" class="0"><segment><pinref part="U90" gate="G$1" pin="VCCA"/><pinref part="U91" gate="G$1" pin="VCCA"/><pinref part="R176" gate="G$1" pin="2"/><pinref part="R177" gate="G$1" pin="2"/><pinref part="C354" gate="G$1" pin="1"/><pinref part="C355" gate="G$1" pin="1"/><pinref part="C358" gate="G$1" pin="1"/><pinref part="C359" gate="G$1" pin="1"/><pinref part="X57" gate="-1" pin="S"/><pinref part="U42" gate="G$2" pin="VCCO_14"/></segment></net><net name="FLASH_NRST_F" class="0"><segment><pinref part="U9" gate="A" pin="RESET"/><pinref part="U91" gate="G$1" pin="B2"/></segment></net><net name="FLASH_NCS_F" class="0"><segment><pinref part="U9" gate="A" pin="S"/><pinref part="U91" gate="G$1" pin="B1"/></segment></net><net name="FLASH_DQ3_F" class="0"><segment><pinref part="U9" gate="A" pin="DQ3/HOLD"/><pinref part="U90" gate="G$1" pin="B4"/></segment></net><net name="FLASH_DQ2_F" class="0"><segment><pinref part="U9" gate="A" pin="W/DQ2"/><pinref part="U90" gate="G$1" pin="B3"/></segment></net><net name="FLASH_DQ1_F" class="0"><segment><pinref part="U9" gate="A" pin="DQ1"/><pinref part="U90" gate="G$1" pin="B2"/></segment></net><net name="FLASH_DQ0_F" class="0"><segment><pinref part="U9" gate="A" pin="DQ0"/><pinref part="U90" gate="G$1" pin="B1"/></segment></net>
 <net name="+3V3" class="0">
 <segment>
 <pinref part="X24" gate="-1" pin="S"/>
 <wire x1="203.2" y1="175.26" x2="200.66" y2="175.26" width="0.1524" layer="91"/>
 <label x="195.58" y="175.26" size="1.778" layer="95"/>
-</segment>
+<pinref part="U92" gate="G$1" pin="VCCB"/></segment>
 </net>
 <net name="GND" class="0">
 <segment>
@@ -30672,14 +30672,14 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <segment>
 <pinref part="X22" gate="-2" pin="S"/>
 <pinref part="GND1079" gate="1" pin="GND"/>
-<pinref part="U90" gate="G$1" pin="GND"/><pinref part="U91" gate="G$1" pin="GND"/><pinref part="C354" gate="G$1" pin="2"/><pinref part="C355" gate="G$1" pin="2"/><pinref part="C356" gate="G$1" pin="2"/><pinref part="C357" gate="G$1" pin="2"/><pinref part="C358" gate="G$1" pin="2"/><pinref part="C359" gate="G$1" pin="2"/><pinref part="X57" gate="-2" pin="S"/><pinref part="X25" gate="-2" pin="S"/><pinref part="X26" gate="-2" pin="S"/><pinref part="X27" gate="-2" pin="S"/><pinref part="X6" gate="-3" pin="S"/><pinref part="X19" gate="-3" pin="S"/><pinref part="X15" gate="-3" pin="S"/><pinref part="X13" gate="-3" pin="S"/><pinref part="X11" gate="-3" pin="S"/><pinref part="X22" gate="-3" pin="S"/><pinref part="X14" gate="-3" pin="S"/><pinref part="X14" gate="-4" pin="S"/><pinref part="X5" gate="-3" pin="S"/><pinref part="X5" gate="-4" pin="S"/><pinref part="X7" gate="-3" pin="S"/><pinref part="X7" gate="-4" pin="S"/></segment>
+<pinref part="U90" gate="G$1" pin="GND"/><pinref part="U91" gate="G$1" pin="GND"/><pinref part="C354" gate="G$1" pin="2"/><pinref part="C355" gate="G$1" pin="2"/><pinref part="C356" gate="G$1" pin="2"/><pinref part="C357" gate="G$1" pin="2"/><pinref part="C358" gate="G$1" pin="2"/><pinref part="C359" gate="G$1" pin="2"/><pinref part="X57" gate="-2" pin="S"/><pinref part="X25" gate="-2" pin="S"/><pinref part="X26" gate="-2" pin="S"/><pinref part="X27" gate="-2" pin="S"/><pinref part="X6" gate="-3" pin="S"/><pinref part="X19" gate="-3" pin="S"/><pinref part="X15" gate="-3" pin="S"/><pinref part="X13" gate="-3" pin="S"/><pinref part="X11" gate="-3" pin="S"/><pinref part="X22" gate="-3" pin="S"/><pinref part="X14" gate="-3" pin="S"/><pinref part="X14" gate="-4" pin="S"/><pinref part="X5" gate="-3" pin="S"/><pinref part="X5" gate="-4" pin="S"/><pinref part="X7" gate="-3" pin="S"/><pinref part="X7" gate="-4" pin="S"/><pinref part="U92" gate="G$1" pin="GND"/><pinref part="R195" gate="G$1" pin="2"/><pinref part="SJ1" gate="G$1" pin="3"/></segment>
 </net>
 <net name="+1V8_FPGA" class="0">
 <segment>
 <pinref part="X10" gate="-1" pin="S"/>
 <wire x1="121.92" y1="248.92" x2="119.38" y2="248.92" width="0.1524" layer="91"/>
 <label x="106.68" y="248.92" size="1.778" layer="95"/>
-</segment>
+<pinref part="U92" gate="G$1" pin="VCCA"/><pinref part="R194" gate="G$1" pin="2"/></segment>
 </net>
 <net name="+1V0_FPGA" class="0">
 <segment>
@@ -46831,7 +46831,7 @@ You are welcome to use this library for commercial purposes. For attribution, we
 </net>
 <net name="+1V8_CLOCK_F" class="0">
 <segment>
-<pinref part="U1" gate="A" pin="CSB"/>
+
 <wire x1="73.66" y1="83.82" x2="63.5" y2="83.82" width="0.1524" layer="91"/>
 <label x="58.42" y="83.82" size="1.778" layer="95"/>
 </segment>
@@ -46888,7 +46888,7 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <label x="127" y="121.92" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="SJ1" gate="G$1" pin="3"/>
+
 <wire x1="43.18" y1="91.44" x2="43.18" y2="93.98" width="0.1524" layer="91"/>
 <label x="43.18" y="93.98" size="1.778" layer="95" rot="R90"/>
 </segment>
@@ -46957,8 +46957,8 @@ You are welcome to use this library for commercial purposes. For attribution, we
 </net>
 <net name="N$6" class="0">
 <segment>
-<pinref part="U1" gate="A" pin="SCLK/DFS"/>
-<pinref part="SJ1" gate="G$1" pin="2"/>
+
+
 <wire x1="73.66" y1="86.36" x2="48.26" y2="86.36" width="0.1524" layer="91"/>
 </segment>
 </net>
@@ -48227,7 +48227,7 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <text x="55.88" y="17.78" size="10.16" layer="97">RF POWER AMPLIFIER BIAS VG CONTROL</text>
 <text x="55.88" y="274.32" size="10.16" layer="97">RF POWER AMPLIFIER TEMPERATURE SENSING</text>
 </plain>
-<instances>
+<instances><instance part="R195" gate="G$1" x="184" y="304" smashed="yes"><attribute name="NAME" x="182" y="305.5" size="1.524" layer="95"/></instance><instance part="R194" gate="G$1" x="184" y="304" smashed="yes"><attribute name="NAME" x="182" y="305.5" size="1.524" layer="95"/></instance><instance part="U92" gate="G$1" x="180" y="300" smashed="yes"><attribute name="NAME" x="178" y="301.5" size="1.524" layer="95"/></instance>
 <instance part="U7" gate="A" x="53.34" y="205.74" smashed="yes">
 <attribute name="NAME" x="81.6356" y="214.8586" size="2.0828" layer="95" ratio="6" rot="SR0"/>
 <attribute name="VALUE" x="81.0006" y="212.3186" size="2.0828" layer="96" ratio="6" rot="SR0"/>
