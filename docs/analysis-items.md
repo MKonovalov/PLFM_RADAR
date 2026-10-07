@@ -115,3 +115,24 @@ the numbers show is unnecessary.
 
 Two earlier claims in this repository are corrected by the same table: that no vendor data was reachable,
 and that the datasheet's tables were image-based. Both were wrong; the PDF extracts cleanly.
+
+## #5 addendum: the airflow figure the issue asks for
+
+The issue's "what is needed" list includes "a documented airflow figure". Computed for the array
+(16 devices at 36.96 W = 591 W), with a 40 °C ambient, an 85 °C case target, and a 15 K rise allowed
+in the air (ρ = 1.2 kg/m³, cp = 1005 J/kg·K):
+
+| duty | dissipated | required airflow | θ case→ambient, array | per device |
+|---|---|---|---|---|
+| **10 % (the acceptance case)** | 59 W | **≈ 7 CFM** | **0.76 °C/W** | 12.2 °C/W |
+| continuous | 591 W | **≈ 69 CFM** | 0.076 °C/W | 1.2 °C/W |
+
+The acceptance soak is specified at **10 % duty**, and that row is the practical one: **a normal
+heatsink with a small fan** (12 °C/W per device, ~7 CFM) meets it with margin. The continuous row is
+what forces liquid cooling or a large forced-air assembly, and it is the reason the requirement has
+to be stated as a choice rather than a single number.
+
+The baseplate thermistor the issue also asks for is already provided for: the eight NTC channels on
+the main board are external flying-lead probes on 3-pin headers (JP5/JP6/JP11/JP12/JP14/JP15/JP16/JP19),
+so one can be attached to the baseplate and read by the MCU with no further hardware — see
+`docs/temperature-channels.md`.
