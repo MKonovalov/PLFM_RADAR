@@ -64,7 +64,8 @@ TESTS_MOCK_ONLY := test_pa_gate_bias_contract \
                    test_gap3_emergency_stop_rails
 
 # Tests that are standalone (no mocks needed, pure logic)
-TESTS_STANDALONE := test_ad9523_outputs \
+TESTS_STANDALONE := test_fpga_config \
+                    test_ad9523_outputs \
                     test_pa_thermal \
                     test_ad9484_spi \
                     test_strobe_ack \
@@ -180,6 +181,10 @@ test_gap3_emergency_stop_rails: test_gap3_emergency_stop_rails.c $(MOCK_OBJS)
 # AD9523 unused outputs: the driver's disable plus the readback's decode (issue #17)
 test_ad9523_outputs: test_ad9523_outputs.c
 	$(CC) $(CFLAGS) $< -o $@
+
+# FPGA configuration status: a failed config must be reportable (issue #13)
+test_fpga_config: test_fpga_config.c ../9_1_1_C_Cpp_Libraries/FPGA_CONFIG.c
+	$(CC) $(CFLAGS) $(INCLUDES) $< ../9_1_1_C_Cpp_Libraries/FPGA_CONFIG.c -o $@
 
 # PA thermal budget: the model must reproduce the datasheet's own row (issue #5)
 test_pa_thermal: test_pa_thermal.c ../9_1_1_C_Cpp_Libraries/PA_THERMAL.c

@@ -72,6 +72,7 @@ extern "C" {
 #include "PA_BIAS_SEQUENCE.h"
 #include "RAIL_FAULT.h"
 #include "STROBE_ACK.h"
+#include "FPGA_CONFIG.h"
 #include "AD9484_SPI.h"
 #include "PA_THERMAL.h"
 #include "ADS7830.h"
@@ -276,6 +277,12 @@ static uint8_t  g_ack_test_attempts;
 static bool     g_ack_test_done;
 static bool     g_ack_test_passed;
 static bool     g_ack_path_ok;
+
+/* The FPGA's configuration status (issue #13).  The main board carries FPGA_DONE from the FPGA's
+ * DONE_0/INIT_B_0 to U2.PC4, so the MCU can see a failed or partial configuration - which it
+ * could not before, when the pins terminated in pull resistors only. */
+static FpgaConfig_t g_fpga_cfg;
+static bool         g_fpga_cfg_reported;
 
 /* ---- AD9484 serial port (AD9484_SPI.h) -------------------------------------
  * The ADC's CSB used to be tied to a rail - which the datasheet names as the way to disable the
@@ -1228,7 +1235,11 @@ void getSystemStatusForGUI(char* status_buffer, size_t buffer_size) {
         }
         avg_current /= 16.0f;
 
-        w = snprintf(status_buffer + off, rem, "StrobeAckPath:%s|PASensorMax:%dC|PALimit:%.0fC|",
+        w = snprintf(status_buffer + off, rem, "FPGAConfig:%s|",
+                 FpgaConfig_StateName(g_fpga_cfg.state));
+    if (w > 0 && (size_t)w < rem) { off += (size_t)w; rem -= (size_t)w; }
+
+    w = snprintf(status_buffer + off, rem, "StrobeAckPath:%s|PASensorMax:%dC|PALimit:%.0fC|",
                  g_ack_path_ok ? "ok" : (g_ack_test_done ? "FAILED" : "testing"),
                  Max_Temp_Report, (int)PA_TCASE_MAX_C);
     if (w > 0 && (size_t)w < rem) { off += (size_t)w; rem -= (size_t)w; }
@@ -2339,6 +2350,20 @@ int main(void)
                 bool faulting = RailFault_Sample(&g_rails);
                 StrobeAck_Sample(&g_strobe_ack,
                                  HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_3) == GPIO_PIN_SET);
+
+                /* Watch the FPGA's configuration line: high once the FPGA reports DONE. */
+                FpgaConfig_Sample(&g_fpga_cfg,
+                                  HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_4) == GPIO_PIN_SET,
+                                  HAL_GetTick());
+                if (FpgaConfig_IsConfigured(&g_fpga_cfg) && !g_fpga_cfg_reported) {
+                    g_fpga_cfg_reported = true;
+                    DIAG("FPGA", "configuration confirmed (DONE is high)");
+                } else if (FpgaConfig_HasFailed(&g_fpga_cfg) && !g_fpga_cfg_reported) {
+                    g_fpga_cfg_reported = true;
+                    DIAG_ERR("FPGA", "configuration NOT confirmed after %u ms -- DONE stayed low. "
+                             "The radar cannot run until the FPGA is configured.",
+                             (unsigned)FPGA_CFG_TIMEOUT_MS);
+                }
 
                 /* ask the acknowledgement path once, then leave it alone */
                 bool ack_high = HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_3) == GPIO_PIN_SET;
