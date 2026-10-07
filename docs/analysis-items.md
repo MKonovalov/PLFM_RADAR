@@ -16,31 +16,41 @@ theta_JC = 2.83 degC/W
 T_CH    = 189 degC     at T_BASE = 85 degC
 ```
 
-The array is sixteen devices, so **592 W** is dissipated in total. Working from the datasheet's own
-characterized condition — a case at **85 °C** — and a 40 °C ambient inside an enclosure:
+**Re-derived for the QPA1010** (issue #21; the figures above are the QPA2962's and are kept only as
+the comparison). The array is sixteen devices at 24 V and 600 mA quiescent, so **230.4 W** standing —
+and **396.8 W** under drive, because driven dissipation (24.8 W) exceeds quiescent (14.4 W):
 
 | | per device | array |
 |---|---|---|
-| dissipation | 36.96 W | 592 W |
+| dissipation, standing | 14.4 W | 230.4 W |
+| dissipation, driven | **24.8 W** | **396.8 W** |
 | allowed rise (85 − 40 °C) | 45 K | 45 K |
-| required case-to-ambient θ | **1.22 °C/W** | **0.076 °C/W** |
+| required case-to-ambient θ, standing | **3.13 °C/W** | **0.195 °C/W** |
+| required case-to-ambient θ, **driven** | **1.81 °C/W** | **0.113 °C/W** |
 
-For scale: a good forced-air heatsink is around 0.5–1 °C/W, and a liquid-cooled plate reaches
-0.05–0.1 °C/W. So **at continuous duty this array needs liquid cooling or a very large forced-air
-assembly** — that is the requirement the design was missing.
+**Driven is the binding case** — the opposite of the old device, where quiescent was the larger
+figure. A plan written against the standing number would be planning for 1.7× less dissipation than
+the part actually produces under drive.
 
-There is a second, cheaper answer, and it is the one the earlier duty-cycle estimate pointed at. At
-the ~22 % duty that keeps each device near 8 W average, the required θ relaxes to about
-**5.6 °C/W per device**, which ordinary air cooling meets comfortably.
+**What that means against the board.** The via field is worth ~0.77–1.15 °C/W per device, so against
+the driven requirement of 1.81 °C/W it leaves roughly **0.7–1.0 °C/W** for the thermal interface and
+the heatsink. A good forced-air heatsink is 0.5–1 °C/W, so **forced air suffices under drive** — and
+at the radar's 10 % transmit duty, where the drain is pulsed per the datasheet's own test conditions
+(PW = 100 µs, DC = 10 %), the average load is far lower again.
 
-**So the requirement is a choice, stated either way:**
+The old requirement was 1.22 °C/W per device that the same field met *with no margin*, and 0.076 °C/W
+for the array which needed a liquid-cooled plate. **The migration removes that** — it is the single
+largest practical consequence of the device change, and it is worth stating plainly because the
+issue's own framing ("the binding constraint is arithmetic not copper") stops being true.
 
-* continuous duty → θ_case-ambient ≤ 0.076 °C/W for the array (liquid-cooled plate), or
-* ≤ ~22 % duty → θ ≤ 5.6 °C/W per device (forced air is sufficient).
+**Airflow.** The old 69 CFM / 7 CFM figures were derived against 592 W and no longer apply. The
+requirement falls by roughly the ratio of the dissipations (2.6×), which puts it in the range of a
+small fan rather than a blower — but the exact figure follows the chosen heatsink's own θ-versus-flow
+curve, so it is stated as a scaling here and pinned when a heatsink is chosen.
 
-The channel limit itself is not in doubt: the case may reach 95.4 °C before the channel approaches
-200 °C, and the firmware's 75 °C PA-sensor limit keeps it near 180 °C. `PA_THERMAL.h` holds that
-model and `test_pa_thermal.c` checks it against the datasheet's own 189 °C row.
+The channel limit itself is not in doubt: `PA_THERMAL.h` now carries the QPA1010's θJC of 2.60 °C/W,
+which puts the channel at 150 °C for an 85 °C case at the driven dissipation, and reaches the 200 °C
+design limit only at a case of 135 °C. `test_pa_thermal.c` checks the model against the datasheet.
 
 ## #19 — the inrush, bounded, with the one number that decides it
 
@@ -127,6 +137,24 @@ in the air (ρ = 1.2 kg/m³, cp = 1005 J/kg·K):
 | **10 % (the acceptance case)** | 59 W | **≈ 7 CFM** | **0.76 °C/W** | 12.2 °C/W |
 | continuous | 591 W | **≈ 69 CFM** | 0.076 °C/W | 1.2 °C/W |
 
+
+**Re-derived for the QPA1010** with the same formula and the same 15 K air rise:
+
+| duty | dissipated | required airflow | θ case→ambient, array | per device |
+|---|---|---|---|---|
+| standing, drain up, no RF | 230 W | **≈ 27 CFM** | **0.20 °C/W** | 3.1 °C/W |
+| driven, 15 W RF out | 397 W | **≈ 46 CFM** | **0.11 °C/W** | 1.8 °C/W |
+| **10 % duty (the acceptance case)** | 23 W | **≈ 3 CFM** | **1.96 °C/W** | 31.3 °C/W |
+
+**What that changes.** The continuous row is the one that mattered: the previous device needed
+**69 CFM** at continuous duty, which is why the earlier conclusion was that the array needed
+*liquid cooling or a very large forced-air assembly*. At **27 CFM** the QPA1010 is served by an
+ordinary fan on a normal heatsink, and the acceptance case falls to about **3 CFM**.
+
+So the airflow requirement is met by the simplest possible answer, and the pedestal/copper coin
+the issue also asks for stop being prerequisites and become margin. The per-device column is the
+figure to compare against the board's via field (~0.77–1.15 °C/W).
+
 The acceptance soak is specified at **10 % duty**, and that row is the practical one: **a normal
 heatsink with a small fan** (12 °C/W per device, ~7 CFM) meets it with margin. The continuous row is
 what forces liquid cooling or a large forced-air assembly, and it is the reason the requirement has
@@ -163,9 +191,14 @@ QPA2962's 36.96 W.
 
 | | QPA2962 | QPA1010 |
 |---|---|---|
-| array dissipation (×16) | 592 W | **283 W** |
-| required θ case→ambient, continuous | 0.076 °C/W | **0.159 °C/W** |
-| required airflow, continuous | 69 CFM | **34 CFM** |
+| array dissipation (×16), standing | 592 W | **230 W** |
+| array dissipation (×16), driven | 473 W | **397 W** |
+| required θ case→ambient, standing | 0.076 °C/W | **0.195 °C/W** |
+| required θ case→ambient, **driven (binding)** | 0.095 °C/W | **0.113 °C/W** |
+| required airflow | 69 CFM at 592 W | falls ~2.6×; see the re-derivation above |
+
+**The 283 W in the earlier version of this table was wrong** — see the correction note below, which
+explains where it came from. The figures here are recomputed from the QPA1010's own bias point.
 
 So the migration would roughly **halve** the thermal load and make the #5 requirement considerably
 easier — possibly bringing continuous duty within reach of air cooling rather than liquid cooling.

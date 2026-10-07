@@ -51,7 +51,7 @@ Rail tolerance used for acceptance: **+/-5 % (probe acceptance; the regulators t
 |---|---|---|---|---|
 | `ADC_PWRD` | 0 / 2.5 V | U42 (bank 14, LVCMOS25) via R36 | U42.IO_L23N_T3_A02_D18_14 | ADC power-down; bank 14 is 2.5 V after the bank-14 change |
 | `M3S_VCTRL` | 0 / 3.3 V | U42 (bank 15, LVCMOS33) | U42.IO_L24N_T3_RS0_15 | common control for 16 RF switch VCTRL pins |
-| `VG_1 ... VG_16` | -4.03 V at reset, -3.98 V at boot | OPA4703 outputs, through the harness | see the net list | from PA_GATE_BIAS.h: mid-scale is the reset state |
+| `VG_1 ... VG_16` | -4.99 V at reset (DAC code 158) | OPA4703 outputs, through the harness | see the net list | from PA_GATE_BIAS.h: the QPA1010's documented off bias. The op-amp's -5 V rail is the floor, so this is as negative as the gates can go |
 
 ## Power board
 
@@ -108,8 +108,8 @@ Rail tolerance used for acceptance: **+/-5 % (probe acceptance; the regulators t
 
 | Signal | Levels | Driven by | Probe at | Note |
 |---|---|---|---|---|
-| `VG` | -4.03 V at reset | X2 pin S (harness from the gate-bias op-amp) | X2 pin S (harness connector) | same value at the far end of the harness; a difference here is harness drop |
-| `VD` | +22 V | X3 pin S / the 22 V terminal | X3 pin S (harness connector) | drain rail, per PA board |
+| `VG` | -4.99 V at reset (DAC code 158) | X2 pin S (harness from the gate-bias op-amp) | X2 pin S (harness connector) | same value at the far end of the harness; a difference here is harness drop. The op-amp's negative rail is -5 V |
+| `VD` | +24 V | X3 pin S / the 24 V terminal | X3 pin S (harness connector) | drain rail, per PA board (QPA1010) |
 | `N$2 / N$8` | RF - not a DC probe point | U$1.RFIN (J1) / U$1.RFOUT (J2) | see the net list | listed so the RF path is not probed by accident |
 
 ## What this map does not cover

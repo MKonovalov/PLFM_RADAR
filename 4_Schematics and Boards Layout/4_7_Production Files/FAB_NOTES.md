@@ -79,19 +79,23 @@ than a single nominal.
 
 ## 5. Thermal path for the PA board (issue #5)
 
-The requirement, from the array's own numbers: 16 devices dissipating 592 W into a 40 °C ambient with
-an 85 °C case ceiling is **1.22 °C/W per device** case-to-ambient, or **0.076 °C/W for the array**.
+**Re-derived for the QPA1010** (issue #21): 16 devices at 24 V / 600 mA dissipate **230 W** standing
+and **~397 W under drive**, which into a 40 °C ambient with an 85 °C case ceiling is **1.81 °C/W per
+device** case-to-ambient in the binding (driven) case, or **0.113 °C/W for the array**.
 
 **What the board provides:** 128 vias at 0.15 mm drill, of which ~104 sit in the densest cluster. A
 0.15 mm plated via through 1.6 mm FR-4 is commonly taken at 80–120 °C/W, so the field is worth
-**0.77–1.15 °C/W per device** — which **meets the requirement with no margin**.
+**0.77–1.15 °C/W per device** — which leaves **~0.7–1.0 °C/W** for the interface and heatsink. A good
+forced-air heatsink is 0.5–1 °C/W, so **forced air suffices**, where the previous device needed the
+same field to work with no margin at all.
 
 So the board path is adequate and nothing about it needs changing. What it does *not* do is leave room
 for the thermal interface and the heatsink, and that is what the issue's mechanical items are for.
 They belong in the PO, not in the layout:
 
 - **A pedestal to the chassis** under each PA board, so the heat leaves through metal rather than
-  through the board alone. This is the cheapest way to buy back the margin.
+  through the board alone. Still worth having — it is the cheapest way to buy back margin — but it is
+  now margin rather than a requirement, which is the change the device migration bought.
 - **A copper coin under the device paddle** if the pedestal route is not taken, or if the acceptance
   soak shows the margin has gone. It is a fab option on the PA stackup (Rogers RO4350B, per #24) and
   must be in the PO — it cannot be added after the boards are made.

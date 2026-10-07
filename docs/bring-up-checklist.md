@@ -49,9 +49,9 @@ Instruments: bench PSU with current limit, 4-channel scope (≥1 GHz), DMM, VNA 
 | Measurement | Target | If it fails |
 |---|---|---|
 | Gate voltage with the DAC in reset, before VD is applied | VGG ≈ −4 V, IDQ ≈ 0 | never apply VD to a FET whose gate bias is unknown |
-| Calibrated IDQ, all 16 channels | **1.680 A ± 2 %** (≈ code 43 of 255 on the ADS7830 with the 5 mΩ/50 V/V chain) | if the reported current is ~32 % high, the ADC reference constant is wrong for how the ADS7830 was initialised (internal 2.5 V vs 3.3 V) |
+| Calibrated IDQ, all 16 channels | **0.600 A ± 2 %** (≈ code 31 of 255 on the ADS7830 with the 5 mΩ / **100 V/V** chain) | if the reported current is ~32 % high, the ADC reference constant is wrong for how the ADS7830 was initialised (internal 2.5 V vs 3.3 V). A 50 V/V figure here is stale — that was the A3 revision of the amplifier, not the A4 the board carries |
 | Injected current check | Inject 1 A and 2 A through the shunt; firmware reads within ±2 % | calibrate/replace the sense chain, not the numbers in the log |
-| Over-current trip | Trips between **2.5 A and 10 A**; the chain must be able to see the trip current at all (a 0.1 Ω shunt saturates at 0.5 A and can *never* trip) | `PA_SENSE.h`'s `static_assert` exists precisely to make that combination fail the build |
+| Over-current trip | **0.9 A ± 2 %** (≈ code 46), against the 0.600 A bias point — a 1.5× ratio. It must sit *near* the operating point: at the old 2.5 A it would have been 4.2× the new bias, and the part could run at four times its rated current before anything fired | `PA_SENSE.h`'s `static_assert` enforces the ratio band, and `test_pa_sense_migration` checks the arithmetic; the shunt must also be able to see the trip current at all (a 0.1 Ω shunt saturates at 0.5 A and can *never* trip) |
 | Bias fault detection | Reads < 0.1 A → `BIAS FAULT` reported | — |
 | VGA write verification | Zero failed read-backs out of 16 (`applyGainVerified`) | a non-zero count means the ADAR SPI path is unreliable — stop and fix the bus |
 
@@ -72,8 +72,8 @@ Instruments: bench PSU with current limit, 4-channel scope (≥1 GHz), DMM, VNA 
 |---|---|---|
 | EIRP per column | Matches the link budget used for the range claim | check the harmonic filter IL and the gate bias |
 | Harmonics | 2nd/3rd ≥ 20 dB below carrier at the antenna port — **no post-PA filter exists on this revision** | add the harmonic filter before quoting EIRP |
-| VD droop during a chirp burst | **< 0.5 V** (30 µs × 1.68 A needs ≥ 100 µF per board; the current 30 µF droops ~1.7 V) | add bulk capacitance at the drain feed |
-| Baseplate temperature, 30-min soak at 10 % duty | **≤ 85 °C** with margin | the thermal path is not solved: copper coin/pedestal to the chassis, thermistor on the baseplate |
+| VD droop during a chirp burst | **< 0.5 V** at the 0.600 A bias point (the bulk fix from issue #6 is in; the pre-fix 30 µF would have drooped ~1.7 V at the old 1.68 A) | the droop scales with device current, so re-check it against the burst length in use |
+| Baseplate temperature, 30-min soak at 10 % duty | **≤ 85 °C** with margin | the thermal path *is* solved for the QPA1010: the via field gives ~0.77–1.15 °C/W per device against a 1.81 °C/W driven requirement, so the leftover ~0.7–1.0 °C/W is ordinary forced air. The pedestal is margin rather than a requirement now. Thermistors are on the baseplate |
 
 ## Gate 6 — full array
 

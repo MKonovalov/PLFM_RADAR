@@ -10,20 +10,22 @@ than an experiment.
 The issue said Qorvo's Rth was NDA-gated. It is in the brief, in the thermal section:
 
 ```
-Thermal Resistance (theta_JC)  2.83 degC/W
-    T_BASE = 85 degC, VD = 22 V, IDQ = 1680 mA, no RF, P_DISS = 36.96 W
-Channel Temperature, T_CH      189 degC     (under RF, IR-scan equivalent)
+Thermal Resistance (theta_JC)  2.60 degC/W                    <- QPA1010, the chosen device
+    T_BASE -40 to +85 degC, VD = 24 V, IDQ = 600 mA
+    quiescent P_DISS = 24 x 0.6 = 14.4 W
+    driven  P_DISS = 39.8 - 15 = 24.8 W   (P_DC 15 W / 37.7 % PAE, minus the RF that leaves)
 ```
 
-Those rows are self-consistent — `85 + 2.83 x 36.96 = 189.6` — which is what makes them usable:
-the channel sits one multiplication above the case, so a measured case temperature converts to a
-channel temperature directly. Under drive the dissipation is *lower* (10 W at 22 % PAE means
-P_DC = 45.5 W, so ~35.5 W dissipated), so the quiescent figure is the safe planning number.
+The model is one multiplication above the case, so a measured case temperature converts to a channel
+temperature directly. **For this device driven is the safe planning number, not quiescent** — the
+opposite of the QPA2962, whose quiescent dissipation (36.96 W) exceeded its driven figure (35.5 W).
+`PA_THERMAL.h` derives `PA_PDISS_PLAN_W` as the larger of the two rather than naming one, so the
+direction cannot be got wrong by habit.
 
-**What that says about the design.** The channel limit (200 °C design, against the brief's 189 °C
-under RF) is reached at a case temperature of **95.4 °C**. `PA_THERMAL.h` now holds the model and
-`test_pa_thermal.c` checks it against the brief's own row, so the numbers cannot drift from the
-datasheet.
+**What that says about the design.** The channel limit (200 °C design) is reached at a case
+temperature of **135 °C**, and the datasheet's own T_BASE maximum of 85 °C binds long before it. At
+the firmware's 75 °C sensor limit the channel sits at `75 + 2.60 x 24.8 = 139 °C`, well inside.
+`test_pa_thermal.c` checks the model against the datasheet, so the numbers cannot drift.
 
 **A real bug it exposed.** The PA over-temperature check read:
 
@@ -32,7 +34,7 @@ int Max_Temp = 25;      // ...while the comment beside it said ">75 C"
 ```
 
 25 °C would trip constantly — or, since no board populates the sensors, never. It now reads 75,
-which the physics supports (75 + 2.83 x 37 ≈ 180 °C channel, inside the limit).
+which the physics supports (75 + 2.60 x 24.8 = 139 °C channel, inside the limit).
 
 **The remaining gap is hardware, and it is specific:** the firmware declares eight sensors
 (`Temperature_1..8`) and **no board has one**. That is what this issue needs: eight case

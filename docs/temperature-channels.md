@@ -79,9 +79,16 @@ ratio 0.10 ->  95.3 C     ratio 0.50 ->  25.0 C
 ratio 0.30 ->  48.7 C     ratio 0.90 -> -22.8 C
 ```
 
-Note the first: **ratio 0.10 lands on 95.3 °C**, which is the case limit derived from the
-QPA2962's θJC in `PA_THERMAL.h` (95.4 °C). The protection threshold and the sensor's useful range
-coincide, which is a good sign that the divider was dimensioned for this job.
+Note the first: **ratio 0.10 lands on 95.3 °C**. That was the case limit derived from the QPA2962's
+θJC — 95.4 °C — so the protection threshold and the sensor's useful range coincided, which is what
+suggested the divider was dimensioned for this job.
+
+**With the QPA1010 the coincidence lapses, and in the safe direction.** Its θJC is 2.60 °C/W and its
+planning dissipation 24.8 W, so the 200 °C channel design limit is not reached until a case of
+**135 °C** — and the datasheet's own T_BASE maximum of **85 °C** binds far earlier than either. The
+sensor's 95 °C ceiling therefore still sits above every limit that matters, and the firmware's 75 °C
+trip keeps the channel at 139 °C. The divider does not need re-dimensioning; what changed is which
+limit is binding, and the sensor is still on the correct side of it.
 
 ## Still to do
 
