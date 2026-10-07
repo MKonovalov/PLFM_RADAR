@@ -185,6 +185,20 @@ bool AD9484_SPI_SetInputRange(const AD9484_SPI_IO_t *io, uint8_t code)
                                     (uint8_t)(AD9484_VREF_SELECT_INTERNAL | code));
 }
 
+bool AD9484_SPI_TestModeIsValid(uint8_t mode)
+{
+    /* 0000 to 1000 are documented; 1001 to 1111 are unused. */
+    return mode <= AD9484_TEST_USER_PATTERN;
+}
+
+bool AD9484_SPI_SetTestMode(const AD9484_SPI_IO_t *io, uint8_t mode)
+{
+    if (!ready(io) || !AD9484_SPI_TestModeIsValid(mode)) {
+        return false;
+    }
+    return AD9484_SPI_WriteRegister(io, AD9484_REG_TEST_IO, (uint8_t)(mode & 0x0Fu));
+}
+
 bool AD9484_SPI_SetTestPattern(const AD9484_SPI_IO_t *io, bool on, uint16_t pattern)
 {
     if (!ready(io)) {

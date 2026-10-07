@@ -145,6 +145,62 @@ int main(void)
     check(!AD9484_SPI_SelfTest(&io, NULL, NULL), "self-test refuses NULL outputs");
     AD9484_SPI_IO_t incomplete = { spy_csb, NULL, spy_sdio_out, NULL, NULL, NULL };
     check(!AD9484_SPI_Init(&incomplete), "missing SCLK refused");
+    printf("=== the output test modes ===\n");
+    {
+        static const struct { uint8_t mode; const char *what; } modes[] = {
+            {AD9484_TEST_OFF,          "off"},
+            {AD9484_TEST_MIDSCALE,     "midscale short"},
+            {AD9484_TEST_POS_FS,       "+FS short"},
+            {AD9484_TEST_NEG_FS,       "-FS short"},
+            {AD9484_TEST_CHECKERBOARD, "checkerboard"},
+            {AD9484_TEST_PN23,         "PN23"},
+            {AD9484_TEST_PN9,          "PN9"},
+            {AD9484_TEST_ONE_ZERO,     "one/zero toggle"},
+            {AD9484_TEST_USER_PATTERN, "user-defined"},
+        };
+        const int n = (int)(sizeof modes / sizeof modes[0]);
+        int good = 0;
+        for (int i = 0; i < n; i++) {
+            reset_spy();
+            if (!AD9484_SPI_SetTestMode(&io, modes[i].mode)) {
+                printf("      %-14s refused\n", modes[i].what);
+                continue;
+            }
+            bits[nbits] = '\0';
+            /* address 0x0D in A12..A0, then the mode in bits[3:0] of the data byte.
+             * The data byte is bits[16..23] with D7 at [16], so D3..D0 are bits[20..23]. */
+            const int addr_ok = strncmp(bits + 3, "0000000001101", 13) == 0;
+            const int mode_ok = (bits[20] == (char)('0' + ((modes[i].mode >> 3) & 1))) &&
+                                (bits[21] == (char)('0' + ((modes[i].mode >> 2) & 1))) &&
+                                (bits[22] == (char)('0' + ((modes[i].mode >> 1) & 1))) &&
+                                (bits[23] == (char)('0' + (modes[i].mode & 1)));
+            if (addr_ok && mode_ok) good++;
+            else printf("      %-14s wrote %s\n", modes[i].what, bits);
+        }
+        check(good == n, "each of the nine documented modes writes its code to 0x0D bits[3:0]");
+
+        check(!AD9484_SPI_SetTestMode(&io, 0x09), "0x09 is unused in the datasheet and is refused");
+        check(!AD9484_SPI_SetTestMode(&io, 0x0F), "0x0F likewise");
+        check(AD9484_SPI_TestModeIsValid(0x08) && !AD9484_SPI_TestModeIsValid(0x09),
+              "the validity check agrees with the datasheet's used/unused split");
+
+        /* PN9 is the deterministic source the acceptance wants - the part has no ramp.  The
+         * sequence is x^9 + x^5 + 1, and its properties are what make a capture checkable: a
+         * defined period, and a return to the seed so the same capture can be taken twice.
+         * The exact mapping of the 9-bit state onto the 8 output pins is a bench detail; what is
+         * asserted here is that the sequence is deterministic and balanced, not bit alignment. */
+        unsigned lfsr = 0x1FFu;
+        int ones = 0;
+        for (int i = 0; i < 511; i++) {
+            const unsigned bit = ((lfsr >> 8) ^ (lfsr >> 4)) & 1u;
+            lfsr = ((lfsr << 1) | bit) & 0x1FFu;
+            ones += (int)bit;
+        }
+        check(lfsr == 0x1FFu, "the PN9 sequence returns to its seed after 2^9 - 1 steps");
+        check(ones == 256, "...and carries exactly 256 ones in its period - balanced, not stuck");
+    }
+
+
     printf("=== the input voltage range: this part's gain trim ===\n");
     {
         /* the datasheet's table, code -> mV peak-to-peak */

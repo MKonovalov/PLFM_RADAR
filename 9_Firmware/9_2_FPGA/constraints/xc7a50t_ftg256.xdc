@@ -220,7 +220,7 @@ set_property PACKAGE_PIN F13 [get_ports {stm32_new_chirp}]
 # Issue #13: the strobe acknowledgement the MCU polls (free bank-15 pin, same bank and
 # standard as the strobe it answers, so no level shift is involved)
 set_property PACKAGE_PIN B16 [get_ports {fpga_strobe_ack}]
-set_property IOSTANDARD LVCMOS33 [get_ports {fpga_strobe_ack}]       ;# DIG_0 (PD8)
+set_property IOSTANDARD LVCMOS33 [get_ports {fpga_strobe_ack}]
 set_property PACKAGE_PIN E16 [get_ports {stm32_new_elevation}]   ;# DIG_1 (PD9)
 set_property PACKAGE_PIN D16 [get_ports {stm32_new_azimuth}]     ;# DIG_2 (PD10)
 set_property PACKAGE_PIN F15 [get_ports {stm32_mixers_enable}]   ;# DIG_3 (PD11)

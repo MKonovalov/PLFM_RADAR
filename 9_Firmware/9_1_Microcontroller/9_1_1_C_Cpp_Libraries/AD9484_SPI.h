@@ -52,8 +52,23 @@
 #define AD9484_FORMAT_TWOS_COMPLEMENT 0x01u
 
 /** TEST_IO: write 0 to return the outputs to normal data. */
-#define AD9484_TEST_OFF 0x00u
-#define AD9484_TEST_USER_PATTERN 0x01u   /* bits[3:0]: user-defined pattern on the outputs */
+/*
+ * The output test modes, from the datasheet's memory map (register 0x0D TEST_IO, bits[3:0]).
+ *
+ * There is no ramp mode.  The deterministic ones are PN9 and PN23: pseudo-random sequences with
+ * defined polynomials, so a capture can be checked against a computed expectation rather than only
+ * against "not constant" - which is what the acceptance means by wanting a deterministic pattern.
+ * Note that the format of the pattern on the pins is set by OUTPUT_MODE, as the datasheet says.
+ */
+#define AD9484_TEST_OFF          0x00u   /* 0000: normal data */
+#define AD9484_TEST_MIDSCALE     0x01u   /* 0001: midscale short  */
+#define AD9484_TEST_POS_FS       0x02u   /* 0010: +FS short       */
+#define AD9484_TEST_NEG_FS       0x03u   /* 0011: -FS short       */
+#define AD9484_TEST_CHECKERBOARD 0x04u   /* 0100: checker board   */
+#define AD9484_TEST_PN23         0x05u   /* 0101: PN23 sequence   */
+#define AD9484_TEST_PN9          0x06u   /* 0110: PN9 sequence    */
+#define AD9484_TEST_ONE_ZERO     0x07u   /* 0111: one/zero word toggle */
+#define AD9484_TEST_USER_PATTERN 0x08u   /* 1000: user-defined, from 0x19/0x1A */
 
 /** The three lines plus the turnaround control. All optional except csb/sclk/sdio_out. */
 typedef struct {
@@ -112,6 +127,19 @@ bool AD9484_SPI_ReadChipGrade(const AD9484_SPI_IO_t *io, uint8_t *grade);
  * with `on` false, TEST_IO is cleared and normal data returns.
  */
 bool AD9484_SPI_SetTestPattern(const AD9484_SPI_IO_t *io, bool on, uint16_t pattern);
+
+/*
+ * Select one of the documented output test modes (the AD9484_TEST_* values above).
+ * Returns false for a mode the datasheet does not document - the codes 1001 to 1111 are unused, and
+ * writing them would put an unverified value in the register.
+ *
+ * AD9484_TEST_USER_PATTERN only selects the mode; the pattern itself is written by
+ * AD9484_SPI_SetTestPattern().
+ */
+bool AD9484_SPI_SetTestMode(const AD9484_SPI_IO_t *io, uint8_t mode);
+
+/* True if the mode is one the datasheet documents. */
+bool AD9484_SPI_TestModeIsValid(uint8_t mode);
 
 /** Select the output data format explicitly rather than relying on the SCLK/DFS strap. */
 bool AD9484_SPI_SetDataFormat(const AD9484_SPI_IO_t *io, uint8_t format);
