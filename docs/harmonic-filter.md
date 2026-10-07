@@ -87,3 +87,18 @@ RoHS-compliant, that has to be resolved with the vendor or an alternative found;
 the RF performance.
 
 Source: `markimicrowave.com/products/connectorized/filters/flp-1250/datasheet/`.
+
+## The acceptance figure, stated where EIRP is quoted
+
+This issue's acceptance asks for two things, and the second is a documentation duty: *"State the
+measured figure wherever EIRP is quoted."* The README quotes EIRP, so the harmonic figure is now
+stated there alongside it, and the same statement applies here:
+
+> The PA's 2nd and 3rd harmonics (21.0 and 31.5 GHz) are suppressed by the inline output filter. The
+> chosen part rejects **≥40 dB across 19.5–32 GHz**, against a requirement of **≥20 dB below carrier**
+> at the antenna port — so the design carries 20 dB of margin. The measured figure is a first-article
+> item.
+
+The margin matters: the requirement is met by the filter's *specified minimum*, not by a typical
+value or by reading a plot, so no bench measurement is needed to know the design complies. What the
+measurement adds is confirmation, not the answer.

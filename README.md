@@ -163,6 +163,13 @@ built unit.  They are only meaningful with their detection assumptions attached,
    the directivity difference is only ~0.2 dB, so the performance number stands either
    way — it is the drawing that needs reconciling with the spec table.
 
+   **Harmonic emissions.**  Wherever EIRP is quoted above, the harmonic figure belongs with it: the
+   PA's 2nd and 3rd harmonics (21.0 and 31.5 GHz) are suppressed by the inline output filter, whose
+   specification is in `docs/harmonic-filter.md`.  The chosen part rejects **≥40 dB across
+   19.5–32 GHz**, against a requirement of ≥20 dB below carrier at the antenna port — so the design
+   carries 20 dB of margin, and the *measured* figure is a first-article item recorded in
+   `docs/bring-up-acceptance.md`.
+
 ## 🚀 Getting Started
 
 ### 🧹 Repository File Placement Policy
