@@ -59,3 +59,37 @@ Both errors were in the direction of declaring a real part missing:
 
 **A "not found" in this sheet is a statement about the search, not about the part.** That is why the
 8 above are reported with their series evidence rather than as absent.
+
+## FINDING: five Yageo part numbers carry value codes that are not in the series' own ladder
+
+`RC0201FR` / `RC0402FR` are Yageo's **1 % (F) = E96** series. Every one of the five remaining Yageo
+part numbers carries a value that is **not an E96 code** — and in each case the nearest E96 value
+resolves at a distributor while the BOM's form resolves nowhere:
+
+| BOM part number | value | in E96? | E96 form | resolves at | value change |
+|---|---|---|---|---|---|
+| `RC0201FR-072K44L` | 2.44 kΩ | **no** | `RC0201FR-072K43L` | digikey.com | −0.4 % |
+| `RC0201FR-073K2L` | 3.20 kΩ | **no** | `RC0201FR-073K16L` | digikey.com | −1.25 % |
+| `RC0201FR-07500RL` | 500 Ω | **no** | `RC0201FR-07499RL` | robu.in | −0.2 % |
+| `RC0201FR-07840RL` | 840 Ω | **no** | `RC0201FR-07845RL` | ti.com | +0.6 % |
+| `RC0402FR-07830RL` | 830 Ω | **no** | `RC0402FR-07825RL` | arrow.com | −0.6 % |
+
+**All five substitutions are within ±1.3 %**, so they are purchasing corrections rather than a
+redesign — but they are still a BOM change and should be made deliberately.
+
+**Stated as evidence, not proof.** Some manufacturers do list E24 values in a 1 % series, so a
+non-E96 value is a strong lead rather than a certainty. What makes it strong here is the asymmetry:
+the BOM's form resolves at no distributor searched, and the E96 neighbour resolves at four different
+ones.
+
+**Action:** correct the five value codes to their E96 forms, or obtain written confirmation from the
+distributor that the E24 value exists in this series. This is the third instance of the same class of
+defect the BOM checks have been catching — a value column that does not correspond to a real part
+(after `X19`'s stale part number and the `47uF`/4.7 µF typo).
+
+## The three Murata parts
+
+`GRM033R60J475ME47D`, `GRM033R71E472KA88D` and `GRM033R71E473KA88D` use standard Murata value codes
+(`475` = 4.7 µF, `472` = 4.7 nF, `473` = 47 nF) and their series is confirmed at DigiKey by a
+known-good sibling. Their individual pages did not surface, which is a limit of the search rather
+than a doubt about the part — unlike the Yageo five, where the *value ladder itself* is the problem.

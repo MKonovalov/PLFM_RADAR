@@ -136,3 +136,43 @@ The baseplate thermistor the issue also asks for is already provided for: the ei
 the main board are external flying-lead probes on 3-pin headers (JP5/JP6/JP11/JP12/JP14/JP15/JP16/JP19),
 so one can be attached to the baseplate and read by the MCU with no further hardware — see
 `docs/temperature-channels.md`.
+
+## #21 CORRECTION: the QPA1010 dissipates about HALF as much, not more
+
+The earlier analysis in this file said the migration "tightens #5 rather than easing it", reasoning
+from 15 W against 10 W. **That was wrong**, and the datasheet says so plainly.
+
+| | QPA2962 (current) | QPA1010 (candidate) |
+|---|---|---|
+| Drain voltage (VD) | 22 V | **24 V** |
+| Quiescent drain current (IDQ) | 1680 mA | **600 mA** |
+| Gate voltage range (VG) | −1.2 to −2.5 V | **−2.9 to −1.5 V** |
+| **Power dissipation, driven** | **36.96 W** | **17.7 W** |
+| Channel temperature at TBASE = 85 °C | 189 °C | **131 °C** |
+| θJC (derived from the two rows above) | 2.83 °C/W | **2.60 °C/W** |
+| Power-added efficiency | 22 % | **38 %** |
+| Saturated output | ~10 W | 15 W (42 dBm at PIN = 24 dBm) |
+| Package | — | 24-lead 4.5 × 5.0 × 1.72 mm air-cavity laminate |
+| Compliance | — | **Lead-free and RoHS compliant** |
+
+The reason is efficiency: 38 % PAE against 22 % means that for **more** output power it dissipates
+**less**. The QPA1010's own thermal row gives PDISS = 17.7 W at 41.4 dBm output, against the
+QPA2962's 36.96 W.
+
+**What that means for the array:**
+
+| | QPA2962 | QPA1010 |
+|---|---|---|
+| array dissipation (×16) | 592 W | **283 W** |
+| required θ case→ambient, continuous | 0.076 °C/W | **0.159 °C/W** |
+| required airflow, continuous | 69 CFM | **34 CFM** |
+
+So the migration would roughly **halve** the thermal load and make the #5 requirement considerably
+easier — possibly bringing continuous duty within reach of air cooling rather than liquid cooling.
+It also removes a procurement constraint: the part is RoHS compliant, which the FLP-1250 filter is
+not (see `docs/harmonic-filter.md`).
+
+Two other differences worth noting for the port: IDQ drops from 1680 mA to 600 mA, which changes the
+bias table's operating point, and the gate range shifts to −2.9…−1.5 V. The *sequence* is unchanged
+in kind — negative gate, then drain — which is what `PA_BIAS_SEQUENCE` and the ADTR1107's documented
+order already implement.

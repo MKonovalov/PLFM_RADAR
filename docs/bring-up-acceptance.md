@@ -71,3 +71,90 @@ to 3.3 V at 3 A), but a sustained warm-up surge is **not** covered by the bulk: 
 droops 5.7 V. So the capture is: probe `+3V3_XO` at power-up and confirm the droop stays inside the
 OCXO's specification. The ECOC-2522's warm-up current has to be read from its datasheet table
 (which is image-based, so it does not extract) or requested from ECS.
+
+## #17 — the AD9523's output spectrum (extracted from the firmware's own configuration)
+
+The acceptance is "no unexplained clock content in the spectrum". That needs an *expected* spectrum
+to compare against, and the firmware defines it. PLL2 runs the VCO at 3.6 GHz from the 100 MHz VCXO,
+and these channels are enabled with these dividers:
+
+| Channels | Divider | Output |
+|---|---|---|
+| 0, 1 | /12 | **300 MHz** |
+| 4, 5 | /9 | **400 MHz** |
+| 6 | /36 | **100 MHz** |
+| 7 | /180 | **20 MHz** |
+| 8, 9 | /60 | **60 MHz** |
+| 10, 11 | /30 | **120 MHz** |
+
+**Channels 2, 3, 12 and 13 are left disabled** — and 2 and 3 are OUT2 and OUT3, the two pairs whose
+nets carry nothing but the driver.
+
+So the pass criterion is two-sided, which is what makes it checkable:
+
+1. **present:** 300, 400, 100, 20, 60 and 120 MHz;
+2. **absent:** any content attributable to channels 2, 3, 12, 13 — i.e. 3.6 GHz divided by their
+   dividers, and in particular nothing at the OUT2/OUT3 pin frequencies.
+
+`AD9523_VerifyOutputs()` reads the channel registers back and reports which are powered down, so the
+register side is already confirmed; the spectrum check is the physical confirmation.
+
+## #20 — the power-up order, as a trace to compare against
+
+The acceptance is "scope capture of the rails at power-up showing the intended order". The firmware
+states the order, with delays, in the ADAR1000 bring-up:
+
+```
+t0          EN_P_3V3_ADAR12 + EN_P_3V3_ADAR34 asserted   -> +3V3_ADAR12/34 rise
+t0 + 500 ms EN_P_5V0_ADAR asserted                       -> +5V0_ADAR rises
+                                                            -> -5V0_ADAR12/34 follow (U20/U21/U36/U37)
+t0 + 1000ms sequencing complete
+```
+
+The expected trace, and the two things to look for:
+
+1. **+3V3_ADAR12/34 rise before (or with) −5V0_ADAR12/34.** This is the ADAR1000 pin-table
+   requirement, quoted in the firmware beside the code.
+2. **−5V0_ADAR12/34 cannot precede +5V0_ADAR.** They are charge-pump inversions of it, so the
+   negative has nothing to invert until the positive exists — the order is structural, not
+   sequential, and `9_Firmware/tools/power_sequencing.py` enforces the pairing.
+
+The same structure holds for the switch rails: `+3V3_SW` (staged on MCU `PE14`) precedes `−3V3_SW`
+(its pump), matching the ADTR1107's documented sequence — VDD_SW 3.3 V, then VSS_SW −3.3 V.
+
+## #14 — the test-pattern check, with expected values
+
+The acceptance asks for the capture chain to be proven without RF. The AD9484 is an **8-bit**,
+500 MSPS part with a 1.5 V full scale, and its test-pattern modes (register `0x0D` TEST_IO, bits
+`[3:0]`) let the output be driven with a known value.
+
+**The self-checking case is the one to use.** Load the user-defined pattern and read it back:
+
+```
+AD9484_SPI_SetTestPattern(&io, true, 0xA5);   -> 0x19 / 0x1A hold it, 0x0D selects it
+captured samples must all read 0xA5
+```
+
+The expected value is known from the register rather than from a graph, so this needs no external
+reference — and it exercises the whole chain: SPI write, the DEVICE_UPDATE transfer, the pattern
+generator, the LVDS output, the FPGA capture and the sample format.
+
+**The modes with derivable codes** (in the configured **offset binary** format — note that midscale
+is `0x80`, not `0x00`, which is why the firmware forces the format rather than trusting the `SJ1`
+strap):
+
+| Mode (0x0D bits[3:0]) | Expected output |
+|---|---|
+| `0001` midscale short | `0x80` |
+| `0010` +FS short | `0xFF` |
+| `0011` −FS short | `0x00` |
+| `0100` checkerboard | alternating `0x55` / `0xAA` |
+| `0111` one/zero word toggle | alternating `0xFF` / `0x00` |
+| `1000` user-defined | whatever `0x19`/`0x1A` hold |
+
+`0101` (PN23) and `0110` (PN9) are pseudo-random sequences: they can be checked against the
+generator polynomial, but the user-defined case above is the simpler proof that the chain works.
+
+The datasheet names the patterns and states the resolution; the codes in the table are **derived**
+from the pattern definitions and the selected format, which is why the user-defined row is the one
+worth relying on.
