@@ -1205,7 +1205,16 @@ for trimmer refence see : &lt;u&gt;www.electrospec-inc.com/cross_references/trim
 &lt;/td&gt;
 &lt;/tr&gt;
 &lt;/table&gt;</description>
-<packages><package name="22-23-2041">
+<packages><package name="S1751-46">
+<description>&lt;b&gt;SMT Test Point&lt;/b&gt; Harwin S1751-46R, 1.63 x 3.25 mm, 2 mm high. Two pads, one node.</description>
+<smd name="1" x="-1.2" y="0" dx="1.4" dy="1.2" layer="1"/>
+<smd name="2" x="1.2" y="0" dx="1.4" dy="1.2" layer="1"/>
+<wire x1="-1.9" y1="-0.815" x2="1.9" y2="-0.815" width="0.127" layer="21"/>
+<wire x1="1.9" y1="-0.815" x2="1.9" y2="0.815" width="0.127" layer="21"/>
+<wire x1="1.9" y1="0.815" x2="-1.9" y2="0.815" width="0.127" layer="21"/>
+<wire x1="-1.9" y1="0.815" x2="-1.9" y2="-0.815" width="0.127" layer="21"/>
+<text x="-1.778" y="1.143" size="0.8" layer="25">&gt;NAME</text>
+</package><package name="22-23-2041">
 <description>&lt;b&gt;KK® 254 Solid Header, Vertical, with Friction Lock, 4 Circuits, Tin (Sn) Plating&lt;/b&gt;&lt;p&gt;&lt;a href =http://www.molex.com/pdm_docs/sd/022232031_sd.pdf&gt;Datasheet &lt;/a&gt;</description>
 <wire x1="-5.08" y1="3.175" x2="5.08" y2="3.175" width="0.254" layer="21"/>
 <wire x1="5.08" y1="3.175" x2="5.08" y2="1.27" width="0.254" layer="21"/>
@@ -2367,7 +2376,7 @@ Your PCBWay Team
 <param name="cfChangeDir" value="25"/>
 </pass>
 </autorouter>
-<elements><element name="X38" library="con-molex" package="22-23-2021" value="22-23-2021" x="166.0" y="102.0" smashed="yes"/><element name="X39" library="con-molex" package="22-23-2021" value="22-23-2021" x="170.5" y="114.5" smashed="yes"/><element name="X40" library="con-molex" package="22-23-2021" value="22-23-2021" x="171.5" y="152.0" smashed="yes"/><element name="U36" library="My_Library_RADAR" package="M08A" value="LM2662MX/NOPB" x="96.15" y="87.85" smashed="yes"/><element name="C173" library="T521W476M020ATE045" package="T521W" value="T521W476M020ATE045" x="96.15" y="90.35" smashed="yes"/><element name="U37" library="My_Library_RADAR" package="M08A" value="LM2662MX/NOPB" x="103.34" y="109.47999999999999" smashed="yes"/><element name="C174" library="T521W476M020ATE045" package="T521W" value="T521W476M020ATE045" x="103.34" y="111.97999999999999" smashed="yes"/><element name="R61" library="rcl" package="M0805" value="10k" x="156.0" y="116.0" smashed="yes"/><element name="R62" library="rcl" package="M0805" value="10k" x="156.0" y="118.0" smashed="yes"/><element name="R63" library="rcl" package="M0805" value="10k" x="156.0" y="120.0" smashed="yes"/><element name="C169" library="rcl" package="C0603" value="22µF" x="149.7" y="245.89999999999998" smashed="yes"/><element name="C170" library="rcl" package="C0603" value="22µF" x="149.7" y="247.89999999999998" smashed="yes"/><element name="C171" library="rcl" package="C0603" value="22µF" x="149.7" y="252.39999999999998" smashed="yes"/><element name="C172" library="rcl" package="C0603" value="22µF" x="149.7" y="256.4" smashed="yes"/><element name="U35" library="My_Library_RADAR" package="TPS7A8300RGRR" value="TPS7A8300RGRR" x="145.8" y="119.80000000000001" smashed="yes"/><element name="R59" library="rcl" package="M0805" value="24.3k" x="170.0" y="138.0" smashed="yes"/><element name="R60" library="rcl" package="M0805" value="11.5k" x="174.0" y="142.0" smashed="yes"/><element name="C164" library="rcl" package="C0603" value="22µF" x="160.0" y="126.0" smashed="yes"/><element name="C165" library="rcl" package="C0603" value="22µF" x="176.0" y="124.0" smashed="yes"/><element name="C166" library="rcl" package="C0603" value="10µF" x="180.0" y="136.0" smashed="yes"/><element name="C167" library="rcl" package="C0603" value="10nF" x="184.0" y="142.0" smashed="yes"/><element name="C168" library="rcl" package="C0603" value="10nF" x="167.0" y="143.0" smashed="yes"/><element name="X36" library="con-molex" package="22-23-2021" value="22-23-2021" x="190.0" y="131.3" smashed="yes"/>
+<elements><element name="TP15" library="My_Library_RADAR" package="S1751-46" value="S1751-46R" x="104.0" y="88.0" smashed="yes"/><element name="TP14" library="My_Library_RADAR" package="S1751-46" value="S1751-46R" x="98.0" y="88.0" smashed="yes"/><element name="TP13" library="My_Library_RADAR" package="S1751-46" value="S1751-46R" x="92.0" y="88.0" smashed="yes"/><element name="TP12" library="My_Library_RADAR" package="S1751-46" value="S1751-46R" x="86.0" y="88.0" smashed="yes"/><element name="TP11" library="My_Library_RADAR" package="S1751-46" value="S1751-46R" x="80.0" y="88.0" smashed="yes"/><element name="TP10" library="My_Library_RADAR" package="S1751-46" value="S1751-46R" x="134.0" y="80.0" smashed="yes"/><element name="TP9" library="My_Library_RADAR" package="S1751-46" value="S1751-46R" x="128.0" y="80.0" smashed="yes"/><element name="TP8" library="My_Library_RADAR" package="S1751-46" value="S1751-46R" x="122.0" y="80.0" smashed="yes"/><element name="TP7" library="My_Library_RADAR" package="S1751-46" value="S1751-46R" x="116.0" y="80.0" smashed="yes"/><element name="TP6" library="My_Library_RADAR" package="S1751-46" value="S1751-46R" x="110.0" y="80.0" smashed="yes"/><element name="TP5" library="My_Library_RADAR" package="S1751-46" value="S1751-46R" x="104.0" y="80.0" smashed="yes"/><element name="TP4" library="My_Library_RADAR" package="S1751-46" value="S1751-46R" x="98.0" y="80.0" smashed="yes"/><element name="TP3" library="My_Library_RADAR" package="S1751-46" value="S1751-46R" x="92.0" y="80.0" smashed="yes"/><element name="TP2" library="My_Library_RADAR" package="S1751-46" value="S1751-46R" x="86.0" y="80.0" smashed="yes"/><element name="TP1" library="My_Library_RADAR" package="S1751-46" value="S1751-46R" x="80.0" y="80.0" smashed="yes"/><element name="X38" library="con-molex" package="22-23-2021" value="22-23-2021" x="166.0" y="102.0" smashed="yes"/><element name="X39" library="con-molex" package="22-23-2021" value="22-23-2021" x="170.5" y="114.5" smashed="yes"/><element name="X40" library="con-molex" package="22-23-2021" value="22-23-2021" x="171.5" y="152.0" smashed="yes"/><element name="U36" library="My_Library_RADAR" package="M08A" value="LM2662MX/NOPB" x="96.15" y="87.85" smashed="yes"/><element name="C173" library="T521W476M020ATE045" package="T521W" value="T521W476M020ATE045" x="96.15" y="90.35" smashed="yes"/><element name="U37" library="My_Library_RADAR" package="M08A" value="LM2662MX/NOPB" x="103.34" y="109.47999999999999" smashed="yes"/><element name="C174" library="T521W476M020ATE045" package="T521W" value="T521W476M020ATE045" x="103.34" y="111.97999999999999" smashed="yes"/><element name="R61" library="rcl" package="M0805" value="10k" x="156.0" y="116.0" smashed="yes"/><element name="R62" library="rcl" package="M0805" value="10k" x="156.0" y="118.0" smashed="yes"/><element name="R63" library="rcl" package="M0805" value="10k" x="156.0" y="120.0" smashed="yes"/><element name="C169" library="rcl" package="C0603" value="22µF" x="149.7" y="245.89999999999998" smashed="yes"/><element name="C170" library="rcl" package="C0603" value="22µF" x="149.7" y="247.89999999999998" smashed="yes"/><element name="C171" library="rcl" package="C0603" value="22µF" x="149.7" y="252.39999999999998" smashed="yes"/><element name="C172" library="rcl" package="C0603" value="22µF" x="149.7" y="256.4" smashed="yes"/><element name="U35" library="My_Library_RADAR" package="TPS7A8300RGRR" value="TPS7A8300RGRR" x="145.8" y="119.80000000000001" smashed="yes"/><element name="R59" library="rcl" package="M0805" value="24.3k" x="170.0" y="138.0" smashed="yes"/><element name="R60" library="rcl" package="M0805" value="11.5k" x="174.0" y="142.0" smashed="yes"/><element name="C164" library="rcl" package="C0603" value="22µF" x="160.0" y="126.0" smashed="yes"/><element name="C165" library="rcl" package="C0603" value="22µF" x="176.0" y="124.0" smashed="yes"/><element name="C166" library="rcl" package="C0603" value="10µF" x="180.0" y="136.0" smashed="yes"/><element name="C167" library="rcl" package="C0603" value="10nF" x="184.0" y="142.0" smashed="yes"/><element name="C168" library="rcl" package="C0603" value="10nF" x="167.0" y="143.0" smashed="yes"/><element name="X36" library="con-molex" package="22-23-2021" value="22-23-2021" x="190.0" y="131.3" smashed="yes"/>
 <element name="C1" library="rcl" package="C0805" value="0.1µF" x="86.28" y="21.19" smashed="yes" rot="R90">
 <attribute name="NAME" x="87.28" y="24.76" size="1.27" layer="25" rot="R180"/>
 <attribute name="POPULARITY" value="88" x="214.55" y="190.1" size="1.778" layer="27" rot="R90" display="off"/>
@@ -4534,7 +4543,7 @@ Your PCBWay Team
 <attribute name="MPN" value="22-23-2021" x="65.35" y="82.7" size="1.778" layer="27" display="off"/>
 </element>
 </elements>
-<signals><signal name="N$U37_C1M" class="0"><contactref element="U37" pad="4"/><contactref element="C174" pad="2"/></signal><signal name="N$U37_C1P" class="0"><contactref element="U37" pad="2"/><contactref element="C174" pad="1"/></signal><signal name="N$U36_C1M" class="0"><contactref element="U36" pad="4"/><contactref element="C173" pad="2"/></signal><signal name="N$U36_C1P" class="0"><contactref element="U36" pad="2"/><contactref element="C173" pad="1"/></signal><signal name="PG_2V5_FPGA" class="0"><contactref element="U35" pad="4"/><contactref element="R63" pad="1"/><contactref element="X40" pad="1"/></signal><signal name="PG_3V3_XO" class="0"><contactref element="U34" pad="4"/><contactref element="R62" pad="1"/><contactref element="X39" pad="1"/></signal><signal name="PG_3V3_ADTR" class="0"><contactref element="U32" pad="4"/><contactref element="R61" pad="1"/><contactref element="X38" pad="1"/></signal><signal name="N$2V5_NRSS" class="0"><contactref element="U35" pad="13"/><contactref element="C167" pad="1"/></signal><signal name="N$2V5_BIAS" class="0"><contactref element="U35" pad="12"/><contactref element="C166" pad="1"/></signal><signal name="N$2V5_SNS" class="0"><contactref element="U35" pad="2"/><contactref element="C168" pad="1"/></signal><signal name="N$2V5_FB" class="0"><contactref element="U35" pad="3"/><contactref element="R59" pad="2"/><contactref element="R60" pad="1"/><contactref element="C168" pad="2"/></signal><signal name="+2V5_FPGA" class="0"><contactref element="U35" pad="20"/><contactref element="U35" pad="1"/><contactref element="U35" pad="19"/><contactref element="R59" pad="1"/><contactref element="C165" pad="1"/><contactref element="X36" pad="1"/></signal>
+<signals><signal name="N$U37_C1M" class="0"><contactref element="U37" pad="4"/><contactref element="C174" pad="2"/></signal><signal name="N$U37_C1P" class="0"><contactref element="U37" pad="2"/><contactref element="C174" pad="1"/></signal><signal name="N$U36_C1M" class="0"><contactref element="U36" pad="4"/><contactref element="C173" pad="2"/></signal><signal name="N$U36_C1P" class="0"><contactref element="U36" pad="2"/><contactref element="C173" pad="1"/></signal><signal name="PG_2V5_FPGA" class="0"><contactref element="U35" pad="4"/><contactref element="R63" pad="1"/><contactref element="X40" pad="1"/><contactref element="TP15" pad="1"/><contactref element="TP15" pad="2"/></signal><signal name="PG_3V3_XO" class="0"><contactref element="U34" pad="4"/><contactref element="R62" pad="1"/><contactref element="X39" pad="1"/><contactref element="TP14" pad="1"/><contactref element="TP14" pad="2"/></signal><signal name="PG_3V3_ADTR" class="0"><contactref element="U32" pad="4"/><contactref element="R61" pad="1"/><contactref element="X38" pad="1"/><contactref element="TP13" pad="1"/><contactref element="TP13" pad="2"/></signal><signal name="N$2V5_NRSS" class="0"><contactref element="U35" pad="13"/><contactref element="C167" pad="1"/></signal><signal name="N$2V5_BIAS" class="0"><contactref element="U35" pad="12"/><contactref element="C166" pad="1"/></signal><signal name="N$2V5_SNS" class="0"><contactref element="U35" pad="2"/><contactref element="C168" pad="1"/></signal><signal name="N$2V5_FB" class="0"><contactref element="U35" pad="3"/><contactref element="R59" pad="2"/><contactref element="R60" pad="1"/><contactref element="C168" pad="2"/></signal><signal name="+2V5_FPGA" class="0"><contactref element="U35" pad="20"/><contactref element="U35" pad="1"/><contactref element="U35" pad="19"/><contactref element="R59" pad="1"/><contactref element="C165" pad="1"/><contactref element="X36" pad="1"/><contactref element="TP3" pad="1"/><contactref element="TP3" pad="2"/></signal>
 <signal name="GND">
 <contactref element="U1" pad="1"/>
 <contactref element="R2" pad="1"/>
@@ -6147,7 +6156,7 @@ Your PCBWay Team
 <contactref element="X4" pad="1"/>
 <wire x1="67.13" y1="40.7" x2="65.4" y2="38.97" width="2" layer="1"/>
 <wire x1="65.4" y1="38.97" x2="65.4" y2="32.6" width="2" layer="1"/>
-</signal>
+<contactref element="TP1" pad="1"/><contactref element="TP1" pad="2"/></signal>
 <signal name="N$4">
 <contactref element="R1" pad="1"/>
 <contactref element="R2" pad="2"/>
@@ -6543,7 +6552,7 @@ Your PCBWay Team
 <contactref element="X5" pad="1"/>
 <wire x1="110.23" y1="40.4" x2="107.65" y2="40.4" width="2" layer="1"/>
 <wire x1="107.65" y1="40.4" x2="105.53" y2="38.28" width="2" layer="1"/>
-</signal>
+<contactref element="TP2" pad="1"/><contactref element="TP2" pad="2"/></signal>
 <signal name="EN_+1V8_FPGA">
 <contactref element="U2" pad="5"/>
 <contactref element="SV1" pad="3"/>
@@ -6653,7 +6662,7 @@ Your PCBWay Team
 <wire x1="57.13" y1="19.42" x2="57.13" y2="31.72" width="0.5" layer="1"/>
 <wire x1="52.7" y1="36.15" x2="37.3" y2="36.15" width="0.5" layer="1"/>
 <wire x1="57.13" y1="31.72" x2="52.7" y2="36.15" width="0.5" layer="1"/>
-<contactref element="R61" pad="2"/><contactref element="R62" pad="2"/><contactref element="R63" pad="2"/></signal>
+<contactref element="R61" pad="2"/><contactref element="R62" pad="2"/><contactref element="R63" pad="2"/><contactref element="TP4" pad="1"/><contactref element="TP4" pad="2"/></signal>
 <signal name="EN_+3V3_FPGA">
 <contactref element="U4" pad="5"/>
 <contactref element="SV1" pad="5"/>
@@ -6935,7 +6944,7 @@ Your PCBWay Team
 <wire x1="167.7" y1="128.4" x2="168.4" y2="127.7" width="0.15" layer="1"/>
 <wire x1="168.4" y1="127.7" x2="168.4" y2="126.85" width="0.15" layer="1"/>
 <wire x1="164.300125" y1="129.075" x2="164.800253125" y2="129.075" width="0.3" layer="1"/>
-</signal>
+<contactref element="TP6" pad="1"/><contactref element="TP6" pad="2"/></signal>
 <signal name="EN_+3V3_SW">
 <contactref element="U10" pad="5"/>
 <contactref element="SV1" pad="15"/>
@@ -7079,7 +7088,7 @@ Your PCBWay Team
 <wire x1="87.17" y1="98.88" x2="84.57" y2="98.88" width="0.6" layer="1"/>
 <wire x1="81.505" y1="101.945" x2="81.505" y2="104.7062" width="0.6" layer="1"/>
 <wire x1="84.57" y1="98.88" x2="81.505" y2="101.945" width="0.6" layer="1"/>
-</signal>
+<contactref element="TP10" pad="1"/><contactref element="TP10" pad="2"/></signal>
 <signal name="N$34">
 <contactref element="U12" pad="2"/>
 <contactref element="U$12" pad="2"/>
@@ -7472,7 +7481,7 @@ Your PCBWay Team
 <wire x1="81.4" y1="210.8" x2="78.7" y2="213.5" width="0.6" layer="1"/>
 <wire x1="82.95" y1="204.65" x2="85.58" y2="204.65" width="0.6" layer="1"/>
 <wire x1="85.58" y1="204.65" x2="87.65" y2="202.58" width="0.6" layer="1"/>
-</signal>
+<contactref element="TP12" pad="1"/><contactref element="TP12" pad="2"/></signal>
 <signal name="-3V3_SW">
 <contactref element="U18" pad="5"/>
 <contactref element="C97" pad="2"/>
@@ -7517,7 +7526,7 @@ Your PCBWay Team
 <wire x1="72.9462" y1="104.7062" x2="72.88" y2="104.64" width="0.6" layer="1"/>
 <wire x1="72.88" y1="104.64" x2="65.35" y2="104.64" width="0.6" layer="1"/>
 <wire x1="65.35" y1="104.64" x2="64.53" y2="103.82" width="0.6" layer="1"/>
-</signal>
+<contactref element="TP11" pad="1"/><contactref element="TP11" pad="2"/></signal>
 <signal name="N$56">
 <contactref element="C100" pad="1"/>
 <contactref element="U20" pad="2"/>
@@ -7552,7 +7561,7 @@ Your PCBWay Team
 <wire x1="109.5538" y1="105.3862" x2="114.245" y2="105.3862" width="0.6" layer="1"/>
 <wire x1="100.73" y1="104.45" x2="101.6662" y2="105.3862" width="0.6" layer="1"/>
 <wire x1="101.6662" y1="105.3862" x2="109.5538" y2="105.3862" width="0.6" layer="1"/>
-<contactref element="U36" pad="5"/></signal>
+<contactref element="U36" pad="5"/><contactref element="TP9" pad="1"/><contactref element="TP9" pad="2"/></signal>
 <signal name="-5V0_ADAR34">
 <contactref element="U21" pad="5"/>
 <contactref element="C103" pad="2"/>
@@ -7586,7 +7595,7 @@ Your PCBWay Team
 <wire x1="58.9638" y1="206.005" x2="65.425" y2="206.005" width="0.6" layer="1"/>
 <wire x1="65.425" y1="206.005" x2="65.63" y2="205.8" width="0.6" layer="1"/>
 </signal>
-<signal name="+3V3_ADAR_12">
+<signal name="+3V3_ADAR12">
 <polygon width="0.1" layer="1" thermals="no">
 <vertex x="167.75" y="78.35"/>
 <vertex x="156.55" y="78.35"/>
@@ -7604,8 +7613,8 @@ Your PCBWay Team
 <wire x1="165.9" y1="90.6" x2="165.9" y2="88.85" width="0.15" layer="1"/>
 <wire x1="167.65" y1="92.35" x2="165.9" y2="90.6" width="0.15" layer="1"/>
 <contactref element="X14" pad="1"/>
-</signal>
-<signal name="+3V3_ADAR_34">
+<contactref element="TP8" pad="1"/><contactref element="TP8" pad="2"/></signal>
+<signal name="+3V3_ADAR34">
 <polygon width="0.1" layer="1" thermals="no">
 <vertex x="204.2" y="78.5"/>
 <vertex x="193" y="78.5"/>
@@ -7773,7 +7782,7 @@ Your PCBWay Team
 <wire x1="181" y1="278.4" x2="182.7" y2="280.1" width="0.3" layer="1"/>
 <wire x1="182.7" y1="280.1" x2="182.7" y2="281.15" width="0.3" layer="1"/>
 <wire x1="175.250253125" y1="277.675" x2="174.750125" y2="277.675" width="0.3" layer="1"/>
-<contactref element="C169" pad="1"/><contactref element="C170" pad="1"/><contactref element="C171" pad="1"/><contactref element="C172" pad="1"/></signal>
+<contactref element="C169" pad="1"/><contactref element="C170" pad="1"/><contactref element="C171" pad="1"/><contactref element="C172" pad="1"/><contactref element="TP7" pad="1"/><contactref element="TP7" pad="2"/></signal>
 <signal name="N$13">
 <contactref element="U5" pad="1"/>
 <contactref element="C24" pad="2"/>
@@ -7801,7 +7810,7 @@ Your PCBWay Team
 <wire x1="198.6524" y1="49.6" x2="201.9" y2="49.6" width="0.4" layer="1"/>
 <wire x1="201.9" y1="49.6" x2="201.9" y2="49.55" width="0.5" layer="1"/>
 <wire x1="201.9" y1="49.55" x2="202.75" y2="48.7" width="0.5" layer="1"/>
-</signal>
+<contactref element="TP5" pad="1"/><contactref element="TP5" pad="2"/></signal>
 <signal name="N$15">
 <contactref element="U5" pad="3"/>
 <contactref element="C26" pad="2"/>

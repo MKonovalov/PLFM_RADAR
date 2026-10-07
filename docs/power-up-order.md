@@ -34,9 +34,16 @@ Two structural facts follow, and they constrain what any sequencing can achieve:
 > same time as the AVDD1(-5V) supply."
 
 So `+3V3_ADAR12/34` must be asserted **no later than** `+5V0_ADAR`. Asserting `EN_+5V0_ADAR`
-first and `EN_+3V3_ADAR12/34` a moment later produces the negative first and **violates** this.
+first and `EN_+3V3_ADAR12/34` a moment later would produce the negative first and **violate** this.
 (The datasheet's other sequencing sentence — "the −5 V supply powering up first before the PA VDD
 is powered on" — is about an *external* PA's drain, i.e. the gate-bias rule, not about AVDD3.)
+
+**The firmware already does this correctly.** `main.cpp` disables the TX mixers, asserts
+`EN_P_3V3_ADAR12`/`EN_P_3V3_ADAR34`, waits 500 ms, and only then asserts `EN_P_5V0_ADAR` (which is
+what creates the −5 V rails through the U20/U21/U36/U37 inverters). The requirement is now cited
+in a comment at that site and **locked by a test**: `test_adar_power_order.c` reads the source and
+asserts the offsets are ascending, so a later edit cannot silently swap them. Swapping the two
+blocks makes it fail with two failures, which is how it was verified.
 
 **ADTR1107** — "Recommended Bias Sequencing" (Transmit and Receive, power-up and power-down) puts
 `VDD_SW` (+3.3 V) first and `VSS_SW` (−3.3 V) alongside; the part is specified at
@@ -58,9 +65,9 @@ respectively), so they impose no order requirement on their rails.
   dual-supply switch whose negative is derived from the positive, and a single-supply amplifier.
   None of them specifies an order the design breaks.
 * The **ADAR1000 pair is the real constraint**, and it is a sequencing *order* question rather
-  than a missing-enable question: `EN_+3V3_ADAR12/34` must not be asserted after `EN_+5V0_ADAR`.
-  Whichever side drives those enables (they arrive over the harness, `SV1`) must assert them
-  together or in the +3.3 V-first order.
+  than a missing-enable question. The enables are driven by the MCU (`U2`) over the harness
+  (`SV1`), and the firmware asserts the 3.3 V rails before the 5.0 V rail that creates the −5 V —
+  the compliant order, cited at the call site and locked by `test_adar_power_order.c`.
 * The ADTR1107 pair is compliant as built.
 
 ## Still a bench step

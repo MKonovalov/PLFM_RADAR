@@ -64,7 +64,9 @@ TESTS_MOCK_ONLY := test_pa_gate_bias_contract \
                    test_gap3_emergency_stop_rails
 
 # Tests that are standalone (no mocks needed, pure logic)
-TESTS_STANDALONE := test_rail_fault \
+TESTS_STANDALONE := test_strobe_ack \
+                    test_adar_power_order \
+                    test_rail_fault \
                     test_pa_bias_sequence \
                     test_pa_gate_bias \
                     test_bug12_pa_cal_loop_inverted \
@@ -172,6 +174,14 @@ test_gap3_emergency_stop_rails: test_gap3_emergency_stop_rails.c $(MOCK_OBJS)
 	$(CC) $(CFLAGS) $(INCLUDES) $< $(MOCK_OBJS) -o $@
 
 # Gap-3 safety tests -- standalone (pure logic)
+# strobe acknowledgement: the MCU side of the FPGA's answer (STROBE_ACK.c)
+test_strobe_ack: test_strobe_ack.c ../9_1_1_C_Cpp_Libraries/STROBE_ACK.c
+	$(CC) $(CFLAGS) $(INCLUDES) $< ../9_1_1_C_Cpp_Libraries/STROBE_ACK.c -o $@
+
+# ADAR1000 supply order: a datasheet requirement, read out of the source (issue #20)
+test_adar_power_order: test_adar_power_order.c
+	$(CC) $(CFLAGS) $< -o $@
+
 # rail-good monitor: latch behaviour (RAIL_FAULT.c + its header)
 test_rail_fault: test_rail_fault.c ../9_1_1_C_Cpp_Libraries/RAIL_FAULT.c
 	$(CC) $(CFLAGS) $(INCLUDES) $< ../9_1_1_C_Cpp_Libraries/RAIL_FAULT.c -o $@

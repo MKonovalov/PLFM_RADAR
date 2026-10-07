@@ -25,6 +25,7 @@ Exit code is 0 when every board is clean, 1 otherwise.  --check prints the same 
 never writes anything (this tool has no write mode at all).
 """
 import re
+import xml.etree.ElementTree as ET
 import sys
 import pathlib
 
@@ -84,6 +85,15 @@ def check_board(_label, sch_path, brd_path):
     if not sch_path.exists() or not brd_path.exists():
         missing = sch_path.name if not sch_path.exists() else brd_path.name
         return [f"missing file: {missing}"]
+    # 0 the files must be well-formed XML.  Every other check below is regex-based, so a
+    #   mis-spliced tag - an edit that dropped a closing tag, or one that landed inside an
+    #   attribute value - passes all of them while breaking every XML consumer of the file.
+    for path in (sch_path, brd_path):
+        try:
+            ET.fromstring(path.read_text(errors="replace"))
+        except ET.ParseError as exc:
+            return [f"{path.name} is not well-formed XML: {exc}"]
+
     parts, elements, instances, netpins, sigrefs, exempt = collect(
         sch_path.read_text(errors="replace"), brd_path.read_text(errors="replace"))
     problems = []
@@ -121,6 +131,16 @@ def check_board(_label, sch_path, brd_path):
     wired = {e for refs in sigrefs.values() for e, _pad in refs}
     problems.extend(f"board element {e} has no contactref in any signal (unconnected)"
                     for e in sorted(eset - wired))
+
+    # 8 a schematic net with no board signal of the same name.  Renaming a net on one side
+    # only (a rail rename that misses the board file) leaves the two files disagreeing while
+    # every other check stays green.
+    sig_names = set(sigrefs)
+    problems.extend(
+        f"schematic net {net} has no board signal of that name "
+        f"({len(pins)} pin(s), e.g. {pins[0][0]}.{pins[0][2]})"
+        for net, pins in sorted(netpins.items())
+        if net not in sig_names and any(p[0] in eset for p in pins))
     return problems
 
 

@@ -17429,7 +17429,7 @@ Your PCBWay Team
 <attribute name="SPICEPREFIX" value="C" x="53.7469375" y="136.535715625" size="1.778" layer="27" rot="R180" display="off"/>
 </element>
 </elements>
-<signals><signal name="PG_2V5_FPGA" class="0"><contactref element="X27" pad="1"/></signal><signal name="PG_3V3_XO" class="0"><contactref element="X26" pad="1"/></signal><signal name="PG_3V3_ADTR" class="0"><contactref element="X25" pad="1"/></signal><signal name="N$U91_OE" class="0"><contactref element="U91" pad="6"/><contactref element="R177" pad="1"/></signal><signal name="N$U90_OE" class="0"><contactref element="U90" pad="8"/><contactref element="R176" pad="1"/></signal><signal name="+2V5_FPGA" class="0"><contactref element="U90" pad="1"/><contactref element="U91" pad="3"/><contactref element="R176" pad="2"/><contactref element="R177" pad="2"/><contactref element="C354" pad="1"/><contactref element="C355" pad="1"/><contactref element="C358" pad="1"/><contactref element="C359" pad="1"/><contactref element="X57" pad="1"/><contactref element="U42" pad="L16"/><contactref element="U42" pad="M13"/><contactref element="U42" pad="N10"/><contactref element="U42" pad="P7"/><contactref element="U42" pad="R14"/><contactref element="U42" pad="T11"/></signal><signal name="FLASH_NRST_F" class="0"><contactref element="U9" pad="A4"/><contactref element="U91" pad="1"/></signal><signal name="FLASH_NCS_F" class="0"><contactref element="U9" pad="C2"/><contactref element="U91" pad="8"/></signal><signal name="FLASH_DQ3_F" class="0"><contactref element="U9" pad="D4"/><contactref element="U90" pad="10"/></signal><signal name="FLASH_DQ2_F" class="0"><contactref element="U9" pad="C4"/><contactref element="U90" pad="11"/></signal><signal name="FLASH_DQ1_F" class="0"><contactref element="U9" pad="D2"/><contactref element="U90" pad="12"/></signal><signal name="FLASH_DQ0_F" class="0"><contactref element="U9" pad="D3"/><contactref element="U90" pad="13"/></signal>
+<signals><signal name="FPGA_STROBE_ACK" class="0"><contactref element="U42" pad="B16"/><contactref element="U2" pad="29"/></signal><signal name="PG_2V5_FPGA" class="0"><contactref element="X27" pad="1"/><contactref element="U2" pad="28"/></signal><signal name="PG_3V3_XO" class="0"><contactref element="X26" pad="1"/><contactref element="U2" pad="27"/></signal><signal name="PG_3V3_ADTR" class="0"><contactref element="X25" pad="1"/><contactref element="U2" pad="26"/></signal><signal name="N$U91_OE" class="0"><contactref element="U91" pad="6"/><contactref element="R177" pad="1"/></signal><signal name="N$U90_OE" class="0"><contactref element="U90" pad="8"/><contactref element="R176" pad="1"/></signal><signal name="+2V5_FPGA" class="0"><contactref element="U90" pad="1"/><contactref element="U91" pad="3"/><contactref element="R176" pad="2"/><contactref element="R177" pad="2"/><contactref element="C354" pad="1"/><contactref element="C355" pad="1"/><contactref element="C358" pad="1"/><contactref element="C359" pad="1"/><contactref element="X57" pad="1"/><contactref element="U42" pad="L16"/><contactref element="U42" pad="M13"/><contactref element="U42" pad="N10"/><contactref element="U42" pad="P7"/><contactref element="U42" pad="R14"/><contactref element="U42" pad="T11"/></signal><signal name="FLASH_NRST_F" class="0"><contactref element="U9" pad="A4"/><contactref element="U91" pad="1"/></signal><signal name="FLASH_NCS_F" class="0"><contactref element="U9" pad="C2"/><contactref element="U91" pad="8"/></signal><signal name="FLASH_DQ3_F" class="0"><contactref element="U9" pad="D4"/><contactref element="U90" pad="10"/></signal><signal name="FLASH_DQ2_F" class="0"><contactref element="U9" pad="C4"/><contactref element="U90" pad="11"/></signal><signal name="FLASH_DQ1_F" class="0"><contactref element="U9" pad="D2"/><contactref element="U90" pad="12"/></signal><signal name="FLASH_DQ0_F" class="0"><contactref element="U9" pad="D3"/><contactref element="U90" pad="13"/></signal>
 <signal name="+3V3">
 <contactref element="X24" pad="1"/>
 <contactref element="JP2" pad="1"/>
@@ -30670,7 +30670,7 @@ Your PCBWay Team
 <via x="41.65" y="186.7" extent="1-16" drill="0.15"/>
 <via x="43.55" y="187.3" extent="1-16" drill="0.15"/>
 </signal>
-<signal name="N$115">
+<signal name="FPGA_DONE">
 <contactref element="R144" pad="1"/>
 <contactref element="U42" pad="H10"/>
 <wire x1="51.18" y1="183.78" x2="51.551234375" y2="184.151234375" width="0.15" layer="1"/>
@@ -30684,7 +30684,7 @@ Your PCBWay Team
 <wire x1="51.3" y1="183.8" x2="51.7" y2="183.8" width="0.1" layer="1"/>
 <wire x1="59.8" y1="184.1" x2="59.815" y2="184.08" width="0.1" layer="1"/>
 <wire x1="51.3" y1="183.8" x2="51.18" y2="183.78" width="0.1" layer="1"/>
-</signal>
+<contactref element="U2" pad="44"/></signal>
 <signal name="N$116">
 <contactref element="U42" pad="K10"/>
 <contactref element="R143" pad="1"/>

@@ -22,6 +22,8 @@ test_bug14_diag_section_args
 test_gap3_emergency_stop_rails
 
 # TESTS_STANDALONE
+test_strobe_ack
+test_adar_power_order
 test_rail_fault
 test_pa_bias_sequence
 test_pa_gate_bias

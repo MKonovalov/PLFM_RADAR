@@ -817,7 +817,14 @@
 <text x="-1.7272" y="-0.635" size="1.27" layer="27" ratio="6" rot="SR0">&gt;Value</text>
 </package>
 </packages>
-<symbols>
+<symbols><symbol name="TESTPOINT">
+<wire x1="-1.27" y1="1.27" x2="1.27" y2="1.27" width="0.254" layer="94"/>
+<wire x1="1.27" y1="1.27" x2="1.27" y2="-1.27" width="0.254" layer="94"/>
+<wire x1="1.27" y1="-1.27" x2="-1.27" y2="-1.27" width="0.254" layer="94"/>
+<wire x1="-1.27" y1="-1.27" x2="-1.27" y2="1.27" width="0.254" layer="94"/>
+<text x="-0.889" y="0.381" size="0.762" layer="95">&gt;NAME</text>
+<pin name="S" x="2.54" y="0" visible="both" length="short" direction="pas" rot="R180"/>
+</symbol>
 <symbol name="TPS562208DDCR">
 <pin name="GND" x="17.78" y="-12.7" length="middle" direction="pwr" rot="R180"/>
 <pin name="SW" x="17.78" y="10.16" length="middle" direction="pwr" rot="R180"/>
@@ -901,7 +908,26 @@
 <text x="17.5006" y="6.5786" size="2.0828" layer="96" ratio="6" rot="SR0">&gt;Value</text>
 </symbol>
 </symbols>
-<devicesets><deviceset name="22-23-2041" prefix="X">
+<devicesets><deviceset name="S1751-46" prefix="TP">
+<description>SMT test point (Harwin S1751-46R), 1.63 x 3.25 mm, 2 mm high</description>
+<gates>
+<gate name="G$1" symbol="TESTPOINT" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="S1751-46">
+<connects>
+<connect gate="G$1" pin="S" pad="1"/>
+<connect gate="G$1" pin="S" pad="2"/>
+</connects>
+<technologies>
+<technology name="">
+<attribute name="MF" value="HARWIN" constant="no"/>
+<attribute name="MPN" value="S1751-46R" constant="no"/>
+</technology>
+</technologies>
+</device>
+</devices>
+</deviceset><deviceset name="22-23-2041" prefix="X">
 <description>.100" (2.54mm) Center Header - 4 Pin</description>
 <gates>
 <gate name="-1" symbol="MV" x="0" y="2.54" addlevel="always" swaplevel="1"/>
@@ -10098,7 +10124,7 @@ W = angled&lt;p&gt;
 <class number="0" name="default" width="0" drill="0">
 </class>
 </classes>
-<parts>
+<parts><part name="TP15" library="My_Library_RADAR" deviceset="S1751-46" device=""/><part name="TP14" library="My_Library_RADAR" deviceset="S1751-46" device=""/><part name="TP13" library="My_Library_RADAR" deviceset="S1751-46" device=""/><part name="TP12" library="My_Library_RADAR" deviceset="S1751-46" device=""/><part name="TP11" library="My_Library_RADAR" deviceset="S1751-46" device=""/><part name="TP10" library="My_Library_RADAR" deviceset="S1751-46" device=""/><part name="TP9" library="My_Library_RADAR" deviceset="S1751-46" device=""/><part name="TP8" library="My_Library_RADAR" deviceset="S1751-46" device=""/><part name="TP7" library="My_Library_RADAR" deviceset="S1751-46" device=""/><part name="TP6" library="My_Library_RADAR" deviceset="S1751-46" device=""/><part name="TP5" library="My_Library_RADAR" deviceset="S1751-46" device=""/><part name="TP4" library="My_Library_RADAR" deviceset="S1751-46" device=""/><part name="TP3" library="My_Library_RADAR" deviceset="S1751-46" device=""/><part name="TP2" library="My_Library_RADAR" deviceset="S1751-46" device=""/><part name="TP1" library="My_Library_RADAR" deviceset="S1751-46" device=""/>
 <part name="U1" library="My_Library_RADAR" deviceset="TPS562208DDCT" device=""/>
 <part name="U$1" library="My_Library_RADAR" deviceset="POWER_INDUCTOR" device="" value="2.2µH"/>
 <part name="GND1" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
@@ -10666,7 +10692,7 @@ W = angled&lt;p&gt;
 <sheet>
 <plain>
 </plain>
-<instances>
+<instances><instance part="TP15" gate="G$1" x="44.0" y="48.0" smashed="yes"><attribute name="NAME" x="42.0" y="49.5" size="1.524" layer="95"/></instance><instance part="TP14" gate="G$1" x="38.0" y="48.0" smashed="yes"><attribute name="NAME" x="36.0" y="49.5" size="1.524" layer="95"/></instance><instance part="TP13" gate="G$1" x="32.0" y="48.0" smashed="yes"><attribute name="NAME" x="30.0" y="49.5" size="1.524" layer="95"/></instance><instance part="TP12" gate="G$1" x="26.0" y="48.0" smashed="yes"><attribute name="NAME" x="24.0" y="49.5" size="1.524" layer="95"/></instance><instance part="TP11" gate="G$1" x="20.0" y="48.0" smashed="yes"><attribute name="NAME" x="18.0" y="49.5" size="1.524" layer="95"/></instance><instance part="TP10" gate="G$1" x="74.0" y="40.0" smashed="yes"><attribute name="NAME" x="72.0" y="41.5" size="1.524" layer="95"/></instance><instance part="TP9" gate="G$1" x="68.0" y="40.0" smashed="yes"><attribute name="NAME" x="66.0" y="41.5" size="1.524" layer="95"/></instance><instance part="TP8" gate="G$1" x="62.0" y="40.0" smashed="yes"><attribute name="NAME" x="60.0" y="41.5" size="1.524" layer="95"/></instance><instance part="TP7" gate="G$1" x="56.0" y="40.0" smashed="yes"><attribute name="NAME" x="54.0" y="41.5" size="1.524" layer="95"/></instance><instance part="TP6" gate="G$1" x="50.0" y="40.0" smashed="yes"><attribute name="NAME" x="48.0" y="41.5" size="1.524" layer="95"/></instance><instance part="TP5" gate="G$1" x="44.0" y="40.0" smashed="yes"><attribute name="NAME" x="42.0" y="41.5" size="1.524" layer="95"/></instance><instance part="TP4" gate="G$1" x="38.0" y="40.0" smashed="yes"><attribute name="NAME" x="36.0" y="41.5" size="1.524" layer="95"/></instance><instance part="TP3" gate="G$1" x="32.0" y="40.0" smashed="yes"><attribute name="NAME" x="30.0" y="41.5" size="1.524" layer="95"/></instance><instance part="TP2" gate="G$1" x="26.0" y="40.0" smashed="yes"><attribute name="NAME" x="24.0" y="41.5" size="1.524" layer="95"/></instance><instance part="TP1" gate="G$1" x="20.0" y="40.0" smashed="yes"><attribute name="NAME" x="18.0" y="41.5" size="1.524" layer="95"/></instance>
 <instance part="U1" gate="A" x="78.74" y="472.44" smashed="yes">
 <attribute name="NAME" x="74.0156" y="473.9386" size="2.0828" layer="95" ratio="6" rot="SR0"/>
 <attribute name="VALUE" x="68.3006" y="468.8586" size="2.0828" layer="96" ratio="6" rot="SR0"/>
@@ -12832,7 +12858,7 @@ W = angled&lt;p&gt;
 </instances>
 <busses>
 </busses>
-<nets><net name="N$U37_C1M" class="0"><segment><pinref part="U37" gate="A" pin="C1-"/><pinref part="C174" gate="G$1" pin="2"/></segment></net><net name="N$U37_C1P" class="0"><segment><pinref part="U37" gate="A" pin="C1+"/><pinref part="C174" gate="G$1" pin="1"/></segment></net><net name="N$U36_C1M" class="0"><segment><pinref part="U36" gate="A" pin="C1-"/><pinref part="C173" gate="G$1" pin="2"/></segment></net><net name="N$U36_C1P" class="0"><segment><pinref part="U36" gate="A" pin="C1+"/><pinref part="C173" gate="G$1" pin="1"/></segment></net><net name="PG_2V5_FPGA" class="0"><segment><pinref part="R63" gate="G$1" pin="1"/><pinref part="X40" gate="-1" pin="S"/></segment><pinref part="U35" gate="A" pin="PG"/></net><net name="PG_3V3_XO" class="0"><segment><pinref part="R62" gate="G$1" pin="1"/><pinref part="X39" gate="-1" pin="S"/></segment><pinref part="U34" gate="A" pin="PG"/></net><net name="PG_3V3_ADTR" class="0"><segment><pinref part="R61" gate="G$1" pin="1"/><pinref part="X38" gate="-1" pin="S"/></segment><pinref part="U32" gate="A" pin="PG"/></net><net name="N$2V5_NRSS" class="0"><segment><pinref part="U35" gate="A" pin="NR/SS"/><pinref part="C167" gate="G$1" pin="1"/></segment></net><net name="N$2V5_BIAS" class="0"><segment><pinref part="U35" gate="A" pin="BIAS"/><pinref part="C166" gate="G$1" pin="1"/></segment></net><net name="N$2V5_SNS" class="0"><segment><pinref part="U35" gate="A" pin="SNS"/><pinref part="C168" gate="G$1" pin="1"/></segment></net><net name="N$2V5_FB" class="0"><segment><pinref part="U35" gate="A" pin="FB"/><pinref part="R59" gate="G$1" pin="2"/><pinref part="R60" gate="G$1" pin="1"/><pinref part="C168" gate="G$1" pin="2"/></segment></net><net name="+2V5_FPGA" class="0"><segment><pinref part="U35" gate="A" pin="OUT"/><pinref part="U35" gate="A" pin="OUT_2"/><pinref part="U35" gate="A" pin="OUT_3"/><pinref part="R59" gate="G$1" pin="1"/><pinref part="C165" gate="G$1" pin="1"/><pinref part="X36" gate="-1" pin="S"/></segment></net>
+<nets><net name="N$U37_C1M" class="0"><segment><pinref part="U37" gate="A" pin="C1-"/><pinref part="C174" gate="G$1" pin="2"/></segment></net><net name="N$U37_C1P" class="0"><segment><pinref part="U37" gate="A" pin="C1+"/><pinref part="C174" gate="G$1" pin="1"/></segment></net><net name="N$U36_C1M" class="0"><segment><pinref part="U36" gate="A" pin="C1-"/><pinref part="C173" gate="G$1" pin="2"/></segment></net><net name="N$U36_C1P" class="0"><segment><pinref part="U36" gate="A" pin="C1+"/><pinref part="C173" gate="G$1" pin="1"/></segment></net><net name="PG_2V5_FPGA" class="0"><segment><pinref part="R63" gate="G$1" pin="1"/><pinref part="X40" gate="-1" pin="S"/><pinref part="TP15" gate="G$1" pin="S"/></segment><pinref part="U35" gate="A" pin="PG"/></net><net name="PG_3V3_XO" class="0"><segment><pinref part="R62" gate="G$1" pin="1"/><pinref part="X39" gate="-1" pin="S"/><pinref part="TP14" gate="G$1" pin="S"/></segment><pinref part="U34" gate="A" pin="PG"/></net><net name="PG_3V3_ADTR" class="0"><segment><pinref part="R61" gate="G$1" pin="1"/><pinref part="X38" gate="-1" pin="S"/><pinref part="TP13" gate="G$1" pin="S"/></segment><pinref part="U32" gate="A" pin="PG"/></net><net name="N$2V5_NRSS" class="0"><segment><pinref part="U35" gate="A" pin="NR/SS"/><pinref part="C167" gate="G$1" pin="1"/></segment></net><net name="N$2V5_BIAS" class="0"><segment><pinref part="U35" gate="A" pin="BIAS"/><pinref part="C166" gate="G$1" pin="1"/></segment></net><net name="N$2V5_SNS" class="0"><segment><pinref part="U35" gate="A" pin="SNS"/><pinref part="C168" gate="G$1" pin="1"/></segment></net><net name="N$2V5_FB" class="0"><segment><pinref part="U35" gate="A" pin="FB"/><pinref part="R59" gate="G$1" pin="2"/><pinref part="R60" gate="G$1" pin="1"/><pinref part="C168" gate="G$1" pin="2"/></segment></net><net name="+2V5_FPGA" class="0"><segment><pinref part="U35" gate="A" pin="OUT"/><pinref part="U35" gate="A" pin="OUT_2"/><pinref part="U35" gate="A" pin="OUT_3"/><pinref part="R59" gate="G$1" pin="1"/><pinref part="C165" gate="G$1" pin="1"/><pinref part="X36" gate="-1" pin="S"/><pinref part="TP3" gate="G$1" pin="S"/></segment></net>
 <net name="GND" class="0">
 <segment>
 <pinref part="U1" gate="A" pin="GND"/>
@@ -13898,7 +13924,7 @@ W = angled&lt;p&gt;
 <wire x1="160.02" y1="482.6" x2="175.26" y2="482.6" width="0.1524" layer="91"/>
 <junction x="160.02" y="482.6"/>
 <pinref part="X4" gate="-1" pin="S"/>
-</segment>
+<pinref part="TP1" gate="G$1" pin="S"/></segment>
 </net>
 <net name="N$4" class="0">
 <segment>
@@ -14279,7 +14305,7 @@ W = angled&lt;p&gt;
 <wire x1="177.8" y1="439.42" x2="160.02" y2="439.42" width="0.1524" layer="91"/>
 <junction x="160.02" y="439.42"/>
 <pinref part="X5" gate="-1" pin="S"/>
-</segment>
+<pinref part="TP2" gate="G$1" pin="S"/></segment>
 </net>
 <net name="EN_+1V8_FPGA" class="0">
 <segment>
@@ -14375,7 +14401,7 @@ W = angled&lt;p&gt;
 <pinref part="X16" gate="-1" pin="S"/>
 <wire x1="177.8" y1="525.78" x2="160.02" y2="525.78" width="0.1524" layer="91"/>
 <junction x="160.02" y="525.78"/>
-<pinref part="R61" gate="G$1" pin="2"/><pinref part="R62" gate="G$1" pin="2"/><pinref part="R63" gate="G$1" pin="2"/></segment>
+<pinref part="R61" gate="G$1" pin="2"/><pinref part="R62" gate="G$1" pin="2"/><pinref part="R63" gate="G$1" pin="2"/><pinref part="TP4" gate="G$1" pin="S"/></segment>
 </net>
 <net name="EN_+3V3_FPGA" class="0">
 <segment>
@@ -14569,7 +14595,7 @@ W = angled&lt;p&gt;
 <wire x1="541.02" y1="363.22" x2="518.16" y2="363.22" width="0.1524" layer="91"/>
 <junction x="518.16" y="363.22"/>
 <pinref part="X14" gate="-1" pin="S"/>
-</segment>
+<pinref part="TP8" gate="G$1" pin="S"/></segment>
 </net>
 <net name="EN_+3V3_ADAR34" class="0">
 <segment>
@@ -14752,7 +14778,7 @@ W = angled&lt;p&gt;
 <pinref part="U19" gate="A" pin="V+"/>
 <wire x1="619.76" y1="469.9" x2="637.54" y2="469.9" width="0.1524" layer="91"/>
 <label x="637.54" y="469.9" size="1.778" layer="95"/>
-</segment>
+<pinref part="TP10" gate="G$1" pin="S"/></segment>
 </net>
 <net name="N$34" class="0">
 <segment>
@@ -15143,7 +15169,7 @@ W = angled&lt;p&gt;
 <pinref part="U22" gate="A" pin="V+"/>
 <wire x1="617.22" y1="518.16" x2="635" y2="518.16" width="0.1524" layer="91"/>
 <label x="635" y="518.16" size="1.778" layer="95"/>
-</segment>
+<pinref part="TP12" gate="G$1" pin="S"/></segment>
 </net>
 <net name="-3V3_SW" class="0">
 <segment>
@@ -15201,7 +15227,7 @@ W = angled&lt;p&gt;
 <label x="637.54" y="462.28" size="1.778" layer="95"/>
 <pinref part="X24" gate="-1" pin="S"/>
 <wire x1="655.32" y1="462.28" x2="629.92" y2="462.28" width="0.1524" layer="91"/>
-</segment>
+<pinref part="TP11" gate="G$1" pin="S"/></segment>
 </net>
 <net name="N$56" class="0">
 <segment>
@@ -15248,7 +15274,7 @@ W = angled&lt;p&gt;
 <label x="647.7" y="424.18" size="1.778" layer="95"/>
 <pinref part="X21" gate="-1" pin="S"/>
 <wire x1="673.1" y1="424.18" x2="640.08" y2="424.18" width="0.1524" layer="91"/>
-<pinref part="U36" gate="A" pin="OUT"/></segment>
+<pinref part="U36" gate="A" pin="OUT"/><pinref part="TP9" gate="G$1" pin="S"/></segment>
 </net>
 <net name="-5V0_ADAR34" class="0">
 <segment>
@@ -15343,7 +15369,7 @@ W = angled&lt;p&gt;
 <label x="208.28" y="347.98" size="1.778" layer="95"/>
 <pinref part="X12" gate="-1" pin="S"/>
 <wire x1="198.12" y1="347.98" x2="226.06" y2="347.98" width="0.1524" layer="91"/>
-</segment>
+<pinref part="TP5" gate="G$1" pin="S"/></segment>
 </net>
 <net name="N$15" class="0">
 <segment>
@@ -15916,7 +15942,7 @@ W = angled&lt;p&gt;
 <pinref part="X34" gate="-1" pin="S"/>
 <wire x1="563.88" y1="266.7" x2="553.72" y2="266.7" width="0.1524" layer="91"/>
 <wire x1="553.72" y1="266.7" x2="553.72" y2="256.54" width="0.1524" layer="91"/>
-</segment>
+<pinref part="TP6" gate="G$1" pin="S"/></segment>
 </net>
 <net name="N$82" class="0">
 <segment>
@@ -16086,7 +16112,7 @@ W = angled&lt;p&gt;
 <wire x1="784.86" y1="287.02" x2="800.1" y2="287.02" width="0.1524" layer="91"/>
 <pinref part="X35" gate="-1" pin="S"/>
 <wire x1="800.1" y1="287.02" x2="800.1" y2="281.94" width="0.1524" layer="91"/>
-<pinref part="C169" gate="G$1" pin="1"/><pinref part="C170" gate="G$1" pin="1"/><pinref part="C171" gate="G$1" pin="1"/><pinref part="C172" gate="G$1" pin="1"/></segment>
+<pinref part="C169" gate="G$1" pin="1"/><pinref part="C170" gate="G$1" pin="1"/><pinref part="C171" gate="G$1" pin="1"/><pinref part="C172" gate="G$1" pin="1"/><pinref part="TP7" gate="G$1" pin="S"/></segment>
 </net>
 </nets>
 </sheet>

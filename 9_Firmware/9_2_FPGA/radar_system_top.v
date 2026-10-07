@@ -1066,7 +1066,32 @@ end
 assign current_elevation = tx_current_elevation;
 assign current_azimuth = tx_current_azimuth;
 assign current_chirp = tx_current_chirp_sync;        // Use CDC-synchronized version
-assign new_chirp_frame = tx_new_chirp_frame_sync;    // Use CDC-synchronized version
+// ---------------------------------------------------------------------------
+// STROBE ACKNOWLEDGEMENT TO THE MCU (issue #13)
+//
+// The MCU asserts stm32_new_chirp and had no way to know whether the FPGA acted on it: the
+// chirp FSM reads the strobe only in IDLE, so one arriving mid-chirp was dropped silently.
+// This turns the accepted-frame pulse into a *level* the MCU can poll - a new request clears
+// it, consumption sets it, so "still low at the next request" means the strobe was dropped.
+// ---------------------------------------------------------------------------
+reg stm32_new_chirp_100m_meta, stm32_new_chirp_100m;
+always @(posedge clk_100m or negedge sys_reset_n) begin
+    if (!sys_reset_n) begin
+        stm32_new_chirp_100m_meta <= 1'b0;
+        stm32_new_chirp_100m      <= 1'b0;
+    end else begin
+        stm32_new_chirp_100m_meta <= stm32_new_chirp;
+        stm32_new_chirp_100m      <= stm32_new_chirp_100m_meta;
+    end
+end
+
+strobe_ack u_strobe_ack (
+    .clk      (clk_100m),
+    .rst      (~sys_reset_n),
+    .strobe   (stm32_new_chirp_100m),
+    .consumed (tx_new_chirp_frame_sync),
+    .ack      (new_chirp_frame)
+);
 
 assign dbg_doppler_data = rx_doppler_output;
 assign dbg_doppler_valid = rx_doppler_valid;

@@ -30360,7 +30360,7 @@ You are welcome to use this library for commercial purposes. For attribution, we
 </instances>
 <busses>
 </busses>
-<nets><net name="PG_2V5_FPGA" class="0"><segment><pinref part="X27" gate="-1" pin="S"/><pinref part="U2" gate="A" pin="PC2"/></segment></net><net name="PG_3V3_XO" class="0"><segment><pinref part="X26" gate="-1" pin="S"/><pinref part="U2" gate="A" pin="PC1"/></segment></net><net name="PG_3V3_ADTR" class="0"><segment><pinref part="X25" gate="-1" pin="S"/><pinref part="U2" gate="A" pin="PC0"/></segment></net><net name="N$U91_OE" class="0"><segment><pinref part="U91" gate="G$1" pin="OE"/><pinref part="R177" gate="G$1" pin="1"/></segment></net><net name="N$U90_OE" class="0"><segment><pinref part="U90" gate="G$1" pin="OE"/><pinref part="R176" gate="G$1" pin="1"/></segment></net><net name="+2V5_FPGA" class="0"><segment><pinref part="U90" gate="G$1" pin="VCCA"/><pinref part="U91" gate="G$1" pin="VCCA"/><pinref part="R176" gate="G$1" pin="2"/><pinref part="R177" gate="G$1" pin="2"/><pinref part="C354" gate="G$1" pin="1"/><pinref part="C355" gate="G$1" pin="1"/><pinref part="C358" gate="G$1" pin="1"/><pinref part="C359" gate="G$1" pin="1"/><pinref part="X57" gate="-1" pin="S"/><pinref part="U42" gate="G$2" pin="VCCO_14"/></segment></net><net name="FLASH_NRST_F" class="0"><segment><pinref part="U9" gate="A" pin="RESET"/><pinref part="U91" gate="G$1" pin="B2"/></segment></net><net name="FLASH_NCS_F" class="0"><segment><pinref part="U9" gate="A" pin="S"/><pinref part="U91" gate="G$1" pin="B1"/></segment></net><net name="FLASH_DQ3_F" class="0"><segment><pinref part="U9" gate="A" pin="DQ3/HOLD"/><pinref part="U90" gate="G$1" pin="B4"/></segment></net><net name="FLASH_DQ2_F" class="0"><segment><pinref part="U9" gate="A" pin="W/DQ2"/><pinref part="U90" gate="G$1" pin="B3"/></segment></net><net name="FLASH_DQ1_F" class="0"><segment><pinref part="U9" gate="A" pin="DQ1"/><pinref part="U90" gate="G$1" pin="B2"/></segment></net><net name="FLASH_DQ0_F" class="0"><segment><pinref part="U9" gate="A" pin="DQ0"/><pinref part="U90" gate="G$1" pin="B1"/></segment></net>
+<nets><net name="FPGA_STROBE_ACK" class="0"><segment><pinref part="U42" gate="G$3" pin="IO_L10N_T1_AD11N_15"/><pinref part="U2" gate="A" pin="PC3"/></segment></net><net name="PG_2V5_FPGA" class="0"><segment><pinref part="X27" gate="-1" pin="S"/><pinref part="U2" gate="A" pin="PC2"/></segment></net><net name="PG_3V3_XO" class="0"><segment><pinref part="X26" gate="-1" pin="S"/><pinref part="U2" gate="A" pin="PC1"/></segment></net><net name="PG_3V3_ADTR" class="0"><segment><pinref part="X25" gate="-1" pin="S"/><pinref part="U2" gate="A" pin="PC0"/></segment></net><net name="N$U91_OE" class="0"><segment><pinref part="U91" gate="G$1" pin="OE"/><pinref part="R177" gate="G$1" pin="1"/></segment></net><net name="N$U90_OE" class="0"><segment><pinref part="U90" gate="G$1" pin="OE"/><pinref part="R176" gate="G$1" pin="1"/></segment></net><net name="+2V5_FPGA" class="0"><segment><pinref part="U90" gate="G$1" pin="VCCA"/><pinref part="U91" gate="G$1" pin="VCCA"/><pinref part="R176" gate="G$1" pin="2"/><pinref part="R177" gate="G$1" pin="2"/><pinref part="C354" gate="G$1" pin="1"/><pinref part="C355" gate="G$1" pin="1"/><pinref part="C358" gate="G$1" pin="1"/><pinref part="C359" gate="G$1" pin="1"/><pinref part="X57" gate="-1" pin="S"/><pinref part="U42" gate="G$2" pin="VCCO_14"/></segment></net><net name="FLASH_NRST_F" class="0"><segment><pinref part="U9" gate="A" pin="RESET"/><pinref part="U91" gate="G$1" pin="B2"/></segment></net><net name="FLASH_NCS_F" class="0"><segment><pinref part="U9" gate="A" pin="S"/><pinref part="U91" gate="G$1" pin="B1"/></segment></net><net name="FLASH_DQ3_F" class="0"><segment><pinref part="U9" gate="A" pin="DQ3/HOLD"/><pinref part="U90" gate="G$1" pin="B4"/></segment></net><net name="FLASH_DQ2_F" class="0"><segment><pinref part="U9" gate="A" pin="W/DQ2"/><pinref part="U90" gate="G$1" pin="B3"/></segment></net><net name="FLASH_DQ1_F" class="0"><segment><pinref part="U9" gate="A" pin="DQ1"/><pinref part="U90" gate="G$1" pin="B2"/></segment></net><net name="FLASH_DQ0_F" class="0"><segment><pinref part="U9" gate="A" pin="DQ0"/><pinref part="U90" gate="G$1" pin="B1"/></segment></net>
 <net name="+3V3" class="0">
 <segment>
 <pinref part="X24" gate="-1" pin="S"/>
@@ -33275,14 +33275,14 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <junction x="38.1" y="119.38"/>
 </segment>
 </net>
-<net name="N$115" class="0">
+<net name="FPGA_DONE" class="0">
 <segment>
 <pinref part="R144" gate="G$1" pin="1"/>
 <wire x1="91.44" y1="127" x2="83.82" y2="127" width="0.1524" layer="91"/>
 <pinref part="U42" gate="G$1" pin="DONE_0"/>
 <junction x="83.82" y="127"/>
-</segment>
-</net>
+<pinref part="U2" gate="A" pin="PC4"/></segment></net>
+
 <net name="N$116" class="0">
 <segment>
 <pinref part="U42" gate="G$1" pin="INIT_B_0"/>

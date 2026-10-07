@@ -25,6 +25,9 @@ module radar_system_top_50t (
     input wire clk_120m_dac,
     input wire reset_n,
 
+    // ===== Issue #13: acknowledgement to the MCU (Bank 15, 3.3 V) =====
+    output wire fpga_strobe_ack,
+
     // ===== DAC Interface (Bank 15: 3.3V) =====
     output wire [7:0] dac_data,
     output wire dac_sleep,
@@ -109,7 +112,9 @@ module radar_system_top_50t (
     wire [5:0]  current_elevation_nc;
     wire [5:0]  current_azimuth_nc;
     wire [5:0]  current_chirp_nc;
-    wire        new_chirp_frame_nc;
+    // Issue #13: the strobe acknowledgement, exposed to the MCU instead of tied off.
+    // A request clears it, the FPGA's acceptance sets it.
+    wire        new_chirp_frame_ack;
     wire [31:0] dbg_doppler_data_nc;
     wire        dbg_doppler_valid_nc;
     wire [4:0]  dbg_doppler_bin_nc;
@@ -211,7 +216,7 @@ module radar_system_top_50t (
         .current_elevation      (current_elevation_nc),
         .current_azimuth        (current_azimuth_nc),
         .current_chirp          (current_chirp_nc),
-        .new_chirp_frame        (new_chirp_frame_nc),
+        .new_chirp_frame        (new_chirp_frame_ack),
         .dbg_doppler_data       (dbg_doppler_data_nc),
         .dbg_doppler_valid      (dbg_doppler_valid_nc),
         .dbg_doppler_bin        (dbg_doppler_bin_nc),
@@ -224,4 +229,7 @@ module radar_system_top_50t (
         .gpio_dig7              (gpio_dig7)
     );
 
+
+    // Issue #13: the MCU polls this to see whether its strobe was consumed
+    assign fpga_strobe_ack = new_chirp_frame_ack;
 endmodule

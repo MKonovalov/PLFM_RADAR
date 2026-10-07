@@ -70,6 +70,7 @@ extern "C" {
 #include "PA_GATE_BIAS.h"
 #include "PA_BIAS_SEQUENCE.h"
 #include "RAIL_FAULT.h"
+#include "STROBE_ACK.h"
 #include "ADS7830.h"
 #include "gps_handler.h"
 
@@ -256,6 +257,13 @@ static const RailFault_Source_t g_rail_sources[3] = {
     { rail_pg_adtr_ok }, { rail_pg_xo_ok }, { rail_pg_2v5_ok }
 };
 static RailFault_Monitor_t g_rails;
+
+/* ---- strobe acknowledgement (STROBE_ACK.h) ---------------------------------
+ * The FPGA answers on PC3: a request clears the line, consumption sets it.  We score each
+ * request *before* issuing the next one, because the FPGA clears the line as soon as it sees
+ * the new request - checking afterwards would always read low.
+ */
+static StrobeAck_State_t g_strobe_ack;
 
 static void RailFault_GPIOInit(void)
 {
@@ -572,6 +580,7 @@ void executeChirpSequence(int num_chirps, float T1, float PRI1, float T2, float 
          num_chirps, T1, PRI1, T2, PRI2);
     // First chirp sequence (microsecond timing)
     for(int i = 0; i < num_chirps; i++) {
+        StrobeAck_BeforeSend(&g_strobe_ack);   /* score the previous request first */
         HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_8); // New chirp signal to FPGA
         adarManager.pulseTXMode();
         delay_us((uint32_t)T1);
@@ -583,6 +592,7 @@ void executeChirpSequence(int num_chirps, float T1, float PRI1, float T2, float 
 
     // Second chirp sequence (nanosecond timing)
     for(int i = 0; i < num_chirps; i++) {
+    	StrobeAck_BeforeSend(&g_strobe_ack);   /* score the previous request first */
     	HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_8); // New chirp signal to FPGA
         adarManager.pulseTXMode();
         delay_ns((uint32_t)(T2 * 1000));
@@ -1116,7 +1126,12 @@ void getSystemStatusForGUI(char* status_buffer, size_t buffer_size) {
         }
         avg_current /= 16.0f;
 
-        w = snprintf(status_buffer + off, rem, "RailFault:0x%lX|RailFaultLatched:%d|",
+        w = snprintf(status_buffer + off, rem, "StrobeSent:%lu|StrobeAck:%lu|StrobeMissed:%lu|",
+                 (unsigned long)g_strobe_ack.sent, (unsigned long)g_strobe_ack.acknowledged,
+                 (unsigned long)g_strobe_ack.missed);
+    if (w > 0 && (size_t)w < rem) { off += (size_t)w; rem -= (size_t)w; }
+
+    w = snprintf(status_buffer + off, rem, "RailFault:0x%lX|RailFaultLatched:%d|",
                  (unsigned long)g_rails.current, RailFault_HasLatched(&g_rails) ? 1 : 0);
     if (w > 0 && (size_t)w < rem) { off += (size_t)w; rem -= (size_t)w; }
 
@@ -1494,6 +1509,7 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   RailFault_GPIOInit();
+  StrobeAck_Init(&g_strobe_ack);
   MX_TIM1_Init();
   MX_TIM3_Init();  // B15 fix: init DELADJ PWM timer before LO manager uses it
   MX_I2C1_Init();
@@ -1846,6 +1862,12 @@ int main(void)
   DIAG("BF", "Disabling TX mixers (GPIOD pin 11 LOW)");
   HAL_GPIO_WritePin(GPIOD, GPIO_PIN_11, GPIO_PIN_RESET);
 
+  /* Order matters here, and it is a datasheet requirement rather than a preference.
+   * ADAR1000 pin table, AVDD3 (M10, M11, N11): "3.3 V Voltage Power Supply Inputs. It is
+   * recommended to power-up these pins before or at the same time as the AVDD1(-5V) supply."
+   * The -5 V rails are inverted from +5V0_ADAR by U20/U21/U36/U37, so enabling +5V0_ADAR is
+   * what creates AVDD1: the 3.3 V rails must therefore be asserted first (or together), with
+   * a settle delay before the negative is loaded.  test_adar_power_order.c locks this in. */
   DIAG("PWR", "Enabling 3.3V ADAR12 + ADAR34 rails");
   HAL_GPIO_WritePin(EN_P_3V3_ADAR12_GPIO_Port,EN_P_3V3_ADAR12_Pin,GPIO_PIN_SET);
   HAL_GPIO_WritePin(EN_P_3V3_ADAR34_GPIO_Port,EN_P_3V3_ADAR34_Pin,GPIO_PIN_SET);
@@ -2166,6 +2188,8 @@ int main(void)
             if ((int32_t)(HAL_GetTick() - rail_next_ms) >= 0) {
                 rail_next_ms = HAL_GetTick() + 100u;
                 bool faulting = RailFault_Sample(&g_rails);
+                StrobeAck_Sample(&g_strobe_ack,
+                                 HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_3) == GPIO_PIN_SET);
                 if (faulting && g_rails.current != rail_reported) {
                     DIAG_ERR("PWR", "rail fault: bitmap=0x%lX (bit0=+3V3_ADTR, bit1=+3V3_XO, bit2=+2V5_FPGA)",
                              (unsigned long)g_rails.current);

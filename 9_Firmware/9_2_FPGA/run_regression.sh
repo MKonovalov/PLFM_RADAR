@@ -79,6 +79,7 @@ PROD_RTL=(
     fpga_self_test.v
     agc_magnitude_link.v
     strobe_reject_monitor.v
+    strobe_ack.v
 )
 
 # Source-only RTL (not instantiated at top level, but should still be lint-clean)
@@ -116,6 +117,7 @@ SYSTEM_RTL=(
     cfar_ca.v fpga_self_test.v
     agc_magnitude_link.v
     strobe_reject_monitor.v
+    strobe_ack.v
 )
 
 # ---- Layer A: iverilog -Wall compilation ----
@@ -470,6 +472,11 @@ if [[ "$QUICK" -eq 0 ]]; then
     run_test "AGC Magnitude Link (DIG_7 pulse encoding)" \
         tb/tb_agc_magnitude_reg.vvp \
         tb/tb_agc_magnitude_link.v agc_magnitude_link.v
+
+    # Strobe acknowledgement (issue #13): the MCU's view of a request
+    run_test "Strobe Acknowledge (MCU-visible request/consumed)" \
+        tb/tb_strobe_ack.vvp \
+        tb/tb_strobe_ack.v strobe_ack.v
 
     # ADC analog out-of-range (AD9484 OR) reaching the AGC status path
     run_test "ADC Out-of-Range -> AGC status" \
